@@ -4,8 +4,6 @@
  */
 package main;
 
-import screens.Reservations;
-
 /**
  *
  * @author rwill
@@ -16,7 +14,7 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Reservations reservations = new Reservations();
+        screens.Main reservations = new screens.Main();
         
         reservations.setVisible(true);
     }

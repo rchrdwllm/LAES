@@ -4,17 +4,30 @@
  */
 package screens;
 
+import java.awt.Font;
+import java.awt.Color;
+import utils.FontLoader;
+
 /**
  *
  * @author rwill
  */
 public class NewReservation extends javax.swing.JFrame {
+    FontLoader fontLoader = new FontLoader();
+    Font inter;
+    Font puritanBold;
 
     /**
      * Creates new form NewReservation
      */
     public NewReservation() {
+        setFonts();
         initComponents();
+    }
+    
+    private void setFonts() {
+        inter = fontLoader.interRegular(16);
+        puritanBold = fontLoader.puritanBold(44);
     }
 
     /**
@@ -26,22 +39,115 @@ public class NewReservation extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        contactTxt = new javax.swing.JTextField();
+        nameTxt1 = new javax.swing.JTextField();
+        jComboBox1 = new javax.swing.JComboBox<>();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 608, Short.MAX_VALUE)
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Add a reservation");
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(64, 64, 64, 64));
+
+        jLabel1.setFont(puritanBold);
+        jLabel1.setForeground(new java.awt.Color(35, 35, 35));
+        jLabel1.setText("NEW RESERVATION");
+
+        contactTxt.setBackground(new java.awt.Color(248, 248, 248));
+        contactTxt.setFont(inter);
+        contactTxt.setForeground(new java.awt.Color(129, 129, 129));
+        contactTxt.setText("Contact number");
+        contactTxt.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(218, 218, 218)), javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16)));
+        contactTxt.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                contactTxtFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                contactTxtFocusLost(evt);
+            }
+        });
+
+        nameTxt1.setBackground(new java.awt.Color(248, 248, 248));
+        nameTxt1.setFont(inter);
+        nameTxt1.setForeground(new java.awt.Color(129, 129, 129));
+        nameTxt1.setText("Name");
+        nameTxt1.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(218, 218, 218)), javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16)));
+        nameTxt1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                nameTxt1FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                nameTxt1FocusLost(evt);
+            }
+        });
+
+        jComboBox1.setBackground(new java.awt.Color(248, 248, 248));
+        jComboBox1.setForeground(new java.awt.Color(35, 35, 35));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(218, 218, 218)), javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16)));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(contactTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 602, Short.MAX_VALUE)
+                    .addComponent(nameTxt1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 602, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 761, Short.MAX_VALUE)
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(nameTxt1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(contactTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(307, Short.MAX_VALUE))
         );
+
+        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void contactTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_contactTxtFocusGained
+        String searchValue = contactTxt.getText();
+
+        if (searchValue.equals("Search reservations")) {
+            contactTxt.setText("");
+            contactTxt.setForeground(new Color(35, 35, 35));
+        }
+    }//GEN-LAST:event_contactTxtFocusGained
+
+    private void contactTxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_contactTxtFocusLost
+        String searchValue = contactTxt.getText();
+
+        if (searchValue.equals("")) {
+            contactTxt.setText("Search reservations");
+            contactTxt.setForeground(new Color(129, 129, 129));
+        }
+    }//GEN-LAST:event_contactTxtFocusLost
+
+    private void nameTxt1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nameTxt1FocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nameTxt1FocusGained
+
+    private void nameTxt1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nameTxt1FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nameTxt1FocusLost
 
     /**
      * @param args the command line arguments
@@ -79,5 +185,10 @@ public class NewReservation extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField contactTxt;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField nameTxt1;
     // End of variables declaration//GEN-END:variables
 }

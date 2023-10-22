@@ -6,9 +6,16 @@ package screens;
 
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
+
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.table.DefaultTableCellRenderer;
+
 import utils.FontLoader;
 
 /**
@@ -18,6 +25,7 @@ import utils.FontLoader;
 public class Main extends javax.swing.JFrame {
     FontLoader fontLoader = new FontLoader();
     Font inter;
+    Font interBold;
     Font puritanBold;
 
     /**
@@ -54,6 +62,21 @@ public class Main extends javax.swing.JFrame {
         addReservationBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         reservationsTbl = new javax.swing.JTable();
+        reservationsTbl.setSelectionBackground(new java.awt.Color(255, 255, 255));
+        reservationsTbl.setSelectionForeground(new java.awt.Color(51, 51, 51));
+        reservationsTbl.setOpaque(true);
+        reservationsTbl.setFillsViewportHeight(true);
+        reservationsTbl.setBackground(new Color(255, 255, 255));
+        reservationsTbl.getTableHeader().setFont(interBold);
+        reservationsTbl.getTableHeader().setBorder(BorderFactory.createEmptyBorder(16, 16, 16, 16));
+        reservationsTbl.setGridColor(new Color(218, 218, 218));
+        reservationsTbl.setShowVerticalLines(false);
+        reservationsTbl.getTableHeader().setForeground(new Color(35, 35, 35));
+        reservationsTbl.getTableHeader().setBackground(new Color(255, 255, 255));
+        reservationsTbl.setRowHeight(44);
+        reservationsTbl.getTableHeader().setPreferredSize(new Dimension(0, 44));
+        ((DefaultTableCellRenderer)reservationsTbl.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.LEFT);
+        ((DefaultTableCellRenderer)reservationsTbl.getTableHeader().getDefaultRenderer()).setBorder(BorderFactory.createEmptyBorder());
         customersPnl = new javax.swing.JPanel();
         inventoryPnl = new javax.swing.JPanel();
         aboutPnl = new javax.swing.JPanel();
@@ -217,13 +240,14 @@ public class Main extends javax.swing.JFrame {
         }
     });
 
+    reservationsTbl.setBackground(new java.awt.Color(255, 255, 255));
+    reservationsTbl.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
     reservationsTbl.setFont(inter);
+    reservationsTbl.setForeground(new java.awt.Color(129, 129, 129));
     reservationsTbl.setModel(new javax.swing.table.DefaultTableModel(
         new Object [][] {
             {"Richard William Flores", "10/22/2023", "09764753058", "Alternator repair"},
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null}
+            {"Richard William Flores", "10/22/2023", "09764753058", "Alternator repair"}
         },
         new String [] {
             "Name", "Date", "Contact number", "Service"
@@ -244,6 +268,8 @@ public class Main extends javax.swing.JFrame {
             return canEdit [columnIndex];
         }
     });
+    reservationsTbl.setSelectionBackground(new java.awt.Color(255, 255, 255));
+    reservationsTbl.setSelectionForeground(new java.awt.Color(51, 51, 51));
     jScrollPane1.setViewportView(reservationsTbl);
 
     javax.swing.GroupLayout reservationsPnlLayout = new javax.swing.GroupLayout(reservationsPnl);
@@ -410,6 +436,7 @@ public class Main extends javax.swing.JFrame {
 
     private void setFonts() {
         inter = fontLoader.interRegular(12);
+        interBold = fontLoader.interBold(12);
         puritanBold = fontLoader.puritanBold(44);
     }
     

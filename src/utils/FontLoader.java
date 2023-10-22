@@ -35,7 +35,7 @@ public class FontLoader {
     
     public Font interBold(float size) {
         try {
-            regular = Font.createFont(Font.TRUETYPE_FONT, FontLoader.class.getResourceAsStream("../fonts/Inter/Inter-Bold.ttf")).deriveFont(size);
+            bold = Font.createFont(Font.TRUETYPE_FONT, FontLoader.class.getResourceAsStream("../fonts/Inter/Inter-Bold.ttf")).deriveFont(size);
         
             registerFont(regular);
         } catch (IOException | FontFormatException e) {
