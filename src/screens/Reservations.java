@@ -57,6 +57,13 @@ public class Reservations extends javax.swing.JFrame {
         customersPnl = new javax.swing.JPanel();
         inventoryPnl = new javax.swing.JPanel();
         aboutPnl = new javax.swing.JPanel();
+        aboutTitle = new javax.swing.JPanel();
+        aboutTitleLabel = new javax.swing.JLabel();
+        aboutDesc = new javax.swing.JPanel();
+        aboutHead1 = new javax.swing.JLabel();
+        aboutDescText = new javax.swing.JLabel();
+        aboutPrevimg1 = new javax.swing.JLabel();
+        aboutPrevimg2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Lath's Auto-Electrical Shop");
@@ -81,7 +88,6 @@ public class Reservations extends javax.swing.JFrame {
         }
     });
 
-    customersBtn.setBackground(new java.awt.Color(255, 255, 255));
     customersBtn.setFont(inter);
     customersBtn.setForeground(new java.awt.Color(35, 35, 35));
     customersBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/UserOutline.png"))); // NOI18N
@@ -96,7 +102,6 @@ public class Reservations extends javax.swing.JFrame {
         }
     });
 
-    inventoryBtn.setBackground(new java.awt.Color(255, 255, 255));
     inventoryBtn.setFont(inter);
     inventoryBtn.setForeground(new java.awt.Color(35, 35, 35));
     inventoryBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ArchiveOutline.png"))); // NOI18N
@@ -111,7 +116,6 @@ public class Reservations extends javax.swing.JFrame {
         }
     });
 
-    aboutBtn.setBackground(new java.awt.Color(255, 255, 255));
     aboutBtn.setFont(inter);
     aboutBtn.setForeground(new java.awt.Color(35, 35, 35));
     aboutBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ExclamationCircleOutline.png"))); // NOI18N
@@ -247,17 +251,16 @@ public class Reservations extends javax.swing.JFrame {
     reservationsPnlLayout.setHorizontalGroup(
         reservationsPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(reservationsPnlLayout.createSequentialGroup()
-            .addGap(112, 112, 112)
+            .addContainerGap()
             .addGroup(reservationsPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 775, Short.MAX_VALUE)
                 .addGroup(reservationsPnlLayout.createSequentialGroup()
-                    .addGroup(reservationsPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel2)
-                        .addGroup(reservationsPnlLayout.createSequentialGroup()
-                            .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(addReservationBtn)))
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(jLabel2)
+                    .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(reservationsPnlLayout.createSequentialGroup()
+                    .addComponent(searchField)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(addReservationBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addContainerGap())
     );
     reservationsPnlLayout.setVerticalGroup(
@@ -271,7 +274,7 @@ public class Reservations extends javax.swing.JFrame {
                 .addComponent(addReservationBtn))
             .addGap(18, 18, 18)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(8, Short.MAX_VALUE))
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
     mainPnl.add(reservationsPnl, "card3");
@@ -280,7 +283,7 @@ public class Reservations extends javax.swing.JFrame {
     customersPnl.setLayout(customersPnlLayout);
     customersPnlLayout.setHorizontalGroup(
         customersPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 901, Short.MAX_VALUE)
+        .addGap(0, 915, Short.MAX_VALUE)
     );
     customersPnlLayout.setVerticalGroup(
         customersPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -293,7 +296,7 @@ public class Reservations extends javax.swing.JFrame {
     inventoryPnl.setLayout(inventoryPnlLayout);
     inventoryPnlLayout.setHorizontalGroup(
         inventoryPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 901, Short.MAX_VALUE)
+        .addGap(0, 915, Short.MAX_VALUE)
     );
     inventoryPnlLayout.setVerticalGroup(
         inventoryPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -302,15 +305,99 @@ public class Reservations extends javax.swing.JFrame {
 
     mainPnl.add(inventoryPnl, "card4");
 
+    aboutPnl.setBackground(new java.awt.Color(255, 255, 255));
+
+    aboutTitle.setBackground(new java.awt.Color(255, 255, 255));
+
+    aboutTitleLabel.setFont(new java.awt.Font("Puritan", 1, 55)); // NOI18N
+    aboutTitleLabel.setText("About");
+
+    javax.swing.GroupLayout aboutTitleLayout = new javax.swing.GroupLayout(aboutTitle);
+    aboutTitle.setLayout(aboutTitleLayout);
+    aboutTitleLayout.setHorizontalGroup(
+        aboutTitleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(aboutTitleLayout.createSequentialGroup()
+            .addGap(33, 33, 33)
+            .addComponent(aboutTitleLabel)
+            .addContainerGap(35, Short.MAX_VALUE))
+    );
+    aboutTitleLayout.setVerticalGroup(
+        aboutTitleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(aboutTitleLayout.createSequentialGroup()
+            .addContainerGap(52, Short.MAX_VALUE)
+            .addComponent(aboutTitleLabel))
+    );
+
+    aboutDesc.setBackground(new java.awt.Color(255, 255, 255));
+
+    aboutHead1.setFont(new java.awt.Font("Inter", 1, 32)); // NOI18N
+    aboutHead1.setText("<html>LATH’S AUTO-ELECTRICAL SHOP - YOUR TRUSTED <br>AUTO-ELECTRICAL SOLUTION!</html>");
+
+    aboutDescText.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
+    aboutDescText.setForeground(new java.awt.Color(102, 102, 102));
+    aboutDescText.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+    aboutDescText.setText("<html>At Lath’s Auto-Electrical Shop, we pride ourselves on being your one-stop destination for all things auto-electrical. With a passion for excellence and a commitment to customer satisfaction, we have been serving the automotive community in the Philippines since 2009.<html>");
+    aboutDescText.setToolTipText("");
+    aboutDescText.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+    aboutDescText.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+
+    aboutPrevimg1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/aboutprev1.png"))); // NOI18N
+
+    aboutPrevimg2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/aboutprev2.png"))); // NOI18N
+
+    javax.swing.GroupLayout aboutDescLayout = new javax.swing.GroupLayout(aboutDesc);
+    aboutDesc.setLayout(aboutDescLayout);
+    aboutDescLayout.setHorizontalGroup(
+        aboutDescLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(aboutDescLayout.createSequentialGroup()
+            .addGroup(aboutDescLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(aboutDescLayout.createSequentialGroup()
+                    .addGap(55, 55, 55)
+                    .addComponent(aboutHead1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(aboutDescLayout.createSequentialGroup()
+                    .addGap(61, 61, 61)
+                    .addGroup(aboutDescLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(aboutDescText, javax.swing.GroupLayout.PREFERRED_SIZE, 797, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(aboutDescLayout.createSequentialGroup()
+                            .addComponent(aboutPrevimg1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(aboutPrevimg2, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addContainerGap())
+    );
+    aboutDescLayout.setVerticalGroup(
+        aboutDescLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(aboutDescLayout.createSequentialGroup()
+            .addComponent(aboutHead1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(aboutDescText, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(18, 18, 18)
+            .addGroup(aboutDescLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(aboutPrevimg1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(aboutPrevimg2, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addContainerGap(36, Short.MAX_VALUE))
+    );
+
     javax.swing.GroupLayout aboutPnlLayout = new javax.swing.GroupLayout(aboutPnl);
     aboutPnl.setLayout(aboutPnlLayout);
     aboutPnlLayout.setHorizontalGroup(
         aboutPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 901, Short.MAX_VALUE)
+        .addGroup(aboutPnlLayout.createSequentialGroup()
+            .addContainerGap()
+            .addGroup(aboutPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(aboutDesc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(aboutPnlLayout.createSequentialGroup()
+                    .addGap(22, 22, 22)
+                    .addComponent(aboutTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
     );
     aboutPnlLayout.setVerticalGroup(
         aboutPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 611, Short.MAX_VALUE)
+        .addGroup(aboutPnlLayout.createSequentialGroup()
+            .addGap(17, 17, 17)
+            .addComponent(aboutTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(aboutDesc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
     mainPnl.add(aboutPnl, "card5");
@@ -349,7 +436,10 @@ public class Reservations extends javax.swing.JFrame {
     }//GEN-LAST:event_inventoryBtnActionPerformed
 
     private void aboutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutBtnActionPerformed
-        // TODO add your handling code here:
+        mainPnl.removeAll();
+        mainPnl.add(aboutPnl);
+        mainPnl.repaint();
+        mainPnl.revalidate();
     }//GEN-LAST:event_aboutBtnActionPerformed
 
     private void reservationsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservationsBtnActionPerformed
@@ -359,31 +449,33 @@ public class Reservations extends javax.swing.JFrame {
         mainPnl.revalidate();
     }//GEN-LAST:event_reservationsBtnActionPerformed
 
-    private void addReservationBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addReservationBtnActionPerformed
+    private void logoutBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtn1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_addReservationBtnActionPerformed
+    }//GEN-LAST:event_logoutBtn1ActionPerformed
 
-    private void searchFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFieldFocusGained
-        String searchValue = searchField.getText();
-        
-        if (searchValue.equals("Search reservations")) {
-            searchField.setText("");
-            searchField.setForeground(new Color(35, 35, 35));
-        }
-    }//GEN-LAST:event_searchFieldFocusGained
+    private void addReservationBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addReservationBtnActionPerformed
+        NewReservation newReservation = new NewReservation();
+
+        newReservation.setVisible(true);
+    }//GEN-LAST:event_addReservationBtnActionPerformed
 
     private void searchFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFieldFocusLost
         String searchValue = searchField.getText();
-        
+
         if (searchValue.equals("")) {
             searchField.setText("Search reservations");
             searchField.setForeground(new Color(129, 129, 129));
         }
     }//GEN-LAST:event_searchFieldFocusLost
 
-    private void logoutBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtn1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_logoutBtn1ActionPerformed
+    private void searchFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFieldFocusGained
+        String searchValue = searchField.getText();
+
+        if (searchValue.equals("Search reservations")) {
+            searchField.setText("");
+            searchField.setForeground(new Color(35, 35, 35));
+        }
+    }//GEN-LAST:event_searchFieldFocusGained
 
     /**
      * @param args the command line arguments
@@ -428,7 +520,14 @@ public class Reservations extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton aboutBtn;
+    private javax.swing.JPanel aboutDesc;
+    private javax.swing.JLabel aboutDescText;
+    private javax.swing.JLabel aboutHead1;
     private javax.swing.JPanel aboutPnl;
+    private javax.swing.JLabel aboutPrevimg1;
+    private javax.swing.JLabel aboutPrevimg2;
+    private javax.swing.JPanel aboutTitle;
+    private javax.swing.JLabel aboutTitleLabel;
     private javax.swing.JButton addReservationBtn;
     private javax.swing.JButton customersBtn;
     private javax.swing.JPanel customersPnl;
