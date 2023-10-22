@@ -318,6 +318,7 @@ public class Reservations extends javax.swing.JFrame {
     getContentPane().add(mainPnl, java.awt.BorderLayout.CENTER);
 
     pack();
+    setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void setFonts() {
