@@ -6,16 +6,9 @@ package screens;
 
 import java.awt.Font;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
-
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.table.DefaultTableCellRenderer;
-
 import utils.FontLoader;
 
 /**
@@ -25,8 +18,8 @@ import utils.FontLoader;
 public class Main extends javax.swing.JFrame {
     FontLoader fontLoader = new FontLoader();
     Font inter;
-    Font interBold;
     Font puritanBold;
+    Font puritanBoldSmall;
 
     /**
      * Creates new form Reservations
@@ -53,7 +46,7 @@ public class Main extends javax.swing.JFrame {
         customersBtn = new javax.swing.JButton();
         inventoryBtn = new javax.swing.JButton();
         aboutBtn = new javax.swing.JButton();
-        logoutBtn1 = new javax.swing.JButton();
+        logoutBtn = new javax.swing.JButton();
         logoLabel = new javax.swing.JLabel();
         mainPnl = new javax.swing.JPanel();
         reservationsPnl = new javax.swing.JPanel();
@@ -62,31 +55,16 @@ public class Main extends javax.swing.JFrame {
         addReservationBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         reservationsTbl = new javax.swing.JTable();
-        reservationsTbl.setSelectionBackground(new java.awt.Color(255, 255, 255));
-        reservationsTbl.setSelectionForeground(new java.awt.Color(51, 51, 51));
-        reservationsTbl.setOpaque(true);
-        reservationsTbl.setFillsViewportHeight(true);
-        reservationsTbl.setBackground(new Color(255, 255, 255));
-        reservationsTbl.getTableHeader().setFont(interBold);
-        reservationsTbl.getTableHeader().setBorder(BorderFactory.createEmptyBorder(16, 16, 16, 16));
-        reservationsTbl.setGridColor(new Color(218, 218, 218));
-        reservationsTbl.setShowVerticalLines(false);
-        reservationsTbl.getTableHeader().setForeground(new Color(35, 35, 35));
-        reservationsTbl.getTableHeader().setBackground(new Color(255, 255, 255));
-        reservationsTbl.setRowHeight(44);
-        reservationsTbl.getTableHeader().setPreferredSize(new Dimension(0, 44));
-        ((DefaultTableCellRenderer)reservationsTbl.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.LEFT);
-        ((DefaultTableCellRenderer)reservationsTbl.getTableHeader().getDefaultRenderer()).setBorder(BorderFactory.createEmptyBorder());
         customersPnl = new javax.swing.JPanel();
         inventoryPnl = new javax.swing.JPanel();
         aboutPnl = new javax.swing.JPanel();
         aboutTitle = new javax.swing.JPanel();
-        aboutTitleLabel = new javax.swing.JLabel();
         aboutDesc = new javax.swing.JPanel();
         aboutHead1 = new javax.swing.JLabel();
         aboutDescText = new javax.swing.JLabel();
         aboutPrevimg1 = new javax.swing.JLabel();
         aboutPrevimg2 = new javax.swing.JLabel();
+        aboutTitleLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Lath's Auto-Electrical Shop");
@@ -111,6 +89,7 @@ public class Main extends javax.swing.JFrame {
         }
     });
 
+    customersBtn.setBackground(java.awt.Color.white);
     customersBtn.setFont(inter);
     customersBtn.setForeground(new java.awt.Color(35, 35, 35));
     customersBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/UserOutline.png"))); // NOI18N
@@ -125,6 +104,7 @@ public class Main extends javax.swing.JFrame {
         }
     });
 
+    inventoryBtn.setBackground(new java.awt.Color(255, 255, 255));
     inventoryBtn.setFont(inter);
     inventoryBtn.setForeground(new java.awt.Color(35, 35, 35));
     inventoryBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ArchiveOutline.png"))); // NOI18N
@@ -139,6 +119,7 @@ public class Main extends javax.swing.JFrame {
         }
     });
 
+    aboutBtn.setBackground(new java.awt.Color(255, 255, 255));
     aboutBtn.setFont(inter);
     aboutBtn.setForeground(new java.awt.Color(35, 35, 35));
     aboutBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ExclamationCircleOutline.png"))); // NOI18N
@@ -153,17 +134,17 @@ public class Main extends javax.swing.JFrame {
         }
     });
 
-    logoutBtn1.setBackground(new java.awt.Color(40, 40, 40));
-    logoutBtn1.setFont(inter);
-    logoutBtn1.setForeground(new java.awt.Color(248, 248, 248));
-    logoutBtn1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/LogoutOutline.png"))); // NOI18N
-    logoutBtn1.setText("  Log out");
-    logoutBtn1.setBorder(javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16));
-    logoutBtn1.setBorderPainted(false);
-    logoutBtn1.setFocusPainted(false);
-    logoutBtn1.addActionListener(new java.awt.event.ActionListener() {
+    logoutBtn.setBackground(new java.awt.Color(40, 40, 40));
+    logoutBtn.setFont(inter);
+    logoutBtn.setForeground(new java.awt.Color(248, 248, 248));
+    logoutBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/LogoutOutline.png"))); // NOI18N
+    logoutBtn.setText("  Log out");
+    logoutBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16));
+    logoutBtn.setBorderPainted(false);
+    logoutBtn.setFocusPainted(false);
+    logoutBtn.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            logoutBtn1ActionPerformed(evt);
+            logoutBtnActionPerformed(evt);
         }
     });
 
@@ -182,7 +163,7 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(customersBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(inventoryBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(aboutBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(logoutBtn1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(logoutBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
     sidePnlLayout.setVerticalGroup(
@@ -198,7 +179,7 @@ public class Main extends javax.swing.JFrame {
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(aboutBtn)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 202, Short.MAX_VALUE)
-            .addComponent(logoutBtn1))
+            .addComponent(logoutBtn))
     );
 
     getContentPane().add(sidePnl, java.awt.BorderLayout.WEST);
@@ -240,14 +221,13 @@ public class Main extends javax.swing.JFrame {
         }
     });
 
-    reservationsTbl.setBackground(new java.awt.Color(255, 255, 255));
-    reservationsTbl.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
     reservationsTbl.setFont(inter);
-    reservationsTbl.setForeground(new java.awt.Color(129, 129, 129));
     reservationsTbl.setModel(new javax.swing.table.DefaultTableModel(
         new Object [][] {
             {"Richard William Flores", "10/22/2023", "09764753058", "Alternator repair"},
-            {"Richard William Flores", "10/22/2023", "09764753058", "Alternator repair"}
+            {null, null, null, null},
+            {null, null, null, null},
+            {null, null, null, null}
         },
         new String [] {
             "Name", "Date", "Contact number", "Service"
@@ -268,8 +248,6 @@ public class Main extends javax.swing.JFrame {
             return canEdit [columnIndex];
         }
     });
-    reservationsTbl.setSelectionBackground(new java.awt.Color(255, 255, 255));
-    reservationsTbl.setSelectionForeground(new java.awt.Color(51, 51, 51));
     jScrollPane1.setViewportView(reservationsTbl);
 
     javax.swing.GroupLayout reservationsPnlLayout = new javax.swing.GroupLayout(reservationsPnl);
@@ -279,7 +257,7 @@ public class Main extends javax.swing.JFrame {
         .addGroup(reservationsPnlLayout.createSequentialGroup()
             .addContainerGap()
             .addGroup(reservationsPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 761, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 775, Short.MAX_VALUE)
                 .addGroup(reservationsPnlLayout.createSequentialGroup()
                     .addComponent(jLabel2)
                     .addGap(0, 0, Short.MAX_VALUE))
@@ -309,7 +287,7 @@ public class Main extends javax.swing.JFrame {
     customersPnl.setLayout(customersPnlLayout);
     customersPnlLayout.setHorizontalGroup(
         customersPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 901, Short.MAX_VALUE)
+        .addGap(0, 915, Short.MAX_VALUE)
     );
     customersPnlLayout.setVerticalGroup(
         customersPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -322,7 +300,7 @@ public class Main extends javax.swing.JFrame {
     inventoryPnl.setLayout(inventoryPnlLayout);
     inventoryPnlLayout.setHorizontalGroup(
         inventoryPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 901, Short.MAX_VALUE)
+        .addGap(0, 915, Short.MAX_VALUE)
     );
     inventoryPnlLayout.setVerticalGroup(
         inventoryPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -332,31 +310,24 @@ public class Main extends javax.swing.JFrame {
     mainPnl.add(inventoryPnl, "card4");
 
     aboutPnl.setBackground(new java.awt.Color(255, 255, 255));
+    aboutPnl.setBorder(javax.swing.BorderFactory.createEmptyBorder(32, 64, 32, 64));
 
     aboutTitle.setBackground(new java.awt.Color(255, 255, 255));
-
-    aboutTitleLabel.setFont(new java.awt.Font("Puritan", 1, 55)); // NOI18N
-    aboutTitleLabel.setText("About");
 
     javax.swing.GroupLayout aboutTitleLayout = new javax.swing.GroupLayout(aboutTitle);
     aboutTitle.setLayout(aboutTitleLayout);
     aboutTitleLayout.setHorizontalGroup(
         aboutTitleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(aboutTitleLayout.createSequentialGroup()
-            .addGap(33, 33, 33)
-            .addComponent(aboutTitleLabel)
-            .addContainerGap(35, Short.MAX_VALUE))
+        .addGap(0, 0, Short.MAX_VALUE)
     );
     aboutTitleLayout.setVerticalGroup(
         aboutTitleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(aboutTitleLayout.createSequentialGroup()
-            .addContainerGap(52, Short.MAX_VALUE)
-            .addComponent(aboutTitleLabel))
+        .addGap(0, 0, Short.MAX_VALUE)
     );
 
     aboutDesc.setBackground(new java.awt.Color(255, 255, 255));
 
-    aboutHead1.setFont(new java.awt.Font("Inter", 1, 32)); // NOI18N
+    aboutHead1.setFont(puritanBoldSmall);
     aboutHead1.setText("<html>LATH’S AUTO-ELECTRICAL SHOP - YOUR TRUSTED <br>AUTO-ELECTRICAL SOLUTION!</html>");
 
     aboutDescText.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
@@ -377,17 +348,14 @@ public class Main extends javax.swing.JFrame {
         aboutDescLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(aboutDescLayout.createSequentialGroup()
             .addGroup(aboutDescLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(aboutHead1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(aboutDescLayout.createSequentialGroup()
-                    .addGap(55, 55, 55)
-                    .addComponent(aboutHead1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGroup(aboutDescLayout.createSequentialGroup()
-                    .addGap(61, 61, 61)
-                    .addGroup(aboutDescLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(aboutDescText, javax.swing.GroupLayout.PREFERRED_SIZE, 797, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(aboutDescLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(aboutDescLayout.createSequentialGroup()
                             .addComponent(aboutPrevimg1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(aboutPrevimg2, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGap(27, 27, 27)
+                            .addComponent(aboutPrevimg2, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(aboutDescText, javax.swing.GroupLayout.PREFERRED_SIZE, 858, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(0, 0, Short.MAX_VALUE)))
             .addContainerGap())
     );
@@ -401,8 +369,11 @@ public class Main extends javax.swing.JFrame {
             .addGroup(aboutDescLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                 .addComponent(aboutPrevimg1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(aboutPrevimg2, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addContainerGap(36, Short.MAX_VALUE))
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
+
+    aboutTitleLabel.setFont(puritanBold);
+    aboutTitleLabel.setText("ABOUT");
 
     javax.swing.GroupLayout aboutPnlLayout = new javax.swing.GroupLayout(aboutPnl);
     aboutPnl.setLayout(aboutPnlLayout);
@@ -411,16 +382,22 @@ public class Main extends javax.swing.JFrame {
         .addGroup(aboutPnlLayout.createSequentialGroup()
             .addContainerGap()
             .addGroup(aboutPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(aboutDesc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(aboutPnlLayout.createSequentialGroup()
                     .addGap(22, 22, 22)
                     .addComponent(aboutTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(aboutPnlLayout.createSequentialGroup()
+                    .addGroup(aboutPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(aboutTitleLabel)
+                        .addComponent(aboutDesc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(0, 0, Short.MAX_VALUE))))
     );
     aboutPnlLayout.setVerticalGroup(
         aboutPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(aboutPnlLayout.createSequentialGroup()
-            .addGap(17, 17, 17)
+            .addContainerGap()
+            .addComponent(aboutTitleLabel)
+            .addGap(18, 18, 18)
             .addComponent(aboutTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(aboutDesc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -436,8 +413,8 @@ public class Main extends javax.swing.JFrame {
 
     private void setFonts() {
         inter = fontLoader.interRegular(12);
-        interBold = fontLoader.interBold(12);
         puritanBold = fontLoader.puritanBold(44);
+        puritanBoldSmall = fontLoader.puritanBold(32);
     }
     
     private void setFrameIcon() {
@@ -476,18 +453,15 @@ public class Main extends javax.swing.JFrame {
         mainPnl.revalidate();
     }//GEN-LAST:event_reservationsBtnActionPerformed
 
-    private void logoutBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtn1ActionPerformed
+    private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_logoutBtn1ActionPerformed
+    }//GEN-LAST:event_logoutBtnActionPerformed
 
-    private void searchFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFieldFocusGained
-        String searchValue = searchField.getText();
+    private void addReservationBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addReservationBtnActionPerformed
+        NewReservation newReservation = new NewReservation();
 
-        if (searchValue.equals("Search reservations")) {
-            searchField.setText("");
-            searchField.setForeground(new Color(35, 35, 35));
-        }
-    }//GEN-LAST:event_searchFieldFocusGained
+        newReservation.setVisible(true);
+    }//GEN-LAST:event_addReservationBtnActionPerformed
 
     private void searchFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFieldFocusLost
         String searchValue = searchField.getText();
@@ -498,11 +472,14 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_searchFieldFocusLost
 
-    private void addReservationBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addReservationBtnActionPerformed
-        NewReservation newReservation = new NewReservation();
+    private void searchFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFieldFocusGained
+        String searchValue = searchField.getText();
 
-        newReservation.setVisible(true);
-    }//GEN-LAST:event_addReservationBtnActionPerformed
+        if (searchValue.equals("Search reservations")) {
+            searchField.setText("");
+            searchField.setForeground(new Color(35, 35, 35));
+        }
+    }//GEN-LAST:event_searchFieldFocusGained
 
     /**
      * @param args the command line arguments
@@ -563,7 +540,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel logoLabel;
-    private javax.swing.JButton logoutBtn1;
+    private javax.swing.JButton logoutBtn;
     private javax.swing.JPanel mainPnl;
     private javax.swing.JButton reservationsBtn;
     private javax.swing.JPanel reservationsPnl;
