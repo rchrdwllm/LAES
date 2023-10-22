@@ -48,13 +48,15 @@ public class Reservations extends javax.swing.JFrame {
         logoutBtn1 = new javax.swing.JButton();
         logoLabel = new javax.swing.JLabel();
         mainPnl = new javax.swing.JPanel();
-        customersPnl = new javax.swing.JPanel();
         reservationsPnl = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         searchField = new javax.swing.JTextField();
         addReservationBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         reservationsTbl = new javax.swing.JTable();
+        customersPnl = new javax.swing.JPanel();
+        inventoryPnl = new javax.swing.JPanel();
+        aboutPnl = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Lath's Auto-Electrical Shop");
@@ -176,19 +178,6 @@ public class Reservations extends javax.swing.JFrame {
 
     mainPnl.setLayout(new java.awt.CardLayout());
 
-    javax.swing.GroupLayout customersPnlLayout = new javax.swing.GroupLayout(customersPnl);
-    customersPnl.setLayout(customersPnlLayout);
-    customersPnlLayout.setHorizontalGroup(
-        customersPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 800, Short.MAX_VALUE)
-    );
-    customersPnlLayout.setVerticalGroup(
-        customersPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 611, Short.MAX_VALUE)
-    );
-
-    mainPnl.add(customersPnl, "card2");
-
     reservationsPnl.setBackground(new java.awt.Color(255, 255, 255));
     reservationsPnl.setBorder(javax.swing.BorderFactory.createEmptyBorder(32, 64, 32, 64));
 
@@ -258,7 +247,7 @@ public class Reservations extends javax.swing.JFrame {
     reservationsPnlLayout.setHorizontalGroup(
         reservationsPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(reservationsPnlLayout.createSequentialGroup()
-            .addContainerGap()
+            .addGap(112, 112, 112)
             .addGroup(reservationsPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jScrollPane1)
                 .addGroup(reservationsPnlLayout.createSequentialGroup()
@@ -268,7 +257,7 @@ public class Reservations extends javax.swing.JFrame {
                             .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(addReservationBtn)))
-                    .addGap(0, 1, Short.MAX_VALUE)))
+                    .addGap(0, 0, Short.MAX_VALUE)))
             .addContainerGap())
     );
     reservationsPnlLayout.setVerticalGroup(
@@ -282,10 +271,49 @@ public class Reservations extends javax.swing.JFrame {
                 .addComponent(addReservationBtn))
             .addGap(18, 18, 18)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addContainerGap(8, Short.MAX_VALUE))
     );
 
     mainPnl.add(reservationsPnl, "card3");
+
+    javax.swing.GroupLayout customersPnlLayout = new javax.swing.GroupLayout(customersPnl);
+    customersPnl.setLayout(customersPnlLayout);
+    customersPnlLayout.setHorizontalGroup(
+        customersPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGap(0, 901, Short.MAX_VALUE)
+    );
+    customersPnlLayout.setVerticalGroup(
+        customersPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGap(0, 611, Short.MAX_VALUE)
+    );
+
+    mainPnl.add(customersPnl, "card2");
+
+    javax.swing.GroupLayout inventoryPnlLayout = new javax.swing.GroupLayout(inventoryPnl);
+    inventoryPnl.setLayout(inventoryPnlLayout);
+    inventoryPnlLayout.setHorizontalGroup(
+        inventoryPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGap(0, 901, Short.MAX_VALUE)
+    );
+    inventoryPnlLayout.setVerticalGroup(
+        inventoryPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGap(0, 611, Short.MAX_VALUE)
+    );
+
+    mainPnl.add(inventoryPnl, "card4");
+
+    javax.swing.GroupLayout aboutPnlLayout = new javax.swing.GroupLayout(aboutPnl);
+    aboutPnl.setLayout(aboutPnlLayout);
+    aboutPnlLayout.setHorizontalGroup(
+        aboutPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGap(0, 901, Short.MAX_VALUE)
+    );
+    aboutPnlLayout.setVerticalGroup(
+        aboutPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGap(0, 611, Short.MAX_VALUE)
+    );
+
+    mainPnl.add(aboutPnl, "card5");
 
     getContentPane().add(mainPnl, java.awt.BorderLayout.CENTER);
 
@@ -399,10 +427,12 @@ public class Reservations extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton aboutBtn;
+    private javax.swing.JPanel aboutPnl;
     private javax.swing.JButton addReservationBtn;
     private javax.swing.JButton customersBtn;
     private javax.swing.JPanel customersPnl;
     private javax.swing.JButton inventoryBtn;
+    private javax.swing.JPanel inventoryPnl;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel logoLabel;
