@@ -16,7 +16,6 @@ import utils.FontLoader;
  * @author rwill
  */
 public class Main extends javax.swing.JFrame {
-
     FontLoader fontLoader = new FontLoader();
     Font inter;
     Font puritanBold;

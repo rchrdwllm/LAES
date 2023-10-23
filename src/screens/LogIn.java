@@ -14,7 +14,7 @@ import utils.FontLoader;
  *
  * @author john michael
  */
-public class Register extends javax.swing.JFrame {
+public class LogIn extends javax.swing.JFrame {
 
     FontLoader fontLoader = new FontLoader();
     Font inter;
@@ -23,7 +23,7 @@ public class Register extends javax.swing.JFrame {
     /**
      * Creates new form LoginPage
      */
-    public Register() {
+    public LogIn() {
         setFonts();
         initComponents();
     }
@@ -79,7 +79,7 @@ public class Register extends javax.swing.JFrame {
         createAccountButton.setBackground(new java.awt.Color(40, 40, 40));
         createAccountButton.setFont(inter);
         createAccountButton.setForeground(new java.awt.Color(248, 248, 248));
-        createAccountButton.setText("Create Account");
+        createAccountButton.setText("Log In");
         createAccountButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16));
         createAccountButton.setBorderPainted(false);
         createAccountButton.setFocusPainted(false);
@@ -89,21 +89,19 @@ public class Register extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(inter);
         jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\john michael\\Documents\\NetBeansProjects\\Log In\\src\\assets\\gear.png")); // NOI18N
         jLabel1.setToolTipText("");
 
-        jPanel2.setBackground(null);
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        label2.setBackground(null);
         label2.setFont(inter);
         label2.setForeground(new java.awt.Color(129, 129, 129));
-        label2.setText("Already have an account?");
+        label2.setText("Don't have an account?");
 
-        aboutBtn1.setBackground(null);
         aboutBtn1.setFont(inter);
         aboutBtn1.setForeground(new java.awt.Color(129, 129, 129));
-        aboutBtn1.setText("Log In");
+        aboutBtn1.setText("Create one");
+        aboutBtn1.setActionCommand("Create One");
         aboutBtn1.setAlignmentY(0.0F);
         aboutBtn1.setBorder(null);
         aboutBtn1.setBorderPainted(false);
@@ -120,11 +118,10 @@ public class Register extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(aboutBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(aboutBtn1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,11 +153,11 @@ public class Register extends javax.swing.JFrame {
                         .addGap(186, 186, 186))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
-                                .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(207, 207, 207))))
+                                .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(192, 192, 192))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,10 +219,10 @@ public class Register extends javax.swing.JFrame {
 
     private void aboutBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutBtn1ActionPerformed
         // TODO add your handling code here:
+        
         this.setVisible(false);
         this.dispose();
-        
-        new LogIn().setVisible(true);
+        new Register().setVisible(true);
     }//GEN-LAST:event_aboutBtn1ActionPerformed
 
     /**
@@ -237,17 +234,33 @@ public class Register extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(LogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(LogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(LogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(LogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
         //</editor-fold>
-
+        
         try {
             javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         } catch (Exception e) {
             System.out.println("UIManager Exception : " + e);
         }
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new Register().setVisible(true);
+            new LogIn().setVisible(true);
         });
     }
 
