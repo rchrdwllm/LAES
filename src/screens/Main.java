@@ -16,6 +16,7 @@ import utils.FontLoader;
  * @author rwill
  */
 public class Main extends javax.swing.JFrame {
+
     FontLoader fontLoader = new FontLoader();
     Font inter;
     Font puritanBold;
@@ -416,18 +417,18 @@ public class Main extends javax.swing.JFrame {
         puritanBold = fontLoader.puritanBold(44);
         puritanBoldSmall = fontLoader.puritanBold(32);
     }
-    
+
     private void setFrameIcon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("../assets/logo.png")));
     }
-    
+
     private void setFirstPanel() {
         mainPnl.removeAll();
         mainPnl.add(reservationsPnl);
         mainPnl.repaint();
         mainPnl.revalidate();
     }
-    
+
     private void customersBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customersBtnActionPerformed
         mainPnl.removeAll();
         mainPnl.add(customersPnl);
@@ -506,7 +507,7 @@ public class Main extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        
+
         try {
             javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         } catch (Exception e) {

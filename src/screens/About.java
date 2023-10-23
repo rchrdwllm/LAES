@@ -6,14 +6,19 @@ package screens;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.PopupMenu;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import utils.FontLoader;
 
 /**
  *
  * @author ruki
  */
 public class About extends javax.swing.JFrame {
+    
+    FontLoader fontLoader = new FontLoader();
     Font inter;
+    Font puritanBold;
 
     /**
      * Creates new form About
@@ -442,6 +447,11 @@ public class About extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void setFonts() {
+        inter = fontLoader.interRegular(12);
+        puritanBold = fontLoader.puritanBold(44);
+    }
+    
     private void reservationsBtnActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_reservationsBtnActionPerformed
         mainPnl.removeAll();
         mainPnl.add(reservationsPnl);
@@ -515,15 +525,11 @@ public class About extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(About.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(About.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(About.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(About.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        // </editor-fold>
+        
         // </editor-fold>
 
         /* Create and display the form */
