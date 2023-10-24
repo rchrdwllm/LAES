@@ -6,7 +6,7 @@ package screens;
 
 import classes.JTextFieldWithPrompt;
 import java.awt.Font;
-import screens.Reservations;
+import screens.Main;
 import utils.FontLoader;
 
 
@@ -214,7 +214,7 @@ public class LogIn extends javax.swing.JFrame {
 
     private void createAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createAccountButtonActionPerformed
         this.setVisible(false);
-        new Reservations().setVisible(true);
+        new Main().setVisible(true);
     }//GEN-LAST:event_createAccountButtonActionPerformed
 
     private void aboutBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutBtn1ActionPerformed
