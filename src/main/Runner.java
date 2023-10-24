@@ -4,6 +4,9 @@
  */
 package main;
 
+import java.sql.Connection;
+import classes.Database;
+import screens.Login;
 /**
  *
  * @author rwill
@@ -14,9 +17,14 @@ public class Runner {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        screens.Main reservations = new screens.Main();
+        Database database = new Database();
+        Connection connection = database.getConnection();
         
-        reservations.setVisible(true);
+        System.out.println(connection);
+        
+        Login login = new Login();
+        
+        login.setVisible(true);
     }
     
 }

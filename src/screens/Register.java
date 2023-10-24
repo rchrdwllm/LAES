@@ -6,7 +6,7 @@ package screens;
 
 import classes.JTextFieldWithPrompt;
 import java.awt.Font;
-import screens.Reservations;
+import screens.Main;
 import utils.FontLoader;
 
 
@@ -90,17 +90,12 @@ public class Register extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(inter);
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\john michael\\Documents\\NetBeansProjects\\Log In\\src\\assets\\gear.png")); // NOI18N
         jLabel1.setToolTipText("");
 
-        jPanel2.setBackground(null);
-
-        label2.setBackground(null);
         label2.setFont(inter);
         label2.setForeground(new java.awt.Color(129, 129, 129));
         label2.setText("Already have an account?");
 
-        aboutBtn1.setBackground(null);
         aboutBtn1.setFont(inter);
         aboutBtn1.setForeground(new java.awt.Color(129, 129, 129));
         aboutBtn1.setText("Log In");
@@ -200,6 +195,7 @@ public class Register extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void setFonts() {
@@ -217,7 +213,7 @@ public class Register extends javax.swing.JFrame {
 
     private void createAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createAccountButtonActionPerformed
         this.setVisible(false);
-        new Reservations().setVisible(true);
+        new Main().setVisible(true);
     }//GEN-LAST:event_createAccountButtonActionPerformed
 
     private void aboutBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutBtn1ActionPerformed
@@ -225,7 +221,7 @@ public class Register extends javax.swing.JFrame {
         this.setVisible(false);
         this.dispose();
         
-        new LogIn().setVisible(true);
+        new Login().setVisible(true);
     }//GEN-LAST:event_aboutBtn1ActionPerformed
 
     /**

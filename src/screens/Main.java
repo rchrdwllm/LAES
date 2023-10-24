@@ -10,6 +10,10 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import utils.FontLoader;
+import classes.Database;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
@@ -29,6 +33,7 @@ public class Main extends javax.swing.JFrame {
         initComponents();
         setFrameIcon();
         setFirstPanel();
+        fetchData();
     }
 
     /**
@@ -55,7 +60,10 @@ public class Main extends javax.swing.JFrame {
         addReservationBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         reservationsTbl = new javax.swing.JTable();
+        reservationsTbl.getTableHeader().setFont(inter);
         customersPnl = new javax.swing.JPanel();
+        aboutTitleLabel1 = new javax.swing.JLabel();
+        searchField1 = new javax.swing.JTextField();
         inventoryPnl = new javax.swing.JPanel();
         aboutPnl = new javax.swing.JPanel();
         aboutTitle = new javax.swing.JPanel();
@@ -89,7 +97,7 @@ public class Main extends javax.swing.JFrame {
         }
     });
 
-    customersBtn.setBackground(java.awt.Color.white);
+    customersBtn.setBackground(new java.awt.Color(255, 255, 255));
     customersBtn.setFont(inter);
     customersBtn.setForeground(new java.awt.Color(35, 35, 35));
     customersBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/UserOutline.png"))); // NOI18N
@@ -178,7 +186,7 @@ public class Main extends javax.swing.JFrame {
             .addComponent(inventoryBtn)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(aboutBtn)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 202, Short.MAX_VALUE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 228, Short.MAX_VALUE)
             .addComponent(logoutBtn))
     );
 
@@ -204,6 +212,11 @@ public class Main extends javax.swing.JFrame {
         }
         public void focusLost(java.awt.event.FocusEvent evt) {
             searchFieldFocusLost(evt);
+        }
+    });
+    searchField.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            searchFieldActionPerformed(evt);
         }
     });
 
@@ -257,7 +270,7 @@ public class Main extends javax.swing.JFrame {
         .addGroup(reservationsPnlLayout.createSequentialGroup()
             .addContainerGap()
             .addGroup(reservationsPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 775, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 981, Short.MAX_VALUE)
                 .addGroup(reservationsPnlLayout.createSequentialGroup()
                     .addComponent(jLabel2)
                     .addGap(0, 0, Short.MAX_VALUE))
@@ -283,15 +296,51 @@ public class Main extends javax.swing.JFrame {
 
     mainPnl.add(reservationsPnl, "card3");
 
+    customersPnl.setBackground(new java.awt.Color(255, 255, 255));
+    customersPnl.setBorder(javax.swing.BorderFactory.createEmptyBorder(32, 64, 32, 64));
+
+    aboutTitleLabel1.setFont(puritanBold);
+    aboutTitleLabel1.setText("CUSTOMERS");
+
+    searchField1.setBackground(new java.awt.Color(248, 248, 248));
+    searchField1.setFont(inter);
+    searchField1.setForeground(new java.awt.Color(129, 129, 129));
+    searchField1.setText("Search customers");
+    searchField1.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(218, 218, 218)), javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16)));
+    searchField1.addFocusListener(new java.awt.event.FocusAdapter() {
+        public void focusGained(java.awt.event.FocusEvent evt) {
+            searchField1FocusGained(evt);
+        }
+        public void focusLost(java.awt.event.FocusEvent evt) {
+            searchField1FocusLost(evt);
+        }
+    });
+    searchField1.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            searchField1ActionPerformed(evt);
+        }
+    });
+
     javax.swing.GroupLayout customersPnlLayout = new javax.swing.GroupLayout(customersPnl);
     customersPnl.setLayout(customersPnlLayout);
     customersPnlLayout.setHorizontalGroup(
         customersPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 915, Short.MAX_VALUE)
+        .addGroup(customersPnlLayout.createSequentialGroup()
+            .addContainerGap()
+            .addGroup(customersPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(customersPnlLayout.createSequentialGroup()
+                    .addComponent(aboutTitleLabel1)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(searchField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 987, Short.MAX_VALUE)))
     );
     customersPnlLayout.setVerticalGroup(
         customersPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 611, Short.MAX_VALUE)
+        .addGroup(customersPnlLayout.createSequentialGroup()
+            .addContainerGap()
+            .addComponent(aboutTitleLabel1)
+            .addGap(18, 18, 18)
+            .addComponent(searchField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(483, Short.MAX_VALUE))
     );
 
     mainPnl.add(customersPnl, "card2");
@@ -300,11 +349,11 @@ public class Main extends javax.swing.JFrame {
     inventoryPnl.setLayout(inventoryPnlLayout);
     inventoryPnlLayout.setHorizontalGroup(
         inventoryPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 915, Short.MAX_VALUE)
+        .addGap(0, 1121, Short.MAX_VALUE)
     );
     inventoryPnlLayout.setVerticalGroup(
         inventoryPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 611, Short.MAX_VALUE)
+        .addGap(0, 637, Short.MAX_VALUE)
     );
 
     mainPnl.add(inventoryPnl, "card4");
@@ -411,6 +460,21 @@ public class Main extends javax.swing.JFrame {
     setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void fetchData() {
+        try {
+            String query = "SELECT * from laes.reservation";
+            PreparedStatement pstmt = Database.sqlConnection.prepareStatement(query);
+            
+            ResultSet rs = pstmt.executeQuery();
+            
+            while (rs.next()) {
+                System.out.println(rs.getString("name"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    
     private void setFonts() {
         inter = fontLoader.interRegular(12);
         puritanBold = fontLoader.puritanBold(44);
@@ -481,6 +545,22 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_searchFieldFocusGained
 
+    private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchFieldActionPerformed
+
+    private void searchField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchField1FocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchField1FocusGained
+
+    private void searchField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchField1FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchField1FocusLost
+
+    private void searchField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchField1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -532,6 +612,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel aboutPrevimg2;
     private javax.swing.JPanel aboutTitle;
     private javax.swing.JLabel aboutTitleLabel;
+    private javax.swing.JLabel aboutTitleLabel1;
     private javax.swing.JButton addReservationBtn;
     private javax.swing.JButton customersBtn;
     private javax.swing.JPanel customersPnl;
@@ -546,6 +627,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel reservationsPnl;
     private javax.swing.JTable reservationsTbl;
     private javax.swing.JTextField searchField;
+    private javax.swing.JTextField searchField1;
     private javax.swing.JPanel sidePnl;
     private javax.swing.ButtonGroup tabsBtnGroup;
     // End of variables declaration//GEN-END:variables
