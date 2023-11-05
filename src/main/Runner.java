@@ -6,7 +6,7 @@ package main;
 
 import java.sql.Connection;
 import classes.Database;
-import screens.Login;
+import screens.LogIn;
 /**
  *
  * @author rwill
@@ -22,7 +22,7 @@ public class Runner {
         
         System.out.println(connection);
         
-        Login login = new Login();
+        LogIn login = new LogIn();
         
         login.setVisible(true);
     }
