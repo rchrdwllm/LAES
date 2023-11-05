@@ -234,6 +234,7 @@ public class Main extends javax.swing.JFrame {
         }
     });
 
+    reservationsTbl.setBackground(new java.awt.Color(255, 255, 255));
     reservationsTbl.setFont(inter);
     reservationsTbl.setModel(new javax.swing.table.DefaultTableModel(
         new Object [][] {
@@ -379,7 +380,7 @@ public class Main extends javax.swing.JFrame {
     aboutHead1.setFont(puritanBoldSmall);
     aboutHead1.setText("<html>LATH’S AUTO-ELECTRICAL SHOP - YOUR TRUSTED <br>AUTO-ELECTRICAL SOLUTION!</html>");
 
-    aboutDescText.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
+    aboutDescText.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
     aboutDescText.setForeground(new java.awt.Color(102, 102, 102));
     aboutDescText.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     aboutDescText.setText("<html>At Lath’s Auto-Electrical Shop, we pride ourselves on being your one-stop destination for all things auto-electrical. With a passion for excellence and a commitment to customer satisfaction, we have been serving the automotive community in the Philippines since 2009.<html>");
@@ -414,11 +415,11 @@ public class Main extends javax.swing.JFrame {
             .addComponent(aboutHead1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(aboutDescText, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(18, 18, 18)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(aboutDescLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                 .addComponent(aboutPrevimg1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(aboutPrevimg2, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addContainerGap(102, Short.MAX_VALUE))
     );
 
     aboutTitleLabel.setFont(puritanBold);
@@ -462,7 +463,7 @@ public class Main extends javax.swing.JFrame {
 
     private void fetchData() {
         try {
-            String query = "SELECT * from laes.reservation";
+            String query = "SELECT * from laes.reservations";
             PreparedStatement pstmt = Database.sqlConnection.prepareStatement(query);
             
             ResultSet rs = pstmt.executeQuery();
@@ -570,23 +571,6 @@ public class Main extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-
         try {
             javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         } catch (Exception e) {

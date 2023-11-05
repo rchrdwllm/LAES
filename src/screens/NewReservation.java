@@ -4,8 +4,13 @@
  */
 package screens;
 
+import com.github.lgooddatepicker.components.DatePicker;
 import java.awt.Font;
 import java.awt.Color;
+import javax.swing.JComponent;
+import javax.swing.border.EmptyBorder;
+import javax.swing.AbstractButton;
+import javax.swing.UIManager;
 import utils.FontLoader;
 
 /**
@@ -23,11 +28,16 @@ public class NewReservation extends javax.swing.JFrame {
     public NewReservation() {
         setFonts();
         initComponents();
+        focus();
     }
     
     private void setFonts() {
-        inter = fontLoader.interRegular(16);
+        inter = fontLoader.interRegular(12);
         puritanBold = fontLoader.puritanBold(44);
+    }
+    
+    private void focus() {
+        mainPnl.requestFocus();
     }
 
     /**
@@ -39,17 +49,39 @@ public class NewReservation extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        mainPnl = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         contactTxt = new javax.swing.JTextField();
-        nameTxt1 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        nameTxt = new javax.swing.JTextField();
+        typeOfReservation = new javax.swing.JComboBox<>();
+        for (int i = 0; i < typeOfReservation.getComponentCount(); i++) 
+        {
+            if (typeOfReservation.getComponent(i) instanceof JComponent) {
+                ((JComponent) typeOfReservation.getComponent(i)).setBorder(new EmptyBorder(0, 0, 0, 0));
+            }
+
+            if (typeOfReservation.getComponent(i) instanceof AbstractButton) {
+                ((AbstractButton) typeOfReservation.getComponent(i)).setBorderPainted(false);
+            }
+        }
+        modeOfPayment = new javax.swing.JComboBox<>();
+        for (int i = 0; i < typeOfReservation.getComponentCount(); i++) 
+        {
+            if (typeOfReservation.getComponent(i) instanceof JComponent) {
+                ((JComponent) typeOfReservation.getComponent(i)).setBorder(new EmptyBorder(0, 0, 0, 0));
+            }
+
+            if (typeOfReservation.getComponent(i) instanceof AbstractButton) {
+                ((AbstractButton) typeOfReservation.getComponent(i)).setBorderPainted(false);
+            }
+        }
+        datePicker1 = new com.github.lgooddatepicker.components.DatePicker();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Add a reservation");
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(64, 64, 64, 64));
+        mainPnl.setBackground(new java.awt.Color(255, 255, 255));
+        mainPnl.setBorder(javax.swing.BorderFactory.createEmptyBorder(64, 64, 64, 64));
 
         jLabel1.setFont(puritanBold);
         jLabel1.setForeground(new java.awt.Color(35, 35, 35));
@@ -69,85 +101,114 @@ public class NewReservation extends javax.swing.JFrame {
             }
         });
 
-        nameTxt1.setBackground(new java.awt.Color(248, 248, 248));
-        nameTxt1.setFont(inter);
-        nameTxt1.setForeground(new java.awt.Color(129, 129, 129));
-        nameTxt1.setText("Name");
-        nameTxt1.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(218, 218, 218)), javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16)));
-        nameTxt1.addFocusListener(new java.awt.event.FocusAdapter() {
+        nameTxt.setBackground(new java.awt.Color(248, 248, 248));
+        nameTxt.setFont(inter);
+        nameTxt.setForeground(new java.awt.Color(129, 129, 129));
+        nameTxt.setText("Name");
+        nameTxt.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(218, 218, 218)), javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16)));
+        nameTxt.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                nameTxt1FocusGained(evt);
+                nameTxtFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                nameTxt1FocusLost(evt);
+                nameTxtFocusLost(evt);
             }
         });
 
-        jComboBox1.setBackground(new java.awt.Color(248, 248, 248));
-        jComboBox1.setForeground(new java.awt.Color(35, 35, 35));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(218, 218, 218)), javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16)));
+        typeOfReservation.setBackground(new java.awt.Color(248, 248, 248));
+        typeOfReservation.setFont(inter);
+        typeOfReservation.setForeground(new java.awt.Color(35, 35, 35));
+        typeOfReservation.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select service", "Alternator repair", "Battery repair" }));
+        typeOfReservation.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(218, 218, 218)), javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16)));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        modeOfPayment.setBackground(new java.awt.Color(248, 248, 248));
+        modeOfPayment.setFont(inter);
+        modeOfPayment.setForeground(new java.awt.Color(35, 35, 35));
+        modeOfPayment.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        modeOfPayment.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(218, 218, 218)), javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16)));
+
+        datePicker1.setText("Date");
+        datePicker1.setFont(inter);
+        datePicker1.setForeground(new java.awt.Color(51, 51, 51));
+
+        javax.swing.GroupLayout mainPnlLayout = new javax.swing.GroupLayout(mainPnl);
+        mainPnl.setLayout(mainPnlLayout);
+        mainPnlLayout.setHorizontalGroup(
+            mainPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainPnlLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(contactTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 602, Short.MAX_VALUE)
-                    .addComponent(nameTxt1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 602, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(mainPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(contactTxt)
+                    .addComponent(nameTxt, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(typeOfReservation, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(mainPnlLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(mainPnlLayout.createSequentialGroup()
+                        .addComponent(datePicker1, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(modeOfPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        mainPnlLayout.setVerticalGroup(
+            mainPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainPnlLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(nameTxt1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(nameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(contactTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(307, Short.MAX_VALUE))
+                .addComponent(typeOfReservation, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(mainPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(modeOfPayment, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                    .addComponent(datePicker1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
+        getContentPane().add(mainPnl, java.awt.BorderLayout.CENTER);
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void contactTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_contactTxtFocusGained
-        String searchValue = contactTxt.getText();
+        String contactValue = contactTxt.getText();
 
-        if (searchValue.equals("Search reservations")) {
+        if (contactValue.equals("Contact number")) {
             contactTxt.setText("");
             contactTxt.setForeground(new Color(35, 35, 35));
         }
     }//GEN-LAST:event_contactTxtFocusGained
 
     private void contactTxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_contactTxtFocusLost
-        String searchValue = contactTxt.getText();
+        String contactValue = contactTxt.getText();
 
-        if (searchValue.equals("")) {
-            contactTxt.setText("Search reservations");
+        if (contactValue.equals("")) {
+            contactTxt.setText("Contact number");
             contactTxt.setForeground(new Color(129, 129, 129));
         }
     }//GEN-LAST:event_contactTxtFocusLost
 
-    private void nameTxt1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nameTxt1FocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nameTxt1FocusGained
+    private void nameTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nameTxtFocusGained
+        String nameValue = nameTxt.getText();
 
-    private void nameTxt1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nameTxt1FocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nameTxt1FocusLost
+        if (nameValue.equals("Name")) {
+            nameTxt.setText("");
+            nameTxt.setForeground(new Color(35, 35, 35));
+        }
+    }//GEN-LAST:event_nameTxtFocusGained
+
+    private void nameTxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nameTxtFocusLost
+        String nameValue = nameTxt.getText();
+
+        if (nameValue.equals("")) {
+            nameTxt.setText("Name");
+            nameTxt.setForeground(new Color(129, 129, 129));
+        }
+    }//GEN-LAST:event_nameTxtFocusLost
 
     /**
      * @param args the command line arguments
@@ -159,21 +220,12 @@ public class NewReservation extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewReservation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewReservation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewReservation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewReservation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        } catch (Exception e) {
+            System.out.println("UIManager Exception : " + e);
         }
+        
+        UIManager.put("ComboBox.borderPaintsFocus", Boolean.FALSE);
         //</editor-fold>
 
         /* Create and display the form */
@@ -186,9 +238,11 @@ public class NewReservation extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField contactTxt;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private com.github.lgooddatepicker.components.DatePicker datePicker1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField nameTxt1;
+    private javax.swing.JPanel mainPnl;
+    private javax.swing.JComboBox<String> modeOfPayment;
+    private javax.swing.JTextField nameTxt;
+    private javax.swing.JComboBox<String> typeOfReservation;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,7 +4,6 @@
  */
 package screens;
 
-import classes.JTextFieldWithPrompt;
 import java.awt.Font;
 import screens.Main;
 import utils.FontLoader;
@@ -213,6 +212,7 @@ public class Register extends javax.swing.JFrame {
 
     private void createAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createAccountButtonActionPerformed
         this.setVisible(false);
+        
         new Main().setVisible(true);
     }//GEN-LAST:event_createAccountButtonActionPerformed
 
@@ -221,7 +221,7 @@ public class Register extends javax.swing.JFrame {
         this.setVisible(false);
         this.dispose();
         
-        new Login().setVisible(true);
+        new screens.LogIn().setVisible(true);
     }//GEN-LAST:event_aboutBtn1ActionPerformed
 
     /**

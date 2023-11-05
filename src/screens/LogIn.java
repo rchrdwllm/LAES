@@ -4,7 +4,6 @@
  */
 package screens;
 
-import classes.JTextFieldWithPrompt;
 import java.awt.Font;
 import screens.Main;
 import utils.FontLoader;
@@ -15,10 +14,8 @@ import utils.FontLoader;
  * @author john michael
  */
 public class LogIn extends javax.swing.JFrame {
-
     FontLoader fontLoader = new FontLoader();
     Font inter;
-    Font puritanBold;
 
     /**
      * Creates new form LoginPage
@@ -89,7 +86,6 @@ public class LogIn extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\john michael\\Documents\\NetBeansProjects\\Log In\\src\\assets\\gear.png")); // NOI18N
         jLabel1.setToolTipText("");
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -197,11 +193,11 @@ public class LogIn extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void setFonts() {
         inter = fontLoader.interRegular(12);
-        puritanBold = fontLoader.puritanBold(44);
     }
 
     private void adminUsernameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminUsernameFieldActionPerformed
@@ -234,24 +230,7 @@ public class LogIn extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
         //</editor-fold>
-        
         try {
             javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         } catch (Exception e) {
