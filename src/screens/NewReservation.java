@@ -4,10 +4,11 @@
  */
 package screens;
 
-import com.github.lgooddatepicker.components.DatePicker;
+import classes.Reservation;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.Toolkit;
+import java.time.LocalDate;
 import javax.swing.JComponent;
 import javax.swing.border.EmptyBorder;
 import javax.swing.AbstractButton;
@@ -253,6 +254,16 @@ public class NewReservation extends javax.swing.JFrame {
     }//GEN-LAST:event_nameTxtFocusLost
 
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
+        String name = nameTxt.getText();
+        String contactNumber = contactTxt.getText();
+        LocalDate date = datePicker.getDate();
+        String service = typeOfReservation.getSelectedItem().toString();
+        String payment = modeOfPayment.getSelectedItem().toString();
+        
+        Reservation reservation = new Reservation(name, contactNumber, date, service, payment);
+        
+        reservation.add();
+        
         this.dispose();
     }//GEN-LAST:event_saveBtnActionPerformed
 

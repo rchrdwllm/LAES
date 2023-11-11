@@ -56,14 +56,14 @@ public class Main extends javax.swing.JFrame {
         mainPnl = new javax.swing.JPanel();
         reservationsPnl = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        searchField = new javax.swing.JTextField();
+        searchReservations = new javax.swing.JTextField();
         addReservationBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         reservationsTbl = new javax.swing.JTable();
         reservationsTbl.getTableHeader().setFont(inter);
         customersPnl = new javax.swing.JPanel();
         aboutTitleLabel1 = new javax.swing.JLabel();
-        searchField1 = new javax.swing.JTextField();
+        searchCustomers = new javax.swing.JTextField();
         inventoryPnl = new javax.swing.JPanel();
         aboutPnl = new javax.swing.JPanel();
         aboutTitle = new javax.swing.JPanel();
@@ -202,22 +202,22 @@ public class Main extends javax.swing.JFrame {
     jLabel2.setForeground(new java.awt.Color(35, 35, 35));
     jLabel2.setText("RESERVATIONS");
 
-    searchField.setBackground(new java.awt.Color(248, 248, 248));
-    searchField.setFont(inter);
-    searchField.setForeground(new java.awt.Color(129, 129, 129));
-    searchField.setText("Search reservations");
-    searchField.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(218, 218, 218)), javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16)));
-    searchField.addFocusListener(new java.awt.event.FocusAdapter() {
+    searchReservations.setBackground(new java.awt.Color(248, 248, 248));
+    searchReservations.setFont(inter);
+    searchReservations.setForeground(new java.awt.Color(129, 129, 129));
+    searchReservations.setText("Search reservations");
+    searchReservations.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(218, 218, 218)), javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16)));
+    searchReservations.addFocusListener(new java.awt.event.FocusAdapter() {
         public void focusGained(java.awt.event.FocusEvent evt) {
-            searchFieldFocusGained(evt);
+            searchReservationsFocusGained(evt);
         }
         public void focusLost(java.awt.event.FocusEvent evt) {
-            searchFieldFocusLost(evt);
+            searchReservationsFocusLost(evt);
         }
     });
-    searchField.addActionListener(new java.awt.event.ActionListener() {
+    searchReservations.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            searchFieldActionPerformed(evt);
+            searchReservationsActionPerformed(evt);
         }
     });
 
@@ -279,7 +279,7 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addGap(0, 0, Short.MAX_VALUE))
                 .addGroup(reservationsPnlLayout.createSequentialGroup()
-                    .addComponent(searchField)
+                    .addComponent(searchReservations)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(addReservationBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addContainerGap())
@@ -291,7 +291,7 @@ public class Main extends javax.swing.JFrame {
             .addComponent(jLabel2)
             .addGap(18, 18, 18)
             .addGroup(reservationsPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(searchReservations, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(addReservationBtn))
             .addGap(18, 18, 18)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -306,22 +306,22 @@ public class Main extends javax.swing.JFrame {
     aboutTitleLabel1.setFont(puritanBold);
     aboutTitleLabel1.setText("CUSTOMERS");
 
-    searchField1.setBackground(new java.awt.Color(248, 248, 248));
-    searchField1.setFont(inter);
-    searchField1.setForeground(new java.awt.Color(129, 129, 129));
-    searchField1.setText("Search customers");
-    searchField1.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(218, 218, 218)), javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16)));
-    searchField1.addFocusListener(new java.awt.event.FocusAdapter() {
+    searchCustomers.setBackground(new java.awt.Color(248, 248, 248));
+    searchCustomers.setFont(inter);
+    searchCustomers.setForeground(new java.awt.Color(129, 129, 129));
+    searchCustomers.setText("Search customers");
+    searchCustomers.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(218, 218, 218)), javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16)));
+    searchCustomers.addFocusListener(new java.awt.event.FocusAdapter() {
         public void focusGained(java.awt.event.FocusEvent evt) {
-            searchField1FocusGained(evt);
+            searchCustomersFocusGained(evt);
         }
         public void focusLost(java.awt.event.FocusEvent evt) {
-            searchField1FocusLost(evt);
+            searchCustomersFocusLost(evt);
         }
     });
-    searchField1.addActionListener(new java.awt.event.ActionListener() {
+    searchCustomers.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            searchField1ActionPerformed(evt);
+            searchCustomersActionPerformed(evt);
         }
     });
 
@@ -335,7 +335,7 @@ public class Main extends javax.swing.JFrame {
                 .addGroup(customersPnlLayout.createSequentialGroup()
                     .addComponent(aboutTitleLabel1)
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addComponent(searchField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 987, Short.MAX_VALUE)))
+                .addComponent(searchCustomers, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 987, Short.MAX_VALUE)))
     );
     customersPnlLayout.setVerticalGroup(
         customersPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -343,7 +343,7 @@ public class Main extends javax.swing.JFrame {
             .addContainerGap()
             .addComponent(aboutTitleLabel1)
             .addGap(18, 18, 18)
-            .addComponent(searchField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(searchCustomers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addContainerGap(483, Short.MAX_VALUE))
     );
 
@@ -531,39 +531,39 @@ public class Main extends javax.swing.JFrame {
         newReservation.setVisible(true);
     }//GEN-LAST:event_addReservationBtnActionPerformed
 
-    private void searchFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFieldFocusLost
-        String searchValue = searchField.getText();
+    private void searchReservationsFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchReservationsFocusLost
+        String searchValue = searchReservations.getText();
 
         if (searchValue.equals("")) {
-            searchField.setText("Search reservations");
-            searchField.setForeground(new Color(129, 129, 129));
+            searchReservations.setText("Search reservations");
+            searchReservations.setForeground(new Color(129, 129, 129));
         }
-    }//GEN-LAST:event_searchFieldFocusLost
+    }//GEN-LAST:event_searchReservationsFocusLost
 
-    private void searchFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFieldFocusGained
-        String searchValue = searchField.getText();
+    private void searchReservationsFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchReservationsFocusGained
+        String searchValue = searchReservations.getText();
 
         if (searchValue.equals("Search reservations")) {
-            searchField.setText("");
-            searchField.setForeground(new Color(35, 35, 35));
+            searchReservations.setText("");
+            searchReservations.setForeground(new Color(35, 35, 35));
         }
-    }//GEN-LAST:event_searchFieldFocusGained
+    }//GEN-LAST:event_searchReservationsFocusGained
 
-    private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
+    private void searchReservationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchReservationsActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_searchFieldActionPerformed
+    }//GEN-LAST:event_searchReservationsActionPerformed
 
-    private void searchField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchField1FocusGained
+    private void searchCustomersFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchCustomersFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_searchField1FocusGained
+    }//GEN-LAST:event_searchCustomersFocusGained
 
-    private void searchField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchField1FocusLost
+    private void searchCustomersFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchCustomersFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_searchField1FocusLost
+    }//GEN-LAST:event_searchCustomersFocusLost
 
-    private void searchField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchField1ActionPerformed
+    private void searchCustomersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchCustomersActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_searchField1ActionPerformed
+    }//GEN-LAST:event_searchCustomersActionPerformed
 
     /**
      * @param args the command line arguments
@@ -613,8 +613,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton reservationsBtn;
     private javax.swing.JPanel reservationsPnl;
     private javax.swing.JTable reservationsTbl;
-    private javax.swing.JTextField searchField;
-    private javax.swing.JTextField searchField1;
+    private javax.swing.JTextField searchCustomers;
+    private javax.swing.JTextField searchReservations;
     private javax.swing.JPanel sidePnl;
     private javax.swing.ButtonGroup tabsBtnGroup;
     // End of variables declaration//GEN-END:variables

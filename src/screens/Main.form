@@ -281,7 +281,7 @@
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="searchField" max="32767" attributes="0"/>
+                              <Component id="searchReservations" max="32767" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="addReservationBtn" min="-2" pref="180" max="-2" attributes="0"/>
                           </Group>
@@ -297,7 +297,7 @@
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="searchField" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="searchReservations" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="addReservationBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -319,7 +319,7 @@
                 <Property name="text" type="java.lang.String" value="RESERVATIONS"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="searchField">
+            <Component class="javax.swing.JTextField" name="searchReservations">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="f8" green="f8" red="f8" type="rgb"/>
@@ -347,9 +347,9 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="searchFieldFocusGained"/>
-                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="searchFieldFocusLost"/>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="searchFieldActionPerformed"/>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="searchReservationsFocusGained"/>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="searchReservationsFocusLost"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="searchReservationsActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="addReservationBtn">
@@ -462,7 +462,7 @@
                               <Component id="aboutTitleLabel1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
-                          <Component id="searchField1" alignment="1" pref="987" max="32767" attributes="0"/>
+                          <Component id="searchCustomers" alignment="1" pref="987" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -473,7 +473,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="aboutTitleLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="searchField1" min="-2" max="-2" attributes="0"/>
+                      <Component id="searchCustomers" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="483" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -488,7 +488,7 @@
                 <Property name="text" type="java.lang.String" value="CUSTOMERS"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="searchField1">
+            <Component class="javax.swing.JTextField" name="searchCustomers">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="f8" green="f8" red="f8" type="rgb"/>
@@ -516,9 +516,9 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="searchField1FocusGained"/>
-                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="searchField1FocusLost"/>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="searchField1ActionPerformed"/>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="searchCustomersFocusGained"/>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="searchCustomersFocusLost"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="searchCustomersActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
