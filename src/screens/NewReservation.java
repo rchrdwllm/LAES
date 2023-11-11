@@ -7,6 +7,7 @@ package screens;
 import com.github.lgooddatepicker.components.DatePicker;
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.Toolkit;
 import javax.swing.JComponent;
 import javax.swing.border.EmptyBorder;
 import javax.swing.AbstractButton;
@@ -28,12 +29,17 @@ public class NewReservation extends javax.swing.JFrame {
     public NewReservation() {
         setFonts();
         initComponents();
+        setFrameIcon();
         focus();
     }
     
     private void setFonts() {
         inter = fontLoader.interRegular(12);
         puritanBold = fontLoader.puritanBold(44);
+    }
+    
+    private void setFrameIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("../assets/logo.png")));
     }
     
     private void focus() {
@@ -64,34 +70,36 @@ public class NewReservation extends javax.swing.JFrame {
                 ((AbstractButton) typeOfReservation.getComponent(i)).setBorderPainted(false);
             }
         }
+        datePicker = new com.github.lgooddatepicker.components.DatePicker();
+        saveBtn = new javax.swing.JButton();
+        cancelBtn = new javax.swing.JButton();
         modeOfPayment = new javax.swing.JComboBox<>();
-        for (int i = 0; i < typeOfReservation.getComponentCount(); i++) 
+        for (int i = 0; i < modeOfPayment.getComponentCount(); i++) 
         {
-            if (typeOfReservation.getComponent(i) instanceof JComponent) {
-                ((JComponent) typeOfReservation.getComponent(i)).setBorder(new EmptyBorder(0, 0, 0, 0));
+            if (modeOfPayment.getComponent(i) instanceof JComponent) {
+                ((JComponent) modeOfPayment.getComponent(i)).setBorder(new EmptyBorder(0, 0, 0, 0));
             }
 
-            if (typeOfReservation.getComponent(i) instanceof AbstractButton) {
-                ((AbstractButton) typeOfReservation.getComponent(i)).setBorderPainted(false);
+            if (modeOfPayment.getComponent(i) instanceof AbstractButton) {
+                ((AbstractButton) modeOfPayment.getComponent(i)).setBorderPainted(false);
             }
         }
-        datePicker1 = new com.github.lgooddatepicker.components.DatePicker();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Add a reservation");
 
         mainPnl.setBackground(new java.awt.Color(255, 255, 255));
         mainPnl.setBorder(javax.swing.BorderFactory.createEmptyBorder(64, 64, 64, 64));
 
+        jLabel1.setText("NEW RESERVATION");
         jLabel1.setFont(puritanBold);
         jLabel1.setForeground(new java.awt.Color(35, 35, 35));
-        jLabel1.setText("NEW RESERVATION");
 
-        contactTxt.setBackground(new java.awt.Color(248, 248, 248));
         contactTxt.setFont(inter);
-        contactTxt.setForeground(new java.awt.Color(129, 129, 129));
         contactTxt.setText("Contact number");
+        contactTxt.setBackground(new java.awt.Color(248, 248, 248));
         contactTxt.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(218, 218, 218)), javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16)));
+        contactTxt.setForeground(new java.awt.Color(129, 129, 129));
         contactTxt.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 contactTxtFocusGained(evt);
@@ -101,11 +109,11 @@ public class NewReservation extends javax.swing.JFrame {
             }
         });
 
-        nameTxt.setBackground(new java.awt.Color(248, 248, 248));
         nameTxt.setFont(inter);
-        nameTxt.setForeground(new java.awt.Color(129, 129, 129));
         nameTxt.setText("Name");
+        nameTxt.setBackground(new java.awt.Color(248, 248, 248));
         nameTxt.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(218, 218, 218)), javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16)));
+        nameTxt.setForeground(new java.awt.Color(129, 129, 129));
         nameTxt.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 nameTxtFocusGained(evt);
@@ -115,21 +123,49 @@ public class NewReservation extends javax.swing.JFrame {
             }
         });
 
+        typeOfReservation.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Type of service", "Alternator repair", "Battery repair" }));
         typeOfReservation.setBackground(new java.awt.Color(248, 248, 248));
+        typeOfReservation.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(218, 218, 218)), javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16)));
         typeOfReservation.setFont(inter);
         typeOfReservation.setForeground(new java.awt.Color(35, 35, 35));
-        typeOfReservation.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select service", "Alternator repair", "Battery repair" }));
-        typeOfReservation.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(218, 218, 218)), javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16)));
+
+        datePicker.setText("Date");
+        datePicker.setFont(inter);
+        datePicker.setForeground(new java.awt.Color(51, 51, 51));
+
+        saveBtn.setBackground(new java.awt.Color(40, 40, 40));
+        saveBtn.setFont(inter);
+        saveBtn.setForeground(new java.awt.Color(248, 248, 248));
+        saveBtn.setText("Save");
+        saveBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16));
+        saveBtn.setBorderPainted(false);
+        saveBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        saveBtn.setFocusPainted(false);
+        saveBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveBtnActionPerformed(evt);
+            }
+        });
+
+        cancelBtn.setBackground(new java.awt.Color(245, 245, 245));
+        cancelBtn.setFont(inter);
+        cancelBtn.setForeground(new java.awt.Color(129, 129, 129));
+        cancelBtn.setText("Cancel");
+        cancelBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16));
+        cancelBtn.setBorderPainted(false);
+        cancelBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cancelBtn.setFocusPainted(false);
+        cancelBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelBtnActionPerformed(evt);
+            }
+        });
 
         modeOfPayment.setBackground(new java.awt.Color(248, 248, 248));
         modeOfPayment.setFont(inter);
         modeOfPayment.setForeground(new java.awt.Color(35, 35, 35));
-        modeOfPayment.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        modeOfPayment.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mode of payment", "Cash", "GCash" }));
         modeOfPayment.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(218, 218, 218)), javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16)));
-
-        datePicker1.setText("Date");
-        datePicker1.setFont(inter);
-        datePicker1.setForeground(new java.awt.Color(51, 51, 51));
 
         javax.swing.GroupLayout mainPnlLayout = new javax.swing.GroupLayout(mainPnl);
         mainPnl.setLayout(mainPnlLayout);
@@ -140,14 +176,16 @@ public class NewReservation extends javax.swing.JFrame {
                 .addGroup(mainPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(contactTxt)
                     .addComponent(nameTxt, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(typeOfReservation, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(typeOfReservation, 0, 622, Short.MAX_VALUE)
+                    .addComponent(saveBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cancelBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(mainPnlLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(mainPnlLayout.createSequentialGroup()
-                        .addComponent(datePicker1, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(modeOfPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPnlLayout.createSequentialGroup()
+                        .addComponent(datePicker, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(modeOfPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         mainPnlLayout.setVerticalGroup(
@@ -162,10 +200,14 @@ public class NewReservation extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(typeOfReservation, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(mainPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(modeOfPayment, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
-                    .addComponent(datePicker1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addGroup(mainPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(modeOfPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(datePicker, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addComponent(saveBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cancelBtn)
+                .addContainerGap())
         );
 
         getContentPane().add(mainPnl, java.awt.BorderLayout.CENTER);
@@ -210,6 +252,14 @@ public class NewReservation extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_nameTxtFocusLost
 
+    private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_saveBtnActionPerformed
+
+    private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_cancelBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -237,12 +287,14 @@ public class NewReservation extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton cancelBtn;
     private javax.swing.JTextField contactTxt;
-    private com.github.lgooddatepicker.components.DatePicker datePicker1;
+    private com.github.lgooddatepicker.components.DatePicker datePicker;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel mainPnl;
     private javax.swing.JComboBox<String> modeOfPayment;
     private javax.swing.JTextField nameTxt;
+    private javax.swing.JButton saveBtn;
     private javax.swing.JComboBox<String> typeOfReservation;
     // End of variables declaration//GEN-END:variables
 }
