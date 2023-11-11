@@ -149,6 +149,7 @@ public class Main extends javax.swing.JFrame {
     logoutBtn.setText("  Log out");
     logoutBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16));
     logoutBtn.setBorderPainted(false);
+    logoutBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     logoutBtn.setFocusPainted(false);
     logoutBtn.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -227,6 +228,7 @@ public class Main extends javax.swing.JFrame {
     addReservationBtn.setText("  Add new reservation");
     addReservationBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16));
     addReservationBtn.setBorderPainted(false);
+    addReservationBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     addReservationBtn.setFocusPainted(false);
     addReservationBtn.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -262,6 +264,7 @@ public class Main extends javax.swing.JFrame {
             return canEdit [columnIndex];
         }
     });
+    reservationsTbl.setOpaque(false);
     jScrollPane1.setViewportView(reservationsTbl);
 
     javax.swing.GroupLayout reservationsPnlLayout = new javax.swing.GroupLayout(reservationsPnl);
