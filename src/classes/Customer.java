@@ -5,8 +5,8 @@
 package classes;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.UUID;
 
 /**
  *
@@ -18,11 +18,11 @@ public class Customer {
     public int services;
     public String customerId;
     
-    public Customer(String name, String contactNumber) {
+    public Customer(String name, String contactNumber, String customerId) {
         this.name = name;
         this.contactNumber = contactNumber;
         this.services = 1;
-        this.customerId = UUID.randomUUID().toString();
+        this.customerId = customerId;
     }
     
     public void add() {
@@ -40,6 +40,48 @@ public class Customer {
             System.out.println("Customer with customerId " + customerId + " added successfully");
         } catch (SQLException e) {
             System.out.println(e);
+        }
+    }
+    
+    public static String getIdByNumber(String contactNumber) {
+        String customerId = "";
+        
+        try {
+            String query = "SELECT * from laes.customers WHERE contactNumber = ?";
+            PreparedStatement pstmt = Database.sqlConnection.prepareStatement(query);
+
+            pstmt.setString(1, contactNumber);
+            
+            ResultSet rs = pstmt.executeQuery();
+            
+            if (rs.next()) {
+                customerId = rs.getString("customerId");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        
+        return customerId;
+    }
+    
+    public static boolean customerExists(String name, String contactNumber) {
+        try {
+            String query = "SELECT * from laes.customers WHERE contactNumber = ?";
+            PreparedStatement pstmt = Database.sqlConnection.prepareStatement(query);
+
+            pstmt.setString(1, contactNumber);
+            
+            ResultSet rs = pstmt.executeQuery();
+            
+            if (rs.next()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+            
+            return false;
         }
     }
 }

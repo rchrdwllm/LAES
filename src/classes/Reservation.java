@@ -6,7 +6,6 @@ package classes;
 
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -31,44 +30,40 @@ public class Reservation {
         this.reservationId = UUID.randomUUID().toString();
     }
     
-    private void checkCustomer(String contactNumber) {
-        try {
-            String query = "SELECT * from laes.customers WHERE contactNumber = ?";
-            PreparedStatement pstmt = Database.sqlConnection.prepareStatement(query);
-
-            pstmt.setString(1, contactNumber);
-            
-            ResultSet rs = pstmt.executeQuery();
-            
-            if (rs.next()) {
-                System.out.println("Customer with contact number " + this.contactNumber + " already exists! Skipping adding new customer...");
-            } else {
-                Customer newCustomer = new Customer(this.name, this.contactNumber);
-                
-                newCustomer.add();
-            }
-            
-            while (rs.next()) {
-                System.out.println(rs.getString("name"));
-            }
-        } catch (SQLException e) {
-            System.out.println("Error: " + e);
-        }
-    }
-    
     public void add() {
         try {
-            String st = "INSERT INTO reservations (name, contactNumber, date, typeOfService, modeOfPayment, reservationId) VALUES (?, ?, ?, ?, ?, ?)";
+            String st = "INSERT INTO reservations (name, contactNumber, date, typeOfService, modeOfPayment, customerId, reservationId) VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement pstmt = Database.sqlConnection.prepareStatement(st);
             
-            pstmt.setString(1, this.name);
-            pstmt.setString(2, this.contactNumber);
-            pstmt.setString(3, this.date);
-            pstmt.setString(4, this.typeOfService);
-            pstmt.setString(5, this.modeOfPayment);
-            pstmt.setString(6, this.reservationId);
+            boolean customerExists = Customer.customerExists(this.name, this.contactNumber);
             
-            checkCustomer(this.contactNumber);
+            if (customerExists) {
+                String customerId = Customer.getIdByNumber(contactNumber);
+                
+                pstmt.setString(1, this.name);
+                pstmt.setString(2, this.contactNumber);
+                pstmt.setString(3, this.date);
+                pstmt.setString(4, this.typeOfService);
+                pstmt.setString(5, this.modeOfPayment);
+                pstmt.setString(6, customerId);
+                pstmt.setString(7, this.reservationId);
+                
+                System.out.println("Customer with customerId " + customerId + " already exists! Skipping creation of new user...");
+            } else {
+                String customerId = UUID.randomUUID().toString();
+                
+                pstmt.setString(1, this.name);
+                pstmt.setString(2, this.contactNumber);
+                pstmt.setString(3, this.date);
+                pstmt.setString(4, this.typeOfService);
+                pstmt.setString(5, this.modeOfPayment);
+                pstmt.setString(6, customerId);
+                pstmt.setString(7, this.reservationId);
+                
+                Customer customer = new Customer(this.name, this.contactNumber, customerId);
+                
+                customer.add();
+            }
             
             pstmt.executeUpdate();
             
