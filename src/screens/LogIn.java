@@ -42,7 +42,7 @@ public class LogIn extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         adminUsernameField = new classes.JTextFieldWithPrompt("Admin Username");
         adminPasswordField = new classes.JPasswordFieldWithPrompt("Admin Password");
-        createAccountButton = new javax.swing.JButton();
+        loginButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -86,17 +86,17 @@ public class LogIn extends javax.swing.JFrame {
             }
         });
 
-        createAccountButton.setBackground(new java.awt.Color(40, 40, 40));
-        createAccountButton.setFont(inter);
-        createAccountButton.setForeground(new java.awt.Color(248, 248, 248));
-        createAccountButton.setText("Log In");
-        createAccountButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16));
-        createAccountButton.setBorderPainted(false);
-        createAccountButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        createAccountButton.setFocusPainted(false);
-        createAccountButton.addActionListener(new java.awt.event.ActionListener() {
+        loginButton.setBackground(new java.awt.Color(40, 40, 40));
+        loginButton.setFont(inter);
+        loginButton.setForeground(new java.awt.Color(248, 248, 248));
+        loginButton.setText("Log In");
+        loginButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16));
+        loginButton.setBorderPainted(false);
+        loginButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        loginButton.setFocusPainted(false);
+        loginButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                createAccountButtonActionPerformed(evt);
+                loginButtonActionPerformed(evt);
             }
         });
 
@@ -105,24 +105,26 @@ public class LogIn extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(adminUsernameField)
-                    .addComponent(adminPasswordField)
-                    .addComponent(createAccountButton, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE))
-                .addGap(0, 6, Short.MAX_VALUE))
+                    .addComponent(adminPasswordField, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
+                    .addComponent(adminUsernameField))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(adminUsernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(adminPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(createAccountButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(adminUsernameField, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(adminPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(loginButton)
+                .addGap(28, 28, 28))
         );
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 110, -1, -1));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 110, 380, -1));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(64, 0, 64, 0));
@@ -170,7 +172,7 @@ public class LogIn extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 310, -1, -1));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 350, -1, -1));
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -195,11 +197,11 @@ public class LogIn extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_adminPasswordFieldActionPerformed
 
-    private void createAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createAccountButtonActionPerformed
+    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         this.setVisible(false);
         
         new Main().setVisible(true);
-    }//GEN-LAST:event_createAccountButtonActionPerformed
+    }//GEN-LAST:event_loginButtonActionPerformed
 
     private void createAccLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createAccLabelMouseClicked
         this.setVisible(false);
@@ -233,12 +235,12 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JTextField adminPasswordField;
     private javax.swing.JTextField adminUsernameField;
     private javax.swing.JLabel createAccLabel;
-    private javax.swing.JButton createAccountButton;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JButton loginButton;
     // End of variables declaration//GEN-END:variables
 }
