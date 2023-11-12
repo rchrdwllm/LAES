@@ -59,13 +59,13 @@ public class FontLoader {
     
     public Font puritanBold(float size) {
         try {
-            regular = Font.createFont(Font.TRUETYPE_FONT, FontLoader.class.getResourceAsStream("../fonts/Puritan/Puritan-Bold.ttf")).deriveFont(size);
+            bold = Font.createFont(Font.TRUETYPE_FONT, FontLoader.class.getResourceAsStream("../fonts/Puritan/Puritan-Bold.ttf")).deriveFont(size);
         
-            registerFont(regular);
+            registerFont(bold);
         } catch (IOException | FontFormatException e) {
             System.out.println(e);
         }
         
-        return regular;
+        return bold;
     }
 }
