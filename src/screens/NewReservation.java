@@ -88,6 +88,11 @@ public class NewReservation extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Add a reservation");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         mainPnl.setBackground(new java.awt.Color(255, 255, 255));
         mainPnl.setBorder(javax.swing.BorderFactory.createEmptyBorder(64, 64, 64, 64));
@@ -134,28 +139,28 @@ public class NewReservation extends javax.swing.JFrame {
         datePicker.setFont(inter);
         datePicker.setForeground(new java.awt.Color(51, 51, 51));
 
-        saveBtn.setBackground(new java.awt.Color(40, 40, 40));
-        saveBtn.setFont(inter);
-        saveBtn.setForeground(new java.awt.Color(248, 248, 248));
         saveBtn.setText("Save");
+        saveBtn.setBackground(new java.awt.Color(40, 40, 40));
         saveBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16));
         saveBtn.setBorderPainted(false);
         saveBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         saveBtn.setFocusPainted(false);
+        saveBtn.setFont(inter);
+        saveBtn.setForeground(new java.awt.Color(248, 248, 248));
         saveBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveBtnActionPerformed(evt);
             }
         });
 
-        cancelBtn.setBackground(new java.awt.Color(245, 245, 245));
-        cancelBtn.setFont(inter);
-        cancelBtn.setForeground(new java.awt.Color(129, 129, 129));
         cancelBtn.setText("Cancel");
+        cancelBtn.setBackground(new java.awt.Color(245, 245, 245));
         cancelBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16));
         cancelBtn.setBorderPainted(false);
         cancelBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cancelBtn.setFocusPainted(false);
+        cancelBtn.setFont(inter);
+        cancelBtn.setForeground(new java.awt.Color(129, 129, 129));
         cancelBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelBtnActionPerformed(evt);
@@ -270,6 +275,10 @@ public class NewReservation extends javax.swing.JFrame {
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
         this.dispose();
     }//GEN-LAST:event_cancelBtnActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // fetch data again from database
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
