@@ -522,7 +522,10 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_reservationsBtnActionPerformed
 
     private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
-        // TODO add your handling code here:
+        this.setVisible(false);
+        this.dispose();
+        
+        new LogIn().setVisible(true);
     }//GEN-LAST:event_logoutBtnActionPerformed
 
     private void addReservationBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addReservationBtnActionPerformed
