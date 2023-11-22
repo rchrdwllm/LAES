@@ -4,9 +4,11 @@
  */
 package screens;
 
+import classes.Database;
+import java.sql.SQLException;
 import java.awt.Font;
 import java.awt.Toolkit;
-import screens.Main;
+import javax.swing.UnsupportedLookAndFeelException;
 import utils.FontLoader;
 
 
@@ -198,9 +200,38 @@ public class LogIn extends javax.swing.JFrame {
     }//GEN-LAST:event_adminPasswordFieldActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        this.setVisible(false);
+        String username = adminUsernameField.getText();
+        String password = adminPasswordField.getText();
+
         
-        new Main().setVisible(true);
+        /// TODO(rchrdwllm): Fix the table name.
+        try {
+            var query = "SELECT * FROM laes.user WHERE email = ?";
+            var stmt = Database.sqlConnection.prepareStatement(query);
+
+            stmt.setString(1, username);
+
+            var rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                String dbPassword = rs.getString("password");
+
+                if (password.equals(dbPassword)) {
+                    /// this should only run if success.
+                    this.setVisible(false);
+        
+                    new Main().setVisible(true);
+
+                    this.dispose();
+                } else {
+                    System.out.println("DEBUG: Invalid Credentials!");
+                }
+            } else {
+                System.out.println("DEBUG: Invalid Credentials!");
+            }
+        } catch (SQLException e) {
+            System.out.print(e);
+        }
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void createAccLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createAccLabelMouseClicked
@@ -221,7 +252,7 @@ public class LogIn extends javax.swing.JFrame {
         //</editor-fold>
         try {
             javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
             System.out.println("UIManager Exception : " + e);
         }
         
