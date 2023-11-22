@@ -13,7 +13,10 @@ import utils.FontLoader;
 import classes.Database;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -33,7 +36,7 @@ public class Main extends javax.swing.JFrame {
         initComponents();
         setFrameIcon();
         setFirstPanel();
-        fetchData();
+        fetchReservations();
     }
 
     /**
@@ -218,6 +221,11 @@ public class Main extends javax.swing.JFrame {
     searchReservations.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             searchReservationsActionPerformed(evt);
+        }
+    });
+    searchReservations.addKeyListener(new java.awt.event.KeyAdapter() {
+        public void keyReleased(java.awt.event.KeyEvent evt) {
+            searchReservationsKeyReleased(evt);
         }
     });
 
@@ -464,15 +472,66 @@ public class Main extends javax.swing.JFrame {
     setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void fetchData() {
+    public void fetchReservations() {
         try {
-            String query = "SELECT * from laes.reservations";
+            String query = "SELECT * FROM laes.reservations ORDER BY date ASC";
             PreparedStatement pstmt = Database.sqlConnection.prepareStatement(query);
             
             ResultSet rs = pstmt.executeQuery();
+            ResultSetMetaData rsMetaData = rs.getMetaData();
+            
+            int tableCount = rsMetaData.getColumnCount();
+            
+            DefaultTableModel recordTable = (DefaultTableModel) reservationsTbl.getModel();
+            
+            recordTable.setRowCount(0);
             
             while (rs.next()) {
-                System.out.println(rs.getString("name"));
+                Vector columnData = new Vector();
+                
+                for (int i = 1; i < tableCount; i++) {
+                    columnData.add(rs.getString("name"));
+                    columnData.add(rs.getString("date"));
+                    columnData.add(rs.getString("contactNumber"));
+                    columnData.add(rs.getString("typeOfService"));
+                }
+                
+                recordTable.addRow(columnData);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    
+    private void filterReservations(String searchQuery) {
+        try {
+            String query = "SELECT * from laes.reservations " +
+                            "WHERE name = '" + searchQuery + "' " +
+                            "OR date = '" + searchQuery + "' " +
+                            "OR contactNumber = '" + searchQuery + "' " +
+                            "OR typeOfService = '" + searchQuery + "'";
+            PreparedStatement pstmt = Database.sqlConnection.prepareStatement(query);
+            
+            ResultSet rs = pstmt.executeQuery();
+            ResultSetMetaData rsMetaData = rs.getMetaData();
+            
+            int tableCount = rsMetaData.getColumnCount();
+            
+            DefaultTableModel recordTable = (DefaultTableModel) reservationsTbl.getModel();
+            
+            recordTable.setRowCount(0);
+            
+            while (rs.next()) {
+                Vector columnData = new Vector();
+                
+                for (int i = 1; i < tableCount; i++) {
+                    columnData.add(rs.getString("name"));
+                    columnData.add(rs.getString("date"));
+                    columnData.add(rs.getString("contactNumber"));
+                    columnData.add(rs.getString("typeOfService"));
+                }
+                
+                recordTable.addRow(columnData);
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -529,7 +588,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutBtnActionPerformed
 
     private void addReservationBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addReservationBtnActionPerformed
-        NewReservation newReservation = new NewReservation();
+        NewReservation newReservation = new NewReservation(this);
 
         newReservation.setVisible(true);
     }//GEN-LAST:event_addReservationBtnActionPerformed
@@ -567,6 +626,12 @@ public class Main extends javax.swing.JFrame {
     private void searchCustomersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchCustomersActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_searchCustomersActionPerformed
+
+    private void searchReservationsKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchReservationsKeyReleased
+        String searchQuery = searchReservations.getText();
+        
+        filterReservations(searchQuery);
+    }//GEN-LAST:event_searchReservationsKeyReleased
 
     /**
      * @param args the command line arguments

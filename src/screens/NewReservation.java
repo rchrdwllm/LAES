@@ -23,10 +23,20 @@ public class NewReservation extends javax.swing.JFrame {
     FontLoader fontLoader = new FontLoader();
     Font inter;
     Font puritanBold;
+    Main main;
 
     /**
      * Creates new form NewReservation
      */
+    public NewReservation(Main main) {
+        setFonts();
+        initComponents();
+        setFrameIcon();
+        focus();
+        
+        this.main = main;
+    }
+    
     public NewReservation() {
         setFonts();
         initComponents();
@@ -269,6 +279,7 @@ public class NewReservation extends javax.swing.JFrame {
         
         reservation.add();
         
+        this.main.fetchReservations();
         this.dispose();
     }//GEN-LAST:event_saveBtnActionPerformed
 
