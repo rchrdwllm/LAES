@@ -195,16 +195,9 @@ public class Register extends javax.swing.JFrame {
     private void createAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createAccountButtonActionPerformed
         String username = adminUsernameField.getText();
         String password = adminPasswordField.getText();
-
-        
-        /// CREATE TABLE user (
-        ///     id       INT PRIMARY KEY AUTO_INCREMENT,
-        ///     username VARCHAR(50),
-        ///     password VARCHAR(50),
-        /// );
         
         try {
-            var searchQuery = "SELECT * FROM laes.user WHERE username = ?";
+            var searchQuery = "SELECT * FROM laes.users WHERE username = ?";
             var searchStatement = Database.sqlConnection.prepareStatement(searchQuery);
             searchStatement.setString(1, username);
             var result = searchStatement.executeQuery();
@@ -215,7 +208,7 @@ public class Register extends javax.swing.JFrame {
                 return;
             }
             
-            var addQuery = "INSERT INTO laes.user (username, password) VALUES (?, ?)";
+            var addQuery = "INSERT INTO laes.users (username, password) VALUES (?, ?)";
             var addStatement = Database.sqlConnection.prepareStatement(addQuery);
             addStatement.setString(1, username);
             addStatement.setString(2, password);

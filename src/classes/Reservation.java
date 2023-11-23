@@ -27,7 +27,7 @@ public class Reservation {
         this.date = date.toString();
         this.typeOfService = typeOfService;
         this.modeOfPayment = modeOfPayment;
-        this.reservationId = UUID.randomUUID().toString();
+        this.reservationId = UUID.randomUUID().toString().substring(0, 7);
     }
     
     public void add() {
@@ -50,7 +50,7 @@ public class Reservation {
                 
                 System.out.println("Customer with customerId " + customerId + " already exists! Skipping creation of new user...");
             } else {
-                String customerId = UUID.randomUUID().toString();
+                String customerId = UUID.randomUUID().toString().substring(0, 7);
                 
                 pstmt.setString(1, this.name);
                 pstmt.setString(2, this.contactNumber);

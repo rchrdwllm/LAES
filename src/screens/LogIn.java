@@ -211,7 +211,7 @@ public class LogIn extends javax.swing.JFrame {
                     password VARCHAR(50),
                 );
             */
-            var query = "SELECT * FROM laes.user WHERE username = ?";
+            var query = "SELECT * FROM laes.users WHERE username = ?";
             var stmt = Database.sqlConnection.prepareStatement(query);
             stmt.setString(1, username);
             var rs = stmt.executeQuery();
