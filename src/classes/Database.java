@@ -19,7 +19,7 @@ public class Database {
     private static final String CONNECTION = "jdbc:mysql://localhost:3306/laes";
     public static Connection sqlConnection = null;
     
-    public Database() {
+    public Database() { 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             

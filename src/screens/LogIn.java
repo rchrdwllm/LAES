@@ -202,35 +202,36 @@ public class LogIn extends javax.swing.JFrame {
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         String username = adminUsernameField.getText();
         String password = adminPasswordField.getText();
-
         
-        /// TODO(rchrdwllm): Fix the table name.
         try {
-            var query = "SELECT * FROM laes.user WHERE email = ?";
+            /*
+                CREATE TABLE user (
+                    id       INT PRIMARY KEY AUTO_INCREMENT,
+                    username VARCHAR(50),
+                    password VARCHAR(50),
+                );
+            */
+            var query = "SELECT * FROM laes.user WHERE username = ?";
             var stmt = Database.sqlConnection.prepareStatement(query);
-
             stmt.setString(1, username);
-
             var rs = stmt.executeQuery();
 
             if (rs.next()) {
-                String dbPassword = rs.getString("password");
+                var dbPassword = rs.getString("password");
 
                 if (password.equals(dbPassword)) {
                     /// this should only run if success.
                     this.setVisible(false);
-        
                     new Main().setVisible(true);
-
-                    this.dispose();
+                    this.dispose(); // I'm not sure if this should be run.
                 } else {
                     System.out.println("DEBUG: Invalid Credentials!");
                 }
             } else {
-                System.out.println("DEBUG: Invalid Credentials!");
+                System.out.println("DEBUG: Invalid Credentials! There was no user with username '" + username + "'.");
             }
         } catch (SQLException e) {
-            System.out.print(e);
+            System.out.print("The query went wrong. The error was: " + e.toString());
         }
     }//GEN-LAST:event_loginButtonActionPerformed
 

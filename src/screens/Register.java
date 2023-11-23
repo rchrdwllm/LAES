@@ -4,8 +4,11 @@
  */
 package screens;
 
+import classes.Database;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.sql.SQLException;
+import javax.swing.UnsupportedLookAndFeelException;
 import screens.Main;
 import utils.FontLoader;
 
@@ -190,15 +193,51 @@ public class Register extends javax.swing.JFrame {
     }//GEN-LAST:event_adminPasswordFieldActionPerformed
 
     private void createAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createAccountButtonActionPerformed
-        this.setVisible(false);
+        String username = adminUsernameField.getText();
+        String password = adminPasswordField.getText();
 
-        new Main().setVisible(true);
+        
+        /// CREATE TABLE user (
+        ///     id       INT PRIMARY KEY AUTO_INCREMENT,
+        ///     username VARCHAR(50),
+        ///     password VARCHAR(50),
+        /// );
+        
+        try {
+            var searchQuery = "SELECT * FROM laes.user WHERE username = ?";
+            var searchStatement = Database.sqlConnection.prepareStatement(searchQuery);
+            searchStatement.setString(1, username);
+            var result = searchStatement.executeQuery();
+            
+            if (result.next()) {
+                /// There was already a user with username.
+                System.out.println("DEBUG: There is already a user with username '" + username +"'.");
+                return;
+            }
+            
+            var addQuery = "INSERT INTO laes.user (username, password) VALUES (?, ?)";
+            var addStatement = Database.sqlConnection.prepareStatement(addQuery);
+            addStatement.setString(1, username);
+            addStatement.setString(2, password);
+            addStatement.executeUpdate();
+            
+            System.out.println("User with username '" + username + "' was added successfully.");
+            
+            
+            this.setVisible(false);
+
+            new Main().setVisible(true);
+            this.dispose();
+        } catch (SQLException e) {
+            System.out.print("The query went wrong. The error was: " + e.toString());
+        }
     }//GEN-LAST:event_createAccountButtonActionPerformed
 
     private void loginLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginLabelMouseClicked
         this.setVisible(false);
 
         new LogIn().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_loginLabelMouseClicked
 
     private void setFonts() {
@@ -223,7 +262,7 @@ public class Register extends javax.swing.JFrame {
 
         try {
             javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
             System.out.println("UIManager Exception : " + e);
         }
 
