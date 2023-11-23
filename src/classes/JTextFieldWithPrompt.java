@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import javax.swing.BorderFactory;
 import javax.swing.JTextField;
 
 /**
@@ -19,6 +20,9 @@ public class JTextFieldWithPrompt extends JTextField {
     
     public JTextFieldWithPrompt(String prompt) {
         this.prompt = prompt;
+        
+        setBorder(BorderFactory.createCompoundBorder(getBorder(), 
+        BorderFactory.createEmptyBorder(0, 16, 0, 16)));
     }
 
     @Override
@@ -37,9 +41,10 @@ public class JTextFieldWithPrompt extends JTextField {
             
             System.out.println(getHeight());
             //figure out x, y from font's FontMetrics and size of component.
-            g2.drawString(prompt, 
-                            getInsets().left,
-                              g.getFontMetrics().getMaxAscent() + getInsets().top + getHeight() / 2 - getFont().getSize());
+            
+            int horizontalOffset = 4 + getInsets().left; // 4 is the left offset.
+            int verticalOffset = getInsets().top + g.getFontMetrics().getMaxAscent() + (getHeight() / 2) - (getFont().getSize() / 2) - 2;
+            g2.drawString(prompt,horizontalOffset, verticalOffset);
             g2.dispose();
         }
     }
