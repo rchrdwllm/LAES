@@ -104,6 +104,7 @@ public class Main extends javax.swing.JFrame {
         }
     });
 
+    customersBtn.setBackground(new java.awt.Color(255, 255, 255));
     customersBtn.setFont(inter);
     customersBtn.setForeground(new java.awt.Color(35, 35, 35));
     customersBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/UserOutline.png"))); // NOI18N
@@ -118,6 +119,7 @@ public class Main extends javax.swing.JFrame {
         }
     });
 
+    inventoryBtn.setBackground(new java.awt.Color(255, 255, 255));
     inventoryBtn.setFont(inter);
     inventoryBtn.setForeground(new java.awt.Color(35, 35, 35));
     inventoryBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ArchiveOutline.png"))); // NOI18N
@@ -132,6 +134,7 @@ public class Main extends javax.swing.JFrame {
         }
     });
 
+    aboutBtn.setBackground(new java.awt.Color(255, 255, 255));
     aboutBtn.setFont(inter);
     aboutBtn.setForeground(new java.awt.Color(35, 35, 35));
     aboutBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ExclamationCircleOutline.png"))); // NOI18N
@@ -372,17 +375,15 @@ public class Main extends javax.swing.JFrame {
     customersPnl.setLayout(customersPnlLayout);
     customersPnlLayout.setHorizontalGroup(
         customersPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(customersPnlLayout.createSequentialGroup()
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, customersPnlLayout.createSequentialGroup()
             .addContainerGap()
-            .addGroup(customersPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(searchCustomers, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 987, Short.MAX_VALUE)
-                .addGroup(customersPnlLayout.createSequentialGroup()
-                    .addGroup(customersPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(customersPnlLayout.createSequentialGroup()
-                            .addComponent(aboutTitleLabel1)
-                            .addGap(0, 0, Short.MAX_VALUE))
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 981, Short.MAX_VALUE))
-                    .addContainerGap())))
+            .addGroup(customersPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(searchCustomers)
+                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, customersPnlLayout.createSequentialGroup()
+                    .addComponent(aboutTitleLabel1)
+                    .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 981, Short.MAX_VALUE))
+            .addContainerGap())
     );
     customersPnlLayout.setVerticalGroup(
         customersPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -393,7 +394,7 @@ public class Main extends javax.swing.JFrame {
             .addComponent(searchCustomers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(18, 18, 18)
             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(38, Short.MAX_VALUE))
+            .addContainerGap(34, Short.MAX_VALUE))
     );
 
     mainPnl.add(customersPnl, "card2");

@@ -4,9 +4,11 @@
  */
 package screens;
 
+import classes.Database;
+import java.sql.SQLException;
 import java.awt.Font;
 import java.awt.Toolkit;
-import screens.Main;
+import javax.swing.UnsupportedLookAndFeelException;
 import utils.FontLoader;
 
 
@@ -198,9 +200,39 @@ public class LogIn extends javax.swing.JFrame {
     }//GEN-LAST:event_adminPasswordFieldActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        this.setVisible(false);
+        String username = adminUsernameField.getText();
+        String password = adminPasswordField.getText();
         
-        new Main().setVisible(true);
+        try {
+            /*
+                CREATE TABLE user (
+                    id       INT PRIMARY KEY AUTO_INCREMENT,
+                    username VARCHAR(50),
+                    password VARCHAR(50),
+                );
+            */
+            var query = "SELECT * FROM laes.users WHERE username = ?";
+            var stmt = Database.sqlConnection.prepareStatement(query);
+            stmt.setString(1, username);
+            var rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                var dbPassword = rs.getString("password");
+
+                if (password.equals(dbPassword)) {
+                    /// this should only run if success.
+                    this.setVisible(false);
+                    new Main().setVisible(true);
+                    this.dispose(); // I'm not sure if this should be run.
+                } else {
+                    System.out.println("DEBUG: Invalid Credentials!");
+                }
+            } else {
+                System.out.println("DEBUG: Invalid Credentials! There was no user with username '" + username + "'.");
+            }
+        } catch (SQLException e) {
+            System.out.print("The query went wrong. The error was: " + e.toString());
+        }
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void createAccLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createAccLabelMouseClicked
@@ -221,7 +253,7 @@ public class LogIn extends javax.swing.JFrame {
         //</editor-fold>
         try {
             javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
             System.out.println("UIManager Exception : " + e);
         }
         
