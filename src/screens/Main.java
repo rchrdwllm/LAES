@@ -37,6 +37,7 @@ public class Main extends javax.swing.JFrame {
         setFrameIcon();
         setFirstPanel();
         fetchReservations();
+        fetchCustomers();
     }
 
     /**
@@ -67,6 +68,9 @@ public class Main extends javax.swing.JFrame {
         customersPnl = new javax.swing.JPanel();
         aboutTitleLabel1 = new javax.swing.JLabel();
         searchCustomers = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        customersTbl = new javax.swing.JTable();
+        reservationsTbl.getTableHeader().setFont(inter);
         inventoryPnl = new javax.swing.JPanel();
         aboutPnl = new javax.swing.JPanel();
         aboutTitle = new javax.swing.JPanel();
@@ -244,24 +248,23 @@ public class Main extends javax.swing.JFrame {
         }
     });
 
-    reservationsTbl.setBackground(new java.awt.Color(255, 255, 255));
     reservationsTbl.setFont(inter);
     reservationsTbl.setModel(new javax.swing.table.DefaultTableModel(
         new Object [][] {
-            {"Richard William Flores", "10/22/2023", "09764753058", "Alternator repair"},
-            {null, null, null, null},
-            {null, null, null, null},
-            {null, null, null, null}
+            {null, "Richard William Flores", "10/22/2023", "09764753058", "Alternator repair"},
+            {null, null, null, null, null},
+            {null, null, null, null, null},
+            {null, null, null, null, null}
         },
         new String [] {
-            "Name", "Date", "Contact number", "Service"
+            "ID", "Name", "Date", "Contact number", "Service"
         }
     ) {
         Class[] types = new Class [] {
-            java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
         };
         boolean[] canEdit = new boolean [] {
-            false, false, false, false
+            false, false, false, false, false
         };
 
         public Class getColumnClass(int columnIndex) {
@@ -273,6 +276,11 @@ public class Main extends javax.swing.JFrame {
         }
     });
     reservationsTbl.setOpaque(false);
+    reservationsTbl.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            reservationsTblMouseClicked(evt);
+        }
+    });
     jScrollPane1.setViewportView(reservationsTbl);
 
     javax.swing.GroupLayout reservationsPnlLayout = new javax.swing.GroupLayout(reservationsPnl);
@@ -333,17 +341,49 @@ public class Main extends javax.swing.JFrame {
         }
     });
 
+    customersTbl.setFont(inter);
+    customersTbl.setModel(new javax.swing.table.DefaultTableModel(
+        new Object [][] {
+            {null, "Richard William Flores", "09764753058", "Alternator repair"},
+            {null, null, null, null},
+            {null, null, null, null},
+            {null, null, null, null}
+        },
+        new String [] {
+            "Customer ID", "Name", "Contact number", "Service"
+        }
+    ) {
+        Class[] types = new Class [] {
+            java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+        };
+        boolean[] canEdit = new boolean [] {
+            false, false, false, false
+        };
+
+        public Class getColumnClass(int columnIndex) {
+            return types [columnIndex];
+        }
+
+        public boolean isCellEditable(int rowIndex, int columnIndex) {
+            return canEdit [columnIndex];
+        }
+    });
+    customersTbl.setOpaque(false);
+    jScrollPane2.setViewportView(customersTbl);
+
     javax.swing.GroupLayout customersPnlLayout = new javax.swing.GroupLayout(customersPnl);
     customersPnl.setLayout(customersPnlLayout);
     customersPnlLayout.setHorizontalGroup(
         customersPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(customersPnlLayout.createSequentialGroup()
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, customersPnlLayout.createSequentialGroup()
             .addContainerGap()
-            .addGroup(customersPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(customersPnlLayout.createSequentialGroup()
+            .addGroup(customersPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(searchCustomers)
+                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, customersPnlLayout.createSequentialGroup()
                     .addComponent(aboutTitleLabel1)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addComponent(searchCustomers, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 987, Short.MAX_VALUE)))
+                    .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 981, Short.MAX_VALUE))
+            .addContainerGap())
     );
     customersPnlLayout.setVerticalGroup(
         customersPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -352,7 +392,9 @@ public class Main extends javax.swing.JFrame {
             .addComponent(aboutTitleLabel1)
             .addGap(18, 18, 18)
             .addComponent(searchCustomers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(483, Short.MAX_VALUE))
+            .addGap(18, 18, 18)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(34, Short.MAX_VALUE))
     );
 
     mainPnl.add(customersPnl, "card2");
@@ -490,6 +532,7 @@ public class Main extends javax.swing.JFrame {
                 Vector columnData = new Vector();
                 
                 for (int i = 1; i < tableCount; i++) {
+                    columnData.add(rs.getString("reservationId"));
                     columnData.add(rs.getString("name"));
                     columnData.add(rs.getString("date"));
                     columnData.add(rs.getString("contactNumber"));
@@ -503,7 +546,45 @@ public class Main extends javax.swing.JFrame {
         }
     }
     
+    public void fetchCustomers() {
+        try {
+            String query = "SELECT * FROM laes.customers ORDER BY name ASC";
+            PreparedStatement pstmt = Database.sqlConnection.prepareStatement(query);
+            
+            ResultSet rs = pstmt.executeQuery();
+            ResultSetMetaData rsMetaData = rs.getMetaData();
+            
+            int tableCount = rsMetaData.getColumnCount();
+            
+            DefaultTableModel recordTable = (DefaultTableModel) customersTbl.getModel();
+            
+            recordTable.setRowCount(0);
+            
+            while (rs.next()) {
+                Vector columnData = new Vector();
+                
+                for (int i = 1; i < tableCount; i++) {
+                    columnData.add(rs.getString("customerId"));
+                    columnData.add(rs.getString("name"));
+                    columnData.add(rs.getString("contactNumber"));
+                    columnData.add(rs.getString("services"));
+                    System.out.println(rs.getString("customerId"));
+                }
+                
+                recordTable.addRow(columnData);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+    }
+    
+    
     private void filterReservations(String searchQuery) {
+        if (searchQuery.equals("")) {
+            fetchReservations();
+        }
+        
         try {
             String query = "SELECT * from laes.reservations " +
                             "WHERE name = '" + searchQuery + "' " +
@@ -537,6 +618,8 @@ public class Main extends javax.swing.JFrame {
             System.out.println(e);
         }
     }
+    
+    
     
     private void setFonts() {
         inter = fontLoader.interRegular(12);
@@ -633,6 +716,15 @@ public class Main extends javax.swing.JFrame {
         filterReservations(searchQuery);
     }//GEN-LAST:event_searchReservationsKeyReleased
 
+    private void reservationsTblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reservationsTblMouseClicked
+        DefaultTableModel RecordTable = (DefaultTableModel) reservationsTbl.getModel();
+        int selectedRows = reservationsTbl.getSelectedRow();
+          
+        String reservationId = RecordTable.getValueAt(selectedRows,0).toString();
+        
+        new ReservationDetails(this, reservationId).setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_reservationsTblMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -671,10 +763,12 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton addReservationBtn;
     private javax.swing.JButton customersBtn;
     private javax.swing.JPanel customersPnl;
+    private javax.swing.JTable customersTbl;
     private javax.swing.JButton inventoryBtn;
     private javax.swing.JPanel inventoryPnl;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel logoLabel;
     private javax.swing.JButton logoutBtn;
     private javax.swing.JPanel mainPnl;
