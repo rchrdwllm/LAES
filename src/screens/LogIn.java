@@ -225,7 +225,7 @@ public class LogIn extends javax.swing.JFrame {
                     new Main().setVisible(true);
                     this.dispose(); // I'm not sure if this should be run.
                 } else {
-                    System.out.println("DEBUG: Invalid Credentials!");
+                    System.out.println("DEBUG: Invalid Credentials! The password is not correct. '" +dbPassword + "'");
                 }
             } else {
                 System.out.println("DEBUG: Invalid Credentials! There was no user with username '" + username + "'.");
