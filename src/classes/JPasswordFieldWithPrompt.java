@@ -34,9 +34,10 @@ public class JPasswordFieldWithPrompt extends JPasswordField {
             
             System.out.println(getHeight());
             //figure out x, y from font's FontMetrics and size of component.
-            g2.drawString(prompt, 
-                            getInsets().left,
-                              g.getFontMetrics().getMaxAscent() + getInsets().top + getHeight() / 2 - getFont().getSize());
+            
+            int horizontalOffset = 4 + getInsets().left; // 4 is the left offset.
+            int verticalOffset = getInsets().top + g.getFontMetrics().getMaxAscent() + (getHeight() / 2) - (getFont().getSize() / 2) - 2;
+            g2.drawString(prompt,horizontalOffset,verticalOffset);
             g2.dispose();
         }
     }
