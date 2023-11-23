@@ -546,7 +546,7 @@ public class Main extends javax.swing.JFrame {
         }
     }
     
-        public void fetchCustomers() {
+    public void fetchCustomers() {
         try {
             String query = "SELECT * FROM laes.customers ORDER BY name ASC";
             PreparedStatement pstmt = Database.sqlConnection.prepareStatement(query);
@@ -559,7 +559,7 @@ public class Main extends javax.swing.JFrame {
             DefaultTableModel recordTable = (DefaultTableModel) customersTbl.getModel();
             
             recordTable.setRowCount(0);
-            System.out.println(rs.next());
+            
             while (rs.next()) {
                 Vector columnData = new Vector();
                 
@@ -581,6 +581,10 @@ public class Main extends javax.swing.JFrame {
     
     
     private void filterReservations(String searchQuery) {
+        if (searchQuery.equals("")) {
+            fetchReservations();
+        }
+        
         try {
             String query = "SELECT * from laes.reservations " +
                             "WHERE name = '" + searchQuery + "' " +
