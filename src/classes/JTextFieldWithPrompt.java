@@ -33,7 +33,7 @@ public class JTextFieldWithPrompt extends JTextField {
             Graphics2D g2 = (Graphics2D) g.create();
             
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2.setColor(super.getDisabledTextColor());
+            g2.setColor(new Color(129,129,129));
             g2.setBackground(Color.gray);
             g2.setFont(getFont());
 //            g2.setFont(getFont().deriveFont(Font.ITALIC));
