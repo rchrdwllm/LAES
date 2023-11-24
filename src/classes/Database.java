@@ -32,16 +32,31 @@ public class Database {
     
     public void loadTables() {
         String[] tables = {
-            "CREATE TABLE IF NOT EXISTS laes.user (" +
+            "CREATE TABLE IF NOT EXISTS laes.users (" +
             "  id       INT PRIMARY KEY AUTO_INCREMENT," +
             "  username VARCHAR(50)," +
             "  password VARCHAR(50)" +
             ")",
-            "CREATE TABLE IF NOT EXISTS laes.product (" +
+            "CREATE TABLE IF NOT EXISTS laes.products (" +
             "  id       INT PRIMARY KEY AUTO_INCREMENT," +
             "  name     VARCHAR(255)," +
             "  quantity INT," +
             "  picture  BLOB" +
+            ")",
+            "CREATE TABLE IF NOT EXISTS laes.reservations (" +
+            "  contactNumber    VARCHAR(255)," +
+            "  customerId       VARCHAR(255)," +
+            "  date             VARCHAR(255)," +
+            "  modeOfPayment    VARCHAR(255)," +
+            "  name             VARCHAR(255)," +
+            "  reservationId    VARCHAR(255) PRIMARY KEY," +
+            "  typeOfService    VARCHAR(255)" +
+            ")",
+            "CREATE TABLE IF NOT EXISTS laes.customers (" +
+            "  contactNumber    VARCHAR(255)," +
+            "  customerId       VARCHAR(255) PRIMARY KEY," +
+            "  name             VARCHAR(255)," +
+            "  services         INT" +
             ")"
         };
         

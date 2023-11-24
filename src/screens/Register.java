@@ -74,7 +74,7 @@ public class Register extends javax.swing.JFrame {
 
         adminUsernameField.setBackground(new java.awt.Color(248, 248, 248));
         adminUsernameField.setFont(inter);
-        adminUsernameField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(218, 218, 218)));
+        adminUsernameField.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(218, 218, 218)), javax.swing.BorderFactory.createEmptyBorder(0, 16, 0, 16)));
         adminUsernameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 adminUsernameFieldActionPerformed(evt);
@@ -83,7 +83,7 @@ public class Register extends javax.swing.JFrame {
 
         adminPasswordField.setBackground(new java.awt.Color(248, 248, 248));
         adminPasswordField.setFont(inter);
-        adminPasswordField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(218, 218, 218)));
+        adminPasswordField.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(218, 218, 218)), javax.swing.BorderFactory.createEmptyBorder(0, 16, 0, 16)));
         adminPasswordField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 adminPasswordFieldActionPerformed(evt);
