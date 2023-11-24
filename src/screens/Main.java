@@ -307,7 +307,7 @@ public class Main extends javax.swing.JFrame {
             {null, null, null, null, null}
         },
         new String [] {
-            "ID", "Name", "Date", "Contact number", "Service"
+            "Reservation ID", "Name", "Date", "Contact number", "Service"
         }
     ) {
         Class[] types = new Class [] {
@@ -400,7 +400,7 @@ public class Main extends javax.swing.JFrame {
             {null, null, null, null}
         },
         new String [] {
-            "Customer ID", "Name", "Contact number", "Service"
+            "Customer ID", "Name", "Contact number", "Services"
         }
     ) {
         Class[] types = new Class [] {
@@ -1228,7 +1228,6 @@ public class Main extends javax.swing.JFrame {
                     columnData.add(rs.getString("date"));
                     columnData.add(rs.getString("contactNumber"));
                     columnData.add(rs.getString("typeOfService"));
-                    System.out.println(rs.getString("reservationId"));
                 }
                 
                 recordTable.addRow(columnData);
@@ -1289,10 +1288,12 @@ public class Main extends javax.swing.JFrame {
             public void insertUpdate(DocumentEvent e) {
                 String text = searchReservations.getText();
 
-                if (text.trim().length() == 0) {
-                    rowSorter.setRowFilter(null);
-                } else {
-                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                if (!text.equals("Search reservations")) {
+                    if (text.trim().length() == 0) {
+                        rowSorter.setRowFilter(null);
+                    } else {
+                        rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                    }
                 }
             }
 
@@ -1300,10 +1301,12 @@ public class Main extends javax.swing.JFrame {
             public void removeUpdate(DocumentEvent e) {
                 String text = searchReservations.getText();
 
-                if (text.trim().length() == 0) {
-                    rowSorter.setRowFilter(null);
-                } else {
-                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                if (!text.equals("Search reservations")) {
+                    if (text.trim().length() == 0) {
+                        rowSorter.setRowFilter(null);
+                    } else {
+                        rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                    }
                 }
             }
 
@@ -1325,10 +1328,12 @@ public class Main extends javax.swing.JFrame {
             public void insertUpdate(DocumentEvent e) {
                 String text = searchCustomers.getText();
 
-                if (text.trim().length() == 0) {
-                    rowSorter.setRowFilter(null);
-                } else {
-                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                if (!text.equals("Search customers")) {
+                    if (text.trim().length() == 0) {
+                        rowSorter.setRowFilter(null);
+                    } else {
+                        rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                    }
                 }
             }
 
@@ -1336,10 +1341,12 @@ public class Main extends javax.swing.JFrame {
             public void removeUpdate(DocumentEvent e) {
                 String text = searchCustomers.getText();
 
-                if (text.trim().length() == 0) {
-                    rowSorter.setRowFilter(null);
-                } else {
-                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                if (!text.equals("Search customers")) {
+                    if (text.trim().length() == 0) {
+                        rowSorter.setRowFilter(null);
+                    } else {
+                        rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                    }
                 }
             }
 

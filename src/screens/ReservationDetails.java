@@ -396,6 +396,38 @@ public class ReservationDetails extends javax.swing.JFrame {
             
             System.out.println("Successfully deleted reservation " + this.reservationId + " data");
             
+            try {
+                String servicesQuery = "SELECT * from laes.customers WHERE customerId = '" + customerId + "'";
+                PreparedStatement servicesPstmt = Database.sqlConnection.prepareStatement(servicesQuery);
+                ResultSet servicesRs = servicesPstmt.executeQuery();
+                    
+                if (servicesRs.next()) {
+                    int currentServices = 0;
+                    
+                    currentServices = servicesRs.getInt("services");
+                        
+                    if (currentServices > 1) {
+                        String customerQuery = "UPDATE laes.customers SET services = " + (currentServices - 1) + " WHERE customerId = '" + customerId + "'";
+                        PreparedStatement customerPstmt = Database.sqlConnection.prepareStatement(customerQuery);
+
+                        customerPstmt.executeUpdate();
+
+                        System.out.println("Removed service from customerId " + customerId);
+                    } else {
+                        String customerQuery = "DELETE FROM laes.customers WHERE customerId = '" + customerId + "'";
+                        PreparedStatement customerPstmt = Database.sqlConnection.prepareStatement(customerQuery);
+
+                        customerPstmt.executeUpdate();
+
+                        System.out.println("Deleted customer with customerId " + customerId);
+                    }
+                    
+                    this.main.fetchCustomers();
+                }
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+            
             this.main.fetchReservations();
             this.dispose();
         } catch (SQLException err) {
