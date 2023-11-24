@@ -16,7 +16,12 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Vector;
+import javax.swing.RowFilter;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+import javax.swing.event.DocumentEvent;
 
 /**
  *
@@ -38,6 +43,8 @@ public class Main extends javax.swing.JFrame {
         setFirstPanel();
         fetchReservations();
         fetchCustomers();
+        setupReservationsSearch();
+        setupCustomersSearch();
     }
 
     /**
@@ -273,16 +280,6 @@ public class Main extends javax.swing.JFrame {
         }
         public void focusLost(java.awt.event.FocusEvent evt) {
             searchReservationsFocusLost(evt);
-        }
-    });
-    searchReservations.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            searchReservationsActionPerformed(evt);
-        }
-    });
-    searchReservations.addKeyListener(new java.awt.event.KeyAdapter() {
-        public void keyReleased(java.awt.event.KeyEvent evt) {
-            searchReservationsKeyReleased(evt);
         }
     });
 
@@ -566,16 +563,6 @@ public class Main extends javax.swing.JFrame {
         }
         public void focusLost(java.awt.event.FocusEvent evt) {
             searchInventoryFocusLost(evt);
-        }
-    });
-    searchInventory.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            searchInventoryActionPerformed(evt);
-        }
-    });
-    searchInventory.addKeyListener(new java.awt.event.KeyAdapter() {
-        public void keyReleased(java.awt.event.KeyEvent evt) {
-            searchInventoryKeyReleased(evt);
         }
     });
 
@@ -1217,7 +1204,7 @@ public class Main extends javax.swing.JFrame {
     pack();
     setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    
     public void fetchReservations() {
         try {
             String query = "SELECT * FROM laes.reservations ORDER BY date ASC";
@@ -1241,6 +1228,7 @@ public class Main extends javax.swing.JFrame {
                     columnData.add(rs.getString("date"));
                     columnData.add(rs.getString("contactNumber"));
                     columnData.add(rs.getString("typeOfService"));
+                    System.out.println(rs.getString("reservationId"));
                 }
                 
                 recordTable.addRow(columnData);
@@ -1272,48 +1260,6 @@ public class Main extends javax.swing.JFrame {
                     columnData.add(rs.getString("name"));
                     columnData.add(rs.getString("contactNumber"));
                     columnData.add(rs.getString("services"));
-                    System.out.println(rs.getString("customerId"));
-                }
-                
-                recordTable.addRow(columnData);
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-
-    }
-    
-    
-    private void filterReservations(String searchQuery) {
-        if (searchQuery.equals("")) {
-            fetchReservations();
-        }
-        
-        try {
-            String query = "SELECT * from laes.reservations " +
-                            "WHERE name = '" + searchQuery + "' " +
-                            "OR date = '" + searchQuery + "' " +
-                            "OR contactNumber = '" + searchQuery + "' " +
-                            "OR typeOfService = '" + searchQuery + "'";
-            PreparedStatement pstmt = Database.sqlConnection.prepareStatement(query);
-            
-            ResultSet rs = pstmt.executeQuery();
-            ResultSetMetaData rsMetaData = rs.getMetaData();
-            
-            int tableCount = rsMetaData.getColumnCount();
-            
-            DefaultTableModel recordTable = (DefaultTableModel) reservationsTbl.getModel();
-            
-            recordTable.setRowCount(0);
-            
-            while (rs.next()) {
-                Vector columnData = new Vector();
-                
-                for (int i = 1; i < tableCount; i++) {
-                    columnData.add(rs.getString("name"));
-                    columnData.add(rs.getString("date"));
-                    columnData.add(rs.getString("contactNumber"));
-                    columnData.add(rs.getString("typeOfService"));
                 }
                 
                 recordTable.addRow(columnData);
@@ -1322,8 +1268,6 @@ public class Main extends javax.swing.JFrame {
             System.out.println(e);
         }
     }
-    
-    
     
     private void setFonts() {
         inter = fontLoader.interRegular(12);
@@ -1333,6 +1277,78 @@ public class Main extends javax.swing.JFrame {
 
     private void setFrameIcon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("../assets/logo.png")));
+    }
+    
+    private void setupReservationsSearch() {
+        TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(reservationsTbl.getModel());
+        
+        reservationsTbl.setRowSorter(rowSorter);
+        
+        searchReservations.getDocument().addDocumentListener(new DocumentListener(){
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                String text = searchReservations.getText();
+
+                if (text.trim().length() == 0) {
+                    rowSorter.setRowFilter(null);
+                } else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                String text = searchReservations.getText();
+
+                if (text.trim().length() == 0) {
+                    rowSorter.setRowFilter(null);
+                } else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+        });
+    }
+    
+    private void setupCustomersSearch() {
+        TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(customersTbl.getModel());
+        
+        customersTbl.setRowSorter(rowSorter);
+        
+        searchCustomers.getDocument().addDocumentListener(new DocumentListener(){
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                String text = searchCustomers.getText();
+
+                if (text.trim().length() == 0) {
+                    rowSorter.setRowFilter(null);
+                } else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                String text = searchCustomers.getText();
+
+                if (text.trim().length() == 0) {
+                    rowSorter.setRowFilter(null);
+                } else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+        });
     }
 
     private void setFirstPanel() {
@@ -1401,41 +1417,32 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_searchReservationsFocusGained
 
-    private void searchReservationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchReservationsActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_searchReservationsActionPerformed
-
     private void searchCustomersFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchCustomersFocusGained
-        // TODO add your handling code here:
+        String searchValue = searchCustomers.getText();
+
+        if (searchValue.equals("Search customers")) {
+            searchCustomers.setText("");
+            searchCustomers.setForeground(new Color(35, 35, 35));
+        }
     }//GEN-LAST:event_searchCustomersFocusGained
 
     private void searchCustomersFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchCustomersFocusLost
-        // TODO add your handling code here:
+        String searchValue = searchCustomers.getText();
+
+        if (searchValue.equals("")) {
+            searchCustomers.setText("Search customers");
+            searchCustomers.setForeground(new Color(129, 129, 129));
+        }
     }//GEN-LAST:event_searchCustomersFocusLost
 
     private void searchCustomersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchCustomersActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_searchCustomersActionPerformed
 
-    private void searchReservationsKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchReservationsKeyReleased
-        String searchQuery = searchReservations.getText();
-        
-        filterReservations(searchQuery);
-    }//GEN-LAST:event_searchReservationsKeyReleased
-
-    private void reservationsTblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reservationsTblMouseClicked
-        DefaultTableModel RecordTable = (DefaultTableModel) reservationsTbl.getModel();
-        int selectedRows = reservationsTbl.getSelectedRow();
-          
-        String reservationId = RecordTable.getValueAt(selectedRows,0).toString();
-        
-        new ReservationDetails(this, reservationId).setVisible(true);        // TODO add your handling code here:
-    }//GEN-LAST:event_reservationsTblMouseClicked
-
     private void searchInventoryFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchInventoryFocusGained
         String searchValue = searchInventory.getText();
 
-        if (searchValue.equals("Search reservations")) {
+        if (searchValue.equals("Search inventory")) {
             searchInventory.setText("");
             searchInventory.setForeground(new Color(35, 35, 35));
         }
@@ -1445,18 +1452,10 @@ public class Main extends javax.swing.JFrame {
         String searchValue = searchInventory.getText();
 
         if (searchValue.equals("")) {
-            searchInventory.setText("Search reservations");
+            searchInventory.setText("Search inventory");
             searchInventory.setForeground(new Color(129, 129, 129));
         }
     }//GEN-LAST:event_searchInventoryFocusLost
-
-    private void searchInventoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchInventoryActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_searchInventoryActionPerformed
-
-    private void searchInventoryKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchInventoryKeyReleased
-
-    }//GEN-LAST:event_searchInventoryKeyReleased
 
     private void addItemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemBtnActionPerformed
         NewInventoryItem newInventoryItem = new NewInventoryItem();
@@ -1527,6 +1526,15 @@ public class Main extends javax.swing.JFrame {
     private void plus5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plus5ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_plus5ActionPerformed
+
+    private void reservationsTblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reservationsTblMouseClicked
+        DefaultTableModel RecordTable = (DefaultTableModel) reservationsTbl.getModel();
+        int selectedRows = reservationsTbl.getSelectedRow();
+          
+        String reservationId = RecordTable.getValueAt(selectedRows,0).toString();
+        
+        new ReservationDetails(this, reservationId).setVisible(true);
+    }//GEN-LAST:event_reservationsTblMouseClicked
 
     /**
      * @param args the command line arguments
