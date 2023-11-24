@@ -35,6 +35,7 @@ public class ReservationDetails extends javax.swing.JFrame {
     String typeOfService;
     String modeOfPayment;
     String reservationId;
+    String customerId;
     
     /**
      * Creates new form NewReservation
@@ -72,6 +73,7 @@ public class ReservationDetails extends javax.swing.JFrame {
                 this.date = rs.getString("date");
                 this.typeOfService = rs.getString("typeOfService");
                 this.modeOfPayment = rs.getString("modeOfPayment");
+                this.customerId = rs.getString("customerId");
                 
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 formatter = formatter.withLocale(Locale.ENGLISH);
@@ -351,6 +353,24 @@ public class ReservationDetails extends javax.swing.JFrame {
             pstmt.executeUpdate();
             
             System.out.println("Successfully updated reservation " + this.reservationId + " data");
+                
+            try {
+                String customerQuery = "UPDATE laes.customers SET " +
+                    "name = '" + name + "', " +
+                    "contactNumber = '" + contactNumber + "' " +
+                    "WHERE customerId = '" + this.customerId + "'";
+                PreparedStatement customerPstmt = Database.sqlConnection.prepareStatement(customerQuery);
+
+                customerPstmt.executeUpdate();
+
+                System.out.println("Updated customerId " + this.customerId + " as well");
+
+                this.main.fetchReservations();
+                this.main.fetchCustomers();
+                this.dispose();
+            } catch (SQLException err) {
+                System.out.println(err);
+            }
             
             this.main.fetchReservations();
             this.dispose();
