@@ -6,6 +6,7 @@ package classes;
 
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -49,6 +50,27 @@ public class Reservation {
                 pstmt.setString(7, this.reservationId);
                 
                 System.out.println("Customer with customerId " + customerId + " already exists! Skipping creation of new user...");
+                
+                int currentServices = 1;
+                
+                try {
+                    String servicesQuery = "SELECT * from laes.customers WHERE customerId = '" + customerId + "'";
+                    PreparedStatement servicesPstmt = Database.sqlConnection.prepareStatement(servicesQuery);
+                    ResultSet servicesRs = servicesPstmt.executeQuery();
+                    
+                    if (servicesRs.next()) {
+                        currentServices = servicesRs.getInt("services");
+                        
+                        String customerQuery = "UPDATE laes.customers SET services = " + (currentServices + 1) + " WHERE customerId = '" + customerId + "'";
+                        PreparedStatement customerPstmt = Database.sqlConnection.prepareStatement(customerQuery);
+                        
+                        customerPstmt.executeUpdate();
+                        
+                        System.out.println("Added service to customerId " + customerId);
+                    }
+                } catch (SQLException e) {
+                    System.out.println(e);
+                }
             } else {
                 String customerId = UUID.randomUUID().toString().substring(0, 7);
                 
