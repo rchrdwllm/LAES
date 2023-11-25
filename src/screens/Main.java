@@ -10,11 +10,14 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import utils.FontLoader;
+import utils.WrapLayout;
 import classes.Database;
+import classes.ProductPanel;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.RowFilter;
 import javax.swing.event.DocumentListener;
@@ -28,6 +31,8 @@ import javax.swing.event.DocumentEvent;
  * @author rwill
  */
 public class Main extends javax.swing.JFrame {
+    private final ArrayList<ProductPanel> products;
+    
     FontLoader fontLoader = new FontLoader();
     Font inter;
     Font puritanBold;
@@ -45,6 +50,11 @@ public class Main extends javax.swing.JFrame {
         fetchCustomers();
         setupReservationsSearch();
         setupCustomersSearch();
+        
+        products = new ArrayList<>();
+        setupProducts();
+        
+        postInitForInventory();
     }
 
     /**
@@ -90,56 +100,9 @@ public class Main extends javax.swing.JFrame {
         title = new javax.swing.JLabel();
         searchInventory = new javax.swing.JTextField();
         addItemBtn = new javax.swing.JButton();
-        box1 = new java.awt.Panel();
-        minus = new javax.swing.JButton();
-        plus = new javax.swing.JButton();
-        label1 = new java.awt.Label();
-        label3 = new java.awt.Label();
-        jLabel4 = new javax.swing.JLabel();
-        label10 = new java.awt.Label();
-        box2 = new java.awt.Panel();
-        label4 = new java.awt.Label();
-        minus3 = new javax.swing.JButton();
-        plus2 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        label16 = new java.awt.Label();
-        box3 = new java.awt.Panel();
-        label6 = new java.awt.Label();
-        minus5 = new javax.swing.JButton();
-        plus4 = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
-        label15 = new java.awt.Label();
-        box4 = new java.awt.Panel();
-        label8 = new java.awt.Label();
-        minus7 = new javax.swing.JButton();
-        plus7 = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
-        label17 = new java.awt.Label();
-        jSeparator1 = new javax.swing.JSeparator();
-        box5 = new java.awt.Panel();
-        label2 = new java.awt.Label();
-        minus1 = new javax.swing.JButton();
-        plus1 = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-        label11 = new java.awt.Label();
-        box6 = new java.awt.Panel();
-        label5 = new java.awt.Label();
-        jLabel6 = new javax.swing.JLabel();
-        minus2 = new javax.swing.JButton();
-        plus3 = new javax.swing.JButton();
-        label12 = new java.awt.Label();
-        box7 = new java.awt.Panel();
-        label7 = new java.awt.Label();
-        minus4 = new javax.swing.JButton();
-        plus6 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        label13 = new java.awt.Label();
-        box8 = new java.awt.Panel();
-        label9 = new java.awt.Label();
-        minus6 = new javax.swing.JButton();
-        plus5 = new javax.swing.JButton();
-        jLabel10 = new javax.swing.JLabel();
-        label14 = new java.awt.Label();
+        contentPanel = new javax.swing.JPanel();
+        inventoryScrollableArea = new javax.swing.JScrollPane();
+        inventoryDisplayPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Lath's Auto-Electrical Shop");
@@ -164,7 +127,6 @@ public class Main extends javax.swing.JFrame {
         }
     });
 
-    customersBtn.setBackground(new java.awt.Color(255, 255, 255));
     customersBtn.setFont(inter);
     customersBtn.setForeground(new java.awt.Color(35, 35, 35));
     customersBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/UserOutline.png"))); // NOI18N
@@ -179,7 +141,6 @@ public class Main extends javax.swing.JFrame {
         }
     });
 
-    inventoryBtn.setBackground(new java.awt.Color(255, 255, 255));
     inventoryBtn.setFont(inter);
     inventoryBtn.setForeground(new java.awt.Color(35, 35, 35));
     inventoryBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ArchiveOutline.png"))); // NOI18N
@@ -194,7 +155,6 @@ public class Main extends javax.swing.JFrame {
         }
     });
 
-    aboutBtn.setBackground(new java.awt.Color(255, 255, 255));
     aboutBtn.setFont(inter);
     aboutBtn.setForeground(new java.awt.Color(35, 35, 35));
     aboutBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ExclamationCircleOutline.png"))); // NOI18N
@@ -254,7 +214,7 @@ public class Main extends javax.swing.JFrame {
             .addComponent(inventoryBtn)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(aboutBtn)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 228, Short.MAX_VALUE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 242, Short.MAX_VALUE)
             .addComponent(logoutBtn))
     );
 
@@ -444,7 +404,7 @@ public class Main extends javax.swing.JFrame {
             .addComponent(searchCustomers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(18, 18, 18)
             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(34, Short.MAX_VALUE))
+            .addContainerGap(52, Short.MAX_VALUE))
     );
 
     mainPnl.add(customersPnl, "card2");
@@ -509,7 +469,7 @@ public class Main extends javax.swing.JFrame {
             .addGroup(aboutDescLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                 .addComponent(aboutPrevimg1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(aboutPrevimg2, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addContainerGap(102, Short.MAX_VALUE))
+            .addContainerGap(116, Short.MAX_VALUE))
     );
 
     aboutTitleLabel.setFont(puritanBold);
@@ -581,620 +541,68 @@ public class Main extends javax.swing.JFrame {
         }
     });
 
-    box1.setBackground(new java.awt.Color(244, 244, 244));
-
-    minus.setBackground(java.awt.Color.lightGray);
-    minus.setText("-");
-    minus.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            minusActionPerformed(evt);
+    inventoryScrollableArea.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            inventoryScrollableAreaMouseClicked(evt);
+        }
+    });
+    inventoryScrollableArea.addComponentListener(new java.awt.event.ComponentAdapter() {
+        public void componentShown(java.awt.event.ComponentEvent evt) {
+            inventoryScrollableAreaComponentShown(evt);
         }
     });
 
-    plus.setBackground(java.awt.Color.lightGray);
-    plus.setForeground(new java.awt.Color(40, 40, 40));
-    plus.setText("+");
-    plus.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            plusActionPerformed(evt);
-        }
-    });
+    inventoryDisplayPanel.setBackground(new java.awt.Color(255, 255, 255));
+    inventoryDisplayPanel.setDoubleBuffered(false);
+    inventoryDisplayPanel.setOpaque(false);
+    inventoryScrollableArea.setViewportView(inventoryDisplayPanel);
 
-    label1.setText("label1");
-
-    label3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-    label3.setText("Alternator");
-
-    jLabel4.setText("jLabel1");
-
-    label10.setForeground(java.awt.Color.gray);
-    label10.setText("5 pcs");
-
-    javax.swing.GroupLayout box1Layout = new javax.swing.GroupLayout(box1);
-    box1.setLayout(box1Layout);
-    box1Layout.setHorizontalGroup(
-        box1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, box1Layout.createSequentialGroup()
-            .addGap(16, 16, 16)
-            .addComponent(minus, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-            .addGroup(box1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(box1Layout.createSequentialGroup()
-                    .addGap(10, 10, 10)
-                    .addComponent(label10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(box1Layout.createSequentialGroup()
-                    .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(23, 23, 23)
-                    .addComponent(plus, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addGap(14, 14, 14))
-        .addGroup(box1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(box1Layout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE)))
-    );
-    box1Layout.setVerticalGroup(
-        box1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(box1Layout.createSequentialGroup()
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(box1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, box1Layout.createSequentialGroup()
-                    .addGroup(box1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(minus)
-                        .addComponent(plus))
-                    .addGap(21, 21, 21))
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, box1Layout.createSequentialGroup()
-                    .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(6, 6, 6)
-                    .addComponent(label10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-        .addGroup(box1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(box1Layout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE)))
-    );
-
-    box2.setBackground(new java.awt.Color(244, 244, 244));
-
-    label4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-    label4.setText("Alternator");
-
-    minus3.setBackground(java.awt.Color.lightGray);
-    minus3.setText("-");
-    minus3.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            minus3ActionPerformed(evt);
-        }
-    });
-
-    plus2.setBackground(java.awt.Color.lightGray);
-    plus2.setForeground(new java.awt.Color(40, 40, 40));
-    plus2.setText("+");
-    plus2.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            plus2ActionPerformed(evt);
-        }
-    });
-
-    jLabel1.setText("jLabel1");
-
-    label16.setForeground(java.awt.Color.gray);
-    label16.setText("5 pcs");
-
-    javax.swing.GroupLayout box2Layout = new javax.swing.GroupLayout(box2);
-    box2.setLayout(box2Layout);
-    box2Layout.setHorizontalGroup(
-        box2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(box2Layout.createSequentialGroup()
-            .addGap(45, 45, 45)
-            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, box2Layout.createSequentialGroup()
-            .addGap(14, 14, 14)
-            .addComponent(minus3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(label4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(24, 24, 24)
-            .addComponent(plus2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(14, 14, 14))
-        .addGroup(box2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, box2Layout.createSequentialGroup()
-                .addContainerGap(84, Short.MAX_VALUE)
-                .addComponent(label16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(82, 82, 82)))
-    );
-    box2Layout.setVerticalGroup(
-        box2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, box2Layout.createSequentialGroup()
-            .addGroup(box2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                .addGroup(box2Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(plus2))
-                .addGroup(box2Layout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(box2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(box2Layout.createSequentialGroup()
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(minus3))
-                        .addGroup(box2Layout.createSequentialGroup()
-                            .addGap(1, 1, 1)
-                            .addComponent(label4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-            .addGap(21, 21, 21))
-        .addGroup(box2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, box2Layout.createSequentialGroup()
-                .addContainerGap(170, Short.MAX_VALUE)
-                .addComponent(label16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap()))
-    );
-
-    box3.setBackground(new java.awt.Color(244, 244, 244));
-
-    label6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-    label6.setText("Alternator");
-
-    minus5.setBackground(java.awt.Color.lightGray);
-    minus5.setText("-");
-    minus5.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            minus5ActionPerformed(evt);
-        }
-    });
-
-    plus4.setBackground(java.awt.Color.lightGray);
-    plus4.setForeground(new java.awt.Color(40, 40, 40));
-    plus4.setText("+");
-    plus4.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            plus4ActionPerformed(evt);
-        }
-    });
-
-    jLabel8.setText("jLabel1");
-
-    label15.setForeground(java.awt.Color.gray);
-    label15.setText("5 pcs");
-
-    javax.swing.GroupLayout box3Layout = new javax.swing.GroupLayout(box3);
-    box3.setLayout(box3Layout);
-    box3Layout.setHorizontalGroup(
-        box3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(box3Layout.createSequentialGroup()
-            .addGap(15, 15, 15)
-            .addComponent(minus5, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(box3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(box3Layout.createSequentialGroup()
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                    .addComponent(label6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(24, 24, 24))
-                .addGroup(box3Layout.createSequentialGroup()
-                    .addGap(42, 42, 42)
-                    .addComponent(label15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-            .addComponent(plus4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(14, 14, 14))
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, box3Layout.createSequentialGroup()
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(44, 44, 44))
-    );
-    box3Layout.setVerticalGroup(
-        box3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, box3Layout.createSequentialGroup()
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(box3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                .addGroup(box3Layout.createSequentialGroup()
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(box3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(minus5)
-                        .addComponent(plus4))
-                    .addGap(20, 20, 20))
-                .addGroup(box3Layout.createSequentialGroup()
-                    .addGap(2, 2, 2)
-                    .addComponent(label6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(label15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap())))
-    );
-
-    box4.setBackground(new java.awt.Color(244, 244, 244));
-
-    label8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-    label8.setText("Alternator");
-
-    minus7.setBackground(java.awt.Color.lightGray);
-    minus7.setText("-");
-    minus7.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            minus7ActionPerformed(evt);
-        }
-    });
-
-    plus7.setBackground(java.awt.Color.lightGray);
-    plus7.setForeground(new java.awt.Color(40, 40, 40));
-    plus7.setText("+");
-    plus7.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            plus7ActionPerformed(evt);
-        }
-    });
-
-    jLabel9.setText("jLabel1");
-
-    label17.setForeground(java.awt.Color.gray);
-    label17.setText("5 pcs");
-
-    javax.swing.GroupLayout box4Layout = new javax.swing.GroupLayout(box4);
-    box4.setLayout(box4Layout);
-    box4Layout.setHorizontalGroup(
-        box4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, box4Layout.createSequentialGroup()
-            .addGap(14, 14, 14)
-            .addComponent(minus7, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-            .addComponent(label8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(24, 24, 24)
-            .addComponent(plus7, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(14, 14, 14))
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, box4Layout.createSequentialGroup()
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(44, 44, 44))
-        .addGroup(box4Layout.createSequentialGroup()
-            .addGap(78, 78, 78)
-            .addComponent(label17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+    javax.swing.GroupLayout contentPanelLayout = new javax.swing.GroupLayout(contentPanel);
+    contentPanel.setLayout(contentPanelLayout);
+    contentPanelLayout.setHorizontalGroup(
+        contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(contentPanelLayout.createSequentialGroup()
+            .addGap(22, 22, 22)
+            .addComponent(inventoryScrollableArea, javax.swing.GroupLayout.PREFERRED_SIZE, 935, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
-    box4Layout.setVerticalGroup(
-        box4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, box4Layout.createSequentialGroup()
-            .addContainerGap(10, Short.MAX_VALUE)
-            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(18, 18, 18)
-            .addGroup(box4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                .addComponent(label8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(box4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(minus7)
-                    .addComponent(plus7)))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(label17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap())
-    );
-
-    box5.setBackground(new java.awt.Color(244, 244, 244));
-
-    label2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-    label2.setText("Bearings");
-
-    minus1.setBackground(java.awt.Color.lightGray);
-    minus1.setText("-");
-    minus1.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            minus1ActionPerformed(evt);
-        }
-    });
-
-    plus1.setBackground(java.awt.Color.lightGray);
-    plus1.setForeground(new java.awt.Color(40, 40, 40));
-    plus1.setText("+");
-    plus1.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            plus1ActionPerformed(evt);
-        }
-    });
-
-    jLabel5.setText("jLabel1");
-
-    label11.setForeground(java.awt.Color.gray);
-    label11.setText("5 pcs");
-
-    javax.swing.GroupLayout box5Layout = new javax.swing.GroupLayout(box5);
-    box5.setLayout(box5Layout);
-    box5Layout.setHorizontalGroup(
-        box5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, box5Layout.createSequentialGroup()
-            .addGap(15, 15, 15)
-            .addComponent(minus1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(box5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(box5Layout.createSequentialGroup()
-                    .addGap(10, 10, 10)
-                    .addComponent(label11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addGap(27, 27, 27)
-            .addComponent(plus1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(14, 14, 14))
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, box5Layout.createSequentialGroup()
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(43, 43, 43))
-    );
-    box5Layout.setVerticalGroup(
-        box5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(box5Layout.createSequentialGroup()
-            .addContainerGap(42, Short.MAX_VALUE)
-            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(1, 1, 1)
-            .addGroup(box5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, box5Layout.createSequentialGroup()
-                    .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(3, 3, 3)
-                    .addComponent(label11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap())
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, box5Layout.createSequentialGroup()
-                    .addGroup(box5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(plus1)
-                        .addComponent(minus1))
-                    .addGap(25, 25, 25))))
-    );
-
-    box6.setBackground(new java.awt.Color(244, 244, 244));
-
-    label5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-    label5.setText("Alternator");
-
-    jLabel6.setText("jLabel1");
-
-    minus2.setBackground(java.awt.Color.lightGray);
-    minus2.setText("-");
-    minus2.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            minus2ActionPerformed(evt);
-        }
-    });
-
-    plus3.setBackground(java.awt.Color.lightGray);
-    plus3.setForeground(new java.awt.Color(40, 40, 40));
-    plus3.setText("+");
-    plus3.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            plus3ActionPerformed(evt);
-        }
-    });
-
-    label12.setForeground(java.awt.Color.gray);
-    label12.setText("5 pcs");
-
-    javax.swing.GroupLayout box6Layout = new javax.swing.GroupLayout(box6);
-    box6.setLayout(box6Layout);
-    box6Layout.setHorizontalGroup(
-        box6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, box6Layout.createSequentialGroup()
-            .addGap(14, 14, 14)
-            .addComponent(minus2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(box6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(box6Layout.createSequentialGroup()
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                    .addComponent(label5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(23, 23, 23))
-                .addGroup(box6Layout.createSequentialGroup()
-                    .addGap(45, 45, 45)
-                    .addComponent(label12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-            .addComponent(plus3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(16, 16, 16))
-        .addGroup(box6Layout.createSequentialGroup()
-            .addGap(44, 44, 44)
-            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-    );
-    box6Layout.setVerticalGroup(
-        box6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(box6Layout.createSequentialGroup()
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(1, 1, 1)
-            .addGroup(box6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, box6Layout.createSequentialGroup()
-                    .addGroup(box6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(plus3)
-                        .addComponent(minus2))
-                    .addGap(24, 24, 24))
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, box6Layout.createSequentialGroup()
-                    .addComponent(label5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(3, 3, 3)
-                    .addComponent(label12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap())))
-    );
-
-    box7.setBackground(new java.awt.Color(244, 244, 244));
-
-    label7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-    label7.setText("Alternator");
-
-    minus4.setBackground(java.awt.Color.lightGray);
-    minus4.setText("-");
-    minus4.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            minus4ActionPerformed(evt);
-        }
-    });
-
-    plus6.setBackground(java.awt.Color.lightGray);
-    plus6.setForeground(new java.awt.Color(40, 40, 40));
-    plus6.setText("+");
-    plus6.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            plus6ActionPerformed(evt);
-        }
-    });
-
-    jLabel3.setText("jLabel1");
-
-    label13.setForeground(java.awt.Color.gray);
-    label13.setText("5 pcs");
-
-    javax.swing.GroupLayout box7Layout = new javax.swing.GroupLayout(box7);
-    box7.setLayout(box7Layout);
-    box7Layout.setHorizontalGroup(
-        box7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, box7Layout.createSequentialGroup()
-            .addGap(14, 14, 14)
-            .addComponent(minus4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(box7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(label7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(box7Layout.createSequentialGroup()
-                    .addGap(10, 10, 10)
-                    .addComponent(label13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addGap(24, 24, 24)
-            .addComponent(plus6, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(14, 14, 14))
-        .addGroup(box7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, box7Layout.createSequentialGroup()
-                .addContainerGap(52, Short.MAX_VALUE)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)))
-    );
-    box7Layout.setVerticalGroup(
-        box7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(box7Layout.createSequentialGroup()
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(box7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, box7Layout.createSequentialGroup()
-                    .addGroup(box7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(minus4)
-                        .addComponent(plus6))
-                    .addGap(22, 22, 22))
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, box7Layout.createSequentialGroup()
-                    .addComponent(label7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(label13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap())))
-        .addGroup(box7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(box7Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(60, Short.MAX_VALUE)))
-    );
-
-    box8.setBackground(new java.awt.Color(244, 244, 244));
-
-    label9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-    label9.setText("Alternator");
-
-    minus6.setBackground(java.awt.Color.lightGray);
-    minus6.setText("-");
-    minus6.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            minus6ActionPerformed(evt);
-        }
-    });
-
-    plus5.setBackground(java.awt.Color.lightGray);
-    plus5.setForeground(new java.awt.Color(40, 40, 40));
-    plus5.setText("+");
-    plus5.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            plus5ActionPerformed(evt);
-        }
-    });
-
-    jLabel10.setText("jLabel1");
-
-    label14.setForeground(java.awt.Color.gray);
-    label14.setText("5 pcs");
-
-    javax.swing.GroupLayout box8Layout = new javax.swing.GroupLayout(box8);
-    box8.setLayout(box8Layout);
-    box8Layout.setHorizontalGroup(
-        box8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, box8Layout.createSequentialGroup()
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(44, 44, 44))
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, box8Layout.createSequentialGroup()
-            .addGap(14, 14, 14)
-            .addComponent(minus6, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-            .addGroup(box8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(box8Layout.createSequentialGroup()
-                    .addGap(10, 10, 10)
-                    .addComponent(label14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(box8Layout.createSequentialGroup()
-                    .addComponent(label9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(23, 23, 23)
-                    .addComponent(plus5, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addGap(14, 14, 14))
-    );
-    box8Layout.setVerticalGroup(
-        box8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, box8Layout.createSequentialGroup()
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(box8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(box8Layout.createSequentialGroup()
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(box8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(minus6)
-                        .addComponent(plus5)))
-                .addGroup(box8Layout.createSequentialGroup()
-                    .addGap(1, 1, 1)
-                    .addComponent(label9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addGap(2, 2, 2)
-            .addComponent(label14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+    contentPanelLayout.setVerticalGroup(
+        contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, contentPanelLayout.createSequentialGroup()
+            .addContainerGap(25, Short.MAX_VALUE)
+            .addComponent(inventoryScrollableArea, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(20, 20, 20))
     );
 
     javax.swing.GroupLayout inventoryPnlLayout = new javax.swing.GroupLayout(inventoryPnl);
     inventoryPnl.setLayout(inventoryPnlLayout);
     inventoryPnlLayout.setHorizontalGroup(
         inventoryPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inventoryPnlLayout.createSequentialGroup()
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(358, 358, 358))
         .addGroup(inventoryPnlLayout.createSequentialGroup()
-            .addGap(56, 56, 56)
+            .addContainerGap()
             .addGroup(inventoryPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(inventoryPnlLayout.createSequentialGroup()
                     .addComponent(title)
                     .addGap(0, 0, Short.MAX_VALUE))
                 .addGroup(inventoryPnlLayout.createSequentialGroup()
-                    .addComponent(searchInventory)
+                    .addComponent(searchInventory, javax.swing.GroupLayout.DEFAULT_SIZE, 792, Short.MAX_VALUE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(addItemBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(inventoryPnlLayout.createSequentialGroup()
-                    .addGroup(inventoryPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(box1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(box5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGap(60, 60, 60)
-                    .addGroup(inventoryPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(box2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(box6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(inventoryPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(box3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(box7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGap(60, 60, 60)
-                    .addGroup(inventoryPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(box4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(box8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addComponent(contentPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addContainerGap())
     );
     inventoryPnlLayout.setVerticalGroup(
         inventoryPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(inventoryPnlLayout.createSequentialGroup()
-            .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(24, 24, 24)
+            .addContainerGap()
+            .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(inventoryPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(searchInventory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(addItemBtn))
-            .addGap(35, 35, 35)
-            .addGroup(inventoryPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                .addComponent(box4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(box2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(box1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(box3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(6, 6, 6)
-            .addGroup(inventoryPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(box7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(box5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(box6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(box8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addContainerGap())
+            .addGap(18, 18, 18)
+            .addComponent(contentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
     mainPnl.add(inventoryPnl, "card5");
@@ -1204,7 +612,7 @@ public class Main extends javax.swing.JFrame {
     pack();
     setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    
+
     public void fetchReservations() {
         try {
             String query = "SELECT * FROM laes.reservations ORDER BY date ASC";
@@ -1266,6 +674,10 @@ public class Main extends javax.swing.JFrame {
         } catch (SQLException e) {
             System.out.println(e);
         }
+    }
+    
+    private void postInitForInventory() {
+        inventoryDisplayPanel.setLayout(new WrapLayout());
     }
     
     private void setFonts() {
@@ -1358,6 +770,91 @@ public class Main extends javax.swing.JFrame {
         });
     }
 
+    private void setupProducts() {
+        try (var statement = Database.sqlConnection.createStatement()) {
+            var query = "SELECT * FROM laes.products";
+            var rs = statement.executeQuery(query);
+            
+            while (rs.next()) {
+                var id = rs.getInt(1);
+                var name = rs.getString(2); // Nullable
+                var quantity = rs.getInt(3); // Nullable
+                var picture = rs.getBlob(4); // Nullable
+                
+                if (name == null) {
+                    name = "Unnamed product";
+                }
+                
+                var panel = new ProductPanel(
+                        id,
+                        name,
+                        quantity,
+                        picture
+                );
+                
+                inventoryDisplayPanel.add(new ProductPanel(
+                        id,
+                        name,
+                        quantity,
+                        picture
+                ));
+                inventoryDisplayPanel.add(new ProductPanel(
+                        id,
+                        name,
+                        quantity,
+                        picture
+                ));
+                inventoryDisplayPanel.add(new ProductPanel(
+                        id,
+                        name,
+                        quantity,
+                        picture
+                ));
+                inventoryDisplayPanel.add(new ProductPanel(
+                        id,
+                        name,
+                        quantity,
+                        picture
+                ));
+                inventoryDisplayPanel.add(panel);   
+            }
+            
+        } catch (SQLException exception) {
+            
+        }
+//        String username = adminUsernameField.getText();
+//        String password = adminPasswordField.getText();
+//        
+//        try {
+//            var searchQuery = "SELECT * FROM laes.users WHERE username = ?";
+//            var searchStatement = Database.sqlConnection.prepareStatement(searchQuery);
+//            searchStatement.setString(1, username);
+//            var result = searchStatement.executeQuery();
+//            
+//            if (result.next()) {
+//                /// There was already a user with username.
+//                System.out.println("DEBUG: There is already a user with username '" + username +"'.");
+//                return;
+//            }
+//            
+//            var addQuery = "INSERT INTO laes.users (username, password) VALUES (?, ?)";
+//            var addStatement = Database.sqlConnection.prepareStatement(addQuery);
+//            addStatement.setString(1, username);
+//            addStatement.setString(2, password);
+//            addStatement.executeUpdate();
+//            
+//            System.out.println("User with username '" + username + "' was added successfully.");
+//            
+//            
+//            this.setVisible(false);
+//
+//            new Main().setVisible(true);
+//            this.dispose();
+//        } catch (SQLException e) {
+//            System.out.print("The query went wrong. The error was: " + e.toString());
+//        }
+    }
+    
     private void setFirstPanel() {
         mainPnl.removeAll();
         mainPnl.add(reservationsPnl);
@@ -1470,70 +967,6 @@ public class Main extends javax.swing.JFrame {
         newInventoryItem.setVisible(true);
     }//GEN-LAST:event_addItemBtnActionPerformed
 
-    private void minusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minusActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_minusActionPerformed
-
-    private void plusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plusActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_plusActionPerformed
-
-    private void minus3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minus3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_minus3ActionPerformed
-
-    private void plus2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plus2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_plus2ActionPerformed
-
-    private void minus5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minus5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_minus5ActionPerformed
-
-    private void plus4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plus4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_plus4ActionPerformed
-
-    private void minus7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minus7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_minus7ActionPerformed
-
-    private void plus7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plus7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_plus7ActionPerformed
-
-    private void minus1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minus1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_minus1ActionPerformed
-
-    private void plus1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plus1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_plus1ActionPerformed
-
-    private void minus2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minus2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_minus2ActionPerformed
-
-    private void plus3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plus3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_plus3ActionPerformed
-
-    private void minus4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minus4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_minus4ActionPerformed
-
-    private void plus6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plus6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_plus6ActionPerformed
-
-    private void minus6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minus6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_minus6ActionPerformed
-
-    private void plus5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plus5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_plus5ActionPerformed
-
     private void reservationsTblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reservationsTblMouseClicked
         DefaultTableModel RecordTable = (DefaultTableModel) reservationsTbl.getModel();
         int selectedRows = reservationsTbl.getSelectedRow();
@@ -1542,6 +975,14 @@ public class Main extends javax.swing.JFrame {
         
         new ReservationDetails(this, reservationId).setVisible(true);
     }//GEN-LAST:event_reservationsTblMouseClicked
+
+    private void inventoryScrollableAreaComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_inventoryScrollableAreaComponentShown
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inventoryScrollableAreaComponentShown
+    
+    private void inventoryScrollableAreaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inventoryScrollableAreaMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inventoryScrollableAreaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1580,67 +1021,20 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel aboutTitleLabel1;
     private javax.swing.JButton addItemBtn;
     private javax.swing.JButton addReservationBtn;
-    private java.awt.Panel box1;
-    private java.awt.Panel box2;
-    private java.awt.Panel box3;
-    private java.awt.Panel box4;
-    private java.awt.Panel box5;
-    private java.awt.Panel box6;
-    private java.awt.Panel box7;
-    private java.awt.Panel box8;
+    private javax.swing.JPanel contentPanel;
     private javax.swing.JButton customersBtn;
     private javax.swing.JPanel customersPnl;
     private javax.swing.JTable customersTbl;
     private javax.swing.JButton inventoryBtn;
+    private javax.swing.JPanel inventoryDisplayPanel;
     private javax.swing.JPanel inventoryPnl;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
+    private javax.swing.JScrollPane inventoryScrollableArea;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSeparator jSeparator1;
-    private java.awt.Label label1;
-    private java.awt.Label label10;
-    private java.awt.Label label11;
-    private java.awt.Label label12;
-    private java.awt.Label label13;
-    private java.awt.Label label14;
-    private java.awt.Label label15;
-    private java.awt.Label label16;
-    private java.awt.Label label17;
-    private java.awt.Label label2;
-    private java.awt.Label label3;
-    private java.awt.Label label4;
-    private java.awt.Label label5;
-    private java.awt.Label label6;
-    private java.awt.Label label7;
-    private java.awt.Label label8;
-    private java.awt.Label label9;
     private javax.swing.JLabel logoLabel;
     private javax.swing.JButton logoutBtn;
     private javax.swing.JPanel mainPnl;
-    private javax.swing.JButton minus;
-    private javax.swing.JButton minus1;
-    private javax.swing.JButton minus2;
-    private javax.swing.JButton minus3;
-    private javax.swing.JButton minus4;
-    private javax.swing.JButton minus5;
-    private javax.swing.JButton minus6;
-    private javax.swing.JButton minus7;
-    private javax.swing.JButton plus;
-    private javax.swing.JButton plus1;
-    private javax.swing.JButton plus2;
-    private javax.swing.JButton plus3;
-    private javax.swing.JButton plus4;
-    private javax.swing.JButton plus5;
-    private javax.swing.JButton plus6;
-    private javax.swing.JButton plus7;
     private javax.swing.JButton reservationsBtn;
     private javax.swing.JPanel reservationsPnl;
     private javax.swing.JTable reservationsTbl;
