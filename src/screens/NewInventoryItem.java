@@ -4,9 +4,17 @@
  */
 package screens;
 
+import classes.Database;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.io.File;
+import java.io.FileInputStream;
+import javax.swing.JFileChooser;
+import javax.swing.SwingWorker;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import utils.FontLoader;
 
 /**
@@ -14,6 +22,8 @@ import utils.FontLoader;
  * @author vctrd
  */
 public class NewInventoryItem extends javax.swing.JFrame {
+    private Blob pictureBlob;
+    
     FontLoader fontLoader = new FontLoader();
     Font inter;
     Font puritanBold;
@@ -125,13 +135,20 @@ public class NewInventoryItem extends javax.swing.JFrame {
         });
 
         panel1.setBackground(new java.awt.Color(248, 248, 248));
-        panel1.setEnabled(false);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Camera.png"))); // NOI18N
 
+        jLabel2.setBackground(new java.awt.Color(225, 225, 225));
         jLabel2.setFont(inter);
         jLabel2.setForeground(new java.awt.Color(129, 129, 129));
         jLabel2.setText("Upload image");
+        jLabel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
         panel1.setLayout(panel1Layout);
@@ -140,11 +157,11 @@ public class NewInventoryItem extends javax.swing.JFrame {
             .addGroup(panel1Layout.createSequentialGroup()
                 .addGap(276, 276, 276)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(280, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
-                .addContainerGap(269, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(132, 132, 132))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(274, 274, 274))
         );
         panel1Layout.setVerticalGroup(
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,7 +205,7 @@ public class NewInventoryItem extends javax.swing.JFrame {
                 .addComponent(savebutton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(deletebutton)
-                .addGap(0, 12, Short.MAX_VALUE))
+                .addGap(0, 8, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -243,13 +260,82 @@ public class NewInventoryItem extends javax.swing.JFrame {
     }//GEN-LAST:event_itemnameFocusLost
 
     private void savebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savebuttonActionPerformed
+        /// Assume that we haven't added it yet, because I am lazy.
 
+        var name = itemname.getText();
+        var quantity = Integer.parseInt(amount.getText());
+        var picture = pictureBlob;
+                
+        var query = "INSERT INTO laes.products (name, quantity, picture) " +
+                    "VALUES (?, ?, ?)";
+        try (var stmt = Database.sqlConnection.prepareStatement(query)) {
+            stmt.setString(1, name);
+            stmt.setInt(2, quantity);
+            stmt.setBlob(3, picture);
+            stmt.executeUpdate();
+            
+            System.out.println("Successfully saved item.");
+        } catch (SQLException exception) {
+            System.out.println("SQL Failed! Error: " + exception.getMessage());
+        }
+        System.out.println("Saved!");
     }//GEN-LAST:event_savebuttonActionPerformed
 
     private void deletebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletebuttonActionPerformed
         this.dispose();
     }//GEN-LAST:event_deletebuttonActionPerformed
 
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        // TODO add your handling code here:
+        
+        var chooser = new JFileChooser();
+        var filter = new FileNameExtensionFilter(
+            "JPG, GIF & PNG Images", 
+            "jpg", 
+            "jpeg", 
+            "gif",
+            "png"
+        );
+        
+        chooser.setFileFilter(filter);
+        chooser.showOpenDialog(null);
+        var f = chooser.getSelectedFile();
+        var filename = f.getAbsolutePath();
+        
+        System.out.println("The filename is " + filename);
+        SwingWorker sw = new SwingWorker() {
+            private Blob blob;
+            private byte[] bytes;
+            
+            @Override
+            protected Object doInBackground() throws Exception {
+//                Thread.sleep(5000);//simulate large image takes long to load
+                var file = new File(f.getAbsolutePath());
+                try (var fis = new FileInputStream(file)) {
+                    var buffer = new byte[(int)file.length()];
+                    fis.read(buffer);
+                    
+                    bytes = buffer;
+                }
+                        
+                
+                blob = Database.sqlConnection.createBlob();
+                blob.setBytes(1, bytes);
+//                ii = new ImageIcon(scaleImage(120, 120, ImageIO.read(new File(f.getAbsolutePath()))));
+                return null;
+            }
+
+            @Override
+            protected void done() { 
+                super.done();
+                System.out.println("The bytes are: " + bytes.length);
+                
+                pictureBlob = blob;
+            }
+        };
+        sw.execute();
+    }//GEN-LAST:event_jLabel2MouseClicked
+   
     /**
      * @param args the command line arguments
      */

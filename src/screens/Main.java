@@ -792,30 +792,6 @@ public class Main extends javax.swing.JFrame {
                         picture
                 );
                 
-                inventoryDisplayPanel.add(new ProductPanel(
-                        id,
-                        name,
-                        quantity,
-                        picture
-                ));
-                inventoryDisplayPanel.add(new ProductPanel(
-                        id,
-                        name,
-                        quantity,
-                        picture
-                ));
-                inventoryDisplayPanel.add(new ProductPanel(
-                        id,
-                        name,
-                        quantity,
-                        picture
-                ));
-                inventoryDisplayPanel.add(new ProductPanel(
-                        id,
-                        name,
-                        quantity,
-                        picture
-                ));
                 inventoryDisplayPanel.add(panel);   
             }
             

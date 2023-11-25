@@ -143,6 +143,7 @@ public class ProductPanel extends javax.swing.JPanel {
         decrementButton.setBackground(new java.awt.Color(192, 192, 192));
         decrementButton.setForeground(new java.awt.Color(64, 64, 64));
         decrementButton.setText("-");
+        decrementButton.setOpaque(true);
         decrementButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 decrementButtonActionPerformed(evt);
@@ -151,13 +152,17 @@ public class ProductPanel extends javax.swing.JPanel {
         buttonRow.add(decrementButton);
 
         productNameLabel.setAlignment(java.awt.Label.CENTER);
+        productNameLabel.setMaximumSize(new java.awt.Dimension(72, 20));
+        productNameLabel.setMinimumSize(new java.awt.Dimension(72, 20));
         productNameLabel.setName(""); // NOI18N
+        productNameLabel.setPreferredSize(new java.awt.Dimension(72, 20));
         productNameLabel.setText(productName);
         buttonRow.add(productNameLabel);
 
         incrementButton.setBackground(new java.awt.Color(192, 192, 192));
         incrementButton.setForeground(new java.awt.Color(64, 64, 64));
         incrementButton.setText("+");
+        incrementButton.setAlignmentY(0.0F);
         incrementButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 incrementButtonActionPerformed(evt);
