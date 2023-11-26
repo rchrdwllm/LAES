@@ -8,30 +8,38 @@ import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
 import javax.swing.ImageIcon;
+import javax.swing.SwingWorker;
+import screens.ItemDetails;
+import screens.Main;
 
 /**
  *
  * @author john michael
  */
 public class ProductPanel extends javax.swing.JPanel {
-    private int databaseId;
+    private Main main;
+    
+    private final int databaseId;
     private String productName;
     private int quantity;
     private Blob pictureBlob;
     
     /**
      * Creates new form Product
+     * @param main
      * @param databaseId
      * @param productName
      * @param quantity
      * @param pictureBlob
      */
     public ProductPanel(
+        Main main,
         int databaseId,
         String productName,
         int quantity,
         Blob pictureBlob
     ) {
+        this.main = main;
         this.databaseId = databaseId;
         this.productName = productName;
         this.quantity = quantity;
@@ -86,12 +94,18 @@ public class ProductPanel extends javax.swing.JPanel {
         imageRow.setPreferredSize(new java.awt.Dimension(183, 128));
 
         imageContainer.setBackground(new java.awt.Color(225, 225, 225));
+        imageContainer.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         productImageLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         productImageLabel.setText("image");
         productImageLabel.setToolTipText("");
         productImageLabel.setAlignmentX(0.5F);
         productImageLabel.setPreferredSize(new java.awt.Dimension(130, 130));
+        productImageLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                productImageLabelMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout imageContainerLayout = new javax.swing.GroupLayout(imageContainer);
         imageContainer.setLayout(imageContainerLayout);
@@ -155,7 +169,6 @@ public class ProductPanel extends javax.swing.JPanel {
         productNameLabel.setMaximumSize(new java.awt.Dimension(72, 20));
         productNameLabel.setMinimumSize(new java.awt.Dimension(72, 20));
         productNameLabel.setName(""); // NOI18N
-        productNameLabel.setPreferredSize(new java.awt.Dimension(72, 20));
         productNameLabel.setText(productName);
         buttonRow.add(productNameLabel);
 
@@ -182,6 +195,44 @@ public class ProductPanel extends javax.swing.JPanel {
         add(bottomRow);
     }// </editor-fold>//GEN-END:initComponents
 
+    public Main getMain() {
+        return main;
+    }
+    
+    public int getDatabaseId() {
+        return databaseId;
+    }
+    
+    public String getProductName() {
+        return productName;
+    }
+    
+    public void setProductName(String productName) {
+        this.productName = productName;
+        
+        renderProductName();
+    }
+    
+    public int getQuantity() {
+        return quantity;
+    }
+    
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+        
+        renderQuantity();
+    }
+    
+    public Blob getPictureBlob() {
+        return pictureBlob;
+    }
+    
+    public void setPictureBlob(Blob blob) {
+        this.pictureBlob = blob;
+        
+        renderPictureBlob();
+    }
+    
     private void decrementButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decrementButtonActionPerformed
         // TODO add your handling code here:
 
@@ -190,10 +241,7 @@ public class ProductPanel extends javax.swing.JPanel {
         }
         
         quantity -= 1;
-        
-        countLabel.setText("" + quantity + " pcs");
-        this.revalidate();
-        
+        renderQuantity();
         this.updateDatabase();
     }//GEN-LAST:event_decrementButtonActionPerformed
 
@@ -203,11 +251,20 @@ public class ProductPanel extends javax.swing.JPanel {
         quantity += 1;
         
         countLabel.setText("" + quantity + " pcs");
-        this.revalidate();
-        
+        renderQuantity();
         this.updateDatabase();
     }//GEN-LAST:event_incrementButtonActionPerformed
 
+    private void productImageLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productImageLabelMouseClicked
+        // TODO add your handling code here:
+        
+        System.out.println("You clicked on the product: '" + productName + "'.");
+        
+        var panel = new ItemDetails(this);
+        
+        panel.setVisible(true);
+    }//GEN-LAST:event_productImageLabelMouseClicked
+    
     private void updateDatabase() {
         try {
             var string = "UPDATE laes.products "
@@ -227,20 +284,46 @@ public class ProductPanel extends javax.swing.JPanel {
     
     private void initRender() {
         if (pictureBlob != null) {
-            try {
-                var blob = this.pictureBlob;
-                var stream = blob.getBinaryStream().readAllBytes();
-            
-                var imageIcon = new ImageIcon(stream);
-                productImageLabel.setIcon(imageIcon);
-            } catch (IOException exception) {
-                System.out.println("Failed reading the image. Error: " + exception.getMessage());
-            } catch (SQLException exception) {
-                System.out.println("SQL Failed! Error: " + exception.getMessage());
-            }
-            
+            renderPictureBlob();
         }
         System.out.println(pictureBlob);
+    }
+    
+    private void renderProductName() {
+        productNameLabel.setText(productName);
+        
+        this.repaint();
+        this.revalidate();
+    }
+    
+    private void renderQuantity() {
+        countLabel.setText("" + quantity + " pcs");
+    
+        this.repaint();
+        this.revalidate();
+    }
+    
+    private void renderPictureBlob() {
+        var worker = new SwingWorker() {
+            @Override
+            protected Object doInBackground()  {
+                try {
+                    var blob = pictureBlob;
+                    var stream = blob.getBinaryStream().readAllBytes();
+            
+                    var imageIcon = new ImageIcon(stream);
+                    productImageLabel.setIcon(imageIcon);
+                    revalidate();
+                } catch (IOException exception) {
+                    System.out.println("Failed reading the image. Error: " + exception.getMessage());
+                } catch (SQLException exception) {
+                    System.out.println("SQL Failed! Error: " + exception.getMessage());
+                }
+                
+                return null;
+            }
+        };
+        worker.execute();
     }
     
 

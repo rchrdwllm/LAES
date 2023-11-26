@@ -7,6 +7,7 @@ package screens;
 import classes.Database;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -22,6 +23,7 @@ import utils.FontLoader;
  * @author vctrd
  */
 public class NewInventoryItem extends javax.swing.JFrame {
+    private Main parent;
     private Blob pictureBlob;
     
     FontLoader fontLoader = new FontLoader();
@@ -30,8 +32,11 @@ public class NewInventoryItem extends javax.swing.JFrame {
 
     /**
      * Creates new form NewInventoryItem
+     * @param parent
      */
-    public NewInventoryItem() {
+    public NewInventoryItem(Main parent) {
+        this.parent = parent;
+        
         setFonts();
         initComponents();
         setFrameIcon();
@@ -268,19 +273,29 @@ public class NewInventoryItem extends javax.swing.JFrame {
                 
         var query = "INSERT INTO laes.products (name, quantity, picture) " +
                     "VALUES (?, ?, ?)";
-        try (var stmt = Database.sqlConnection.prepareStatement(query)) {
+        try (var stmt = Database.sqlConnection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, name);
             stmt.setInt(2, quantity);
             stmt.setBlob(3, picture);
             stmt.executeUpdate();
+                        
+            try (var keys = stmt.getGeneratedKeys()) {
+                if (keys.next()) {
+                    var id = keys.getInt(1);
+                    
+                    System.out.println("Successfully saved item with id " + id + ".");
+                    
+                    parent.addProduct(id, name, quantity, picture);
+                }
+            }
             
-            System.out.println("Successfully saved item.");
+            this.dispose();
         } catch (SQLException exception) {
             System.out.println("SQL Failed! Error: " + exception.getMessage());
         }
         System.out.println("Saved!");
     }//GEN-LAST:event_savebuttonActionPerformed
-
+    
     private void deletebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletebuttonActionPerformed
         this.dispose();
     }//GEN-LAST:event_deletebuttonActionPerformed
@@ -336,41 +351,41 @@ public class NewInventoryItem extends javax.swing.JFrame {
         sw.execute();
     }//GEN-LAST:event_jLabel2MouseClicked
    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewInventoryItem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewInventoryItem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewInventoryItem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewInventoryItem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new NewInventoryItem().setVisible(true);
-            }
-        });
-    }
+//    /**
+//     * @param args the command line arguments
+//     */
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(NewInventoryItem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(NewInventoryItem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(NewInventoryItem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(NewInventoryItem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new NewInventoryItem().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel addnewitempnl;

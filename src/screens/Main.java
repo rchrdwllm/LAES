@@ -13,6 +13,7 @@ import utils.FontLoader;
 import utils.WrapLayout;
 import classes.Database;
 import classes.ProductPanel;
+import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -541,6 +542,7 @@ public class Main extends javax.swing.JFrame {
         }
     });
 
+    inventoryScrollableArea.setBorder(null);
     inventoryScrollableArea.addMouseListener(new java.awt.event.MouseAdapter() {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
             inventoryScrollableAreaMouseClicked(evt);
@@ -769,6 +771,42 @@ public class Main extends javax.swing.JFrame {
 
         });
     }
+    
+    public void addProduct(int id, String productName, int quantity, Blob picture) {
+        if (productName == null) {
+            productName = "Unnamed product";
+        }
+                
+        var panel = new ProductPanel(
+            this,
+            id,
+            productName,
+            quantity,
+            picture
+        );
+        
+        products.add(panel);
+        inventoryDisplayPanel.add(panel);
+        
+        inventoryDisplayPanel.repaint();
+        inventoryDisplayPanel.revalidate();
+    }
+    
+    public void removeProduct(int id) {
+        for (var product : products) {
+            if (product.getDatabaseId() == id) {
+                /// Remove this brother.
+                
+                products.remove(product);
+                inventoryDisplayPanel.remove(product);
+                
+                inventoryDisplayPanel.repaint();
+                inventoryDisplayPanel.revalidate();
+                
+                break;
+            }
+        }
+    }
 
     private void setupProducts() {
         try (var statement = Database.sqlConnection.createStatement()) {
@@ -786,49 +824,20 @@ public class Main extends javax.swing.JFrame {
                 }
                 
                 var panel = new ProductPanel(
+                        this,
                         id,
                         name,
                         quantity,
                         picture
                 );
                 
-                inventoryDisplayPanel.add(panel);   
+        
+                products.add(panel);
+                inventoryDisplayPanel.add(panel);
             }
-            
         } catch (SQLException exception) {
-            
+            System.out.println("SQL Failed! Error: " + exception.getMessage());
         }
-//        String username = adminUsernameField.getText();
-//        String password = adminPasswordField.getText();
-//        
-//        try {
-//            var searchQuery = "SELECT * FROM laes.users WHERE username = ?";
-//            var searchStatement = Database.sqlConnection.prepareStatement(searchQuery);
-//            searchStatement.setString(1, username);
-//            var result = searchStatement.executeQuery();
-//            
-//            if (result.next()) {
-//                /// There was already a user with username.
-//                System.out.println("DEBUG: There is already a user with username '" + username +"'.");
-//                return;
-//            }
-//            
-//            var addQuery = "INSERT INTO laes.users (username, password) VALUES (?, ?)";
-//            var addStatement = Database.sqlConnection.prepareStatement(addQuery);
-//            addStatement.setString(1, username);
-//            addStatement.setString(2, password);
-//            addStatement.executeUpdate();
-//            
-//            System.out.println("User with username '" + username + "' was added successfully.");
-//            
-//            
-//            this.setVisible(false);
-//
-//            new Main().setVisible(true);
-//            this.dispose();
-//        } catch (SQLException e) {
-//            System.out.print("The query went wrong. The error was: " + e.toString());
-//        }
     }
     
     private void setFirstPanel() {
@@ -938,7 +947,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_searchInventoryFocusLost
 
     private void addItemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemBtnActionPerformed
-        NewInventoryItem newInventoryItem = new NewInventoryItem();
+        NewInventoryItem newInventoryItem = new NewInventoryItem(this);
         
         newInventoryItem.setVisible(true);
     }//GEN-LAST:event_addItemBtnActionPerformed
