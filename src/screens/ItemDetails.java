@@ -118,9 +118,9 @@ public class ItemDetails extends javax.swing.JFrame {
 
         clickableImagePanel.add(topPadding);
 
-        jPanel4.setBackground(null);
         jPanel4.setOpaque(false);
 
+        imageLabel.setFont(inter);
         imageLabel.setText("IMAGE");
         imageLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -154,6 +154,7 @@ public class ItemDetails extends javax.swing.JFrame {
 
         clickableImagePanel.add(jPanel1);
 
+        hintLabel.setFont(inter);
         hintLabel.setText("UPLOAD IMAGE");
         hintLabel.setName(""); // NOI18N
         jPanel3.add(hintLabel);
