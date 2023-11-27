@@ -5,6 +5,7 @@
 package classes;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
@@ -13,6 +14,7 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingWorker;
 import screens.ItemDetails;
 import screens.Main;
+import utils.FontLoader;
 
 /**
  *
@@ -20,6 +22,9 @@ import screens.Main;
  */
 public class ProductPanel extends javax.swing.JPanel {
     private Main main;
+    FontLoader fontLoader = new FontLoader();
+    Font inter;
+    Font interBold;
     
     private final int databaseId;
     private String productName;
@@ -47,6 +52,7 @@ public class ProductPanel extends javax.swing.JPanel {
         this.quantity = quantity;
         this.pictureBlob = pictureBlob;
 
+        setFonts();
         initComponents();
         initRender();
     }
@@ -71,28 +77,29 @@ public class ProductPanel extends javax.swing.JPanel {
         productNameLabel = new javax.swing.JLabel();
         incrementButton = new javax.swing.JButton();
         countRow = new javax.swing.JPanel();
-        countLabel = new java.awt.Label();
+        quantityLabel = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(243, 243, 243));
+        setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 16, 0));
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
 
-        topPadding.setBackground(new java.awt.Color(255, 255, 255));
+        topPadding.setBackground(new java.awt.Color(243, 243, 243));
         topPadding.setPreferredSize(new java.awt.Dimension(183, 12));
 
         javax.swing.GroupLayout topPaddingLayout = new javax.swing.GroupLayout(topPadding);
         topPadding.setLayout(topPaddingLayout);
         topPaddingLayout.setHorizontalGroup(
             topPaddingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 183, Short.MAX_VALUE)
+            .addGap(0, 234, Short.MAX_VALUE)
         );
         topPaddingLayout.setVerticalGroup(
             topPaddingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 14, Short.MAX_VALUE)
+            .addGap(0, 15, Short.MAX_VALUE)
         );
 
         add(topPadding);
 
-        imageRow.setBackground(new java.awt.Color(255, 255, 255));
+        imageRow.setBackground(new java.awt.Color(243, 243, 243));
         imageRow.setPreferredSize(new java.awt.Dimension(183, 128));
 
         imageContainer.setBackground(new java.awt.Color(225, 225, 225));
@@ -134,31 +141,35 @@ public class ProductPanel extends javax.swing.JPanel {
 
         add(imageRow);
 
-        bottomPadding.setBackground(new java.awt.Color(255, 255, 255));
+        bottomPadding.setBackground(new java.awt.Color(243, 243, 243));
         bottomPadding.setPreferredSize(new java.awt.Dimension(183, 12));
 
         javax.swing.GroupLayout bottomPaddingLayout = new javax.swing.GroupLayout(bottomPadding);
         bottomPadding.setLayout(bottomPaddingLayout);
         bottomPaddingLayout.setHorizontalGroup(
             bottomPaddingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 183, Short.MAX_VALUE)
+            .addGap(0, 234, Short.MAX_VALUE)
         );
         bottomPaddingLayout.setVerticalGroup(
             bottomPaddingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 14, Short.MAX_VALUE)
+            .addGap(0, 15, Short.MAX_VALUE)
         );
 
         add(bottomPadding);
 
-        bottomRow.setBackground(new java.awt.Color(255, 255, 255));
+        bottomRow.setBackground(new java.awt.Color(243, 243, 243));
         bottomRow.setPreferredSize(new java.awt.Dimension(183, 64));
         bottomRow.setLayout(new javax.swing.BoxLayout(bottomRow, javax.swing.BoxLayout.Y_AXIS));
 
         buttonRow.setBackground(new java.awt.Color(255, 255, 255));
+        buttonRow.setOpaque(false);
 
-        decrementButton.setBackground(new java.awt.Color(192, 192, 192));
+        decrementButton.setBackground(new java.awt.Color(233, 233, 233));
+        decrementButton.setFont(inter);
         decrementButton.setForeground(new java.awt.Color(64, 64, 64));
         decrementButton.setText("-");
+        decrementButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 12, 8, 12));
+        decrementButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         decrementButton.setOpaque(true);
         decrementButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -167,6 +178,8 @@ public class ProductPanel extends javax.swing.JPanel {
         });
         buttonRow.add(decrementButton);
 
+        productNameLabel.setFont(interBold);
+        productNameLabel.setForeground(new java.awt.Color(129, 129, 129));
         productNameLabel.setText(productName);
         productNameLabel.setPreferredSize(new Dimension(72, 16));
         productNameLabel.setMinimumSize(new Dimension(72, 16));
@@ -174,10 +187,13 @@ public class ProductPanel extends javax.swing.JPanel {
         productNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
         buttonRow.add(productNameLabel);
 
-        incrementButton.setBackground(new java.awt.Color(192, 192, 192));
+        incrementButton.setBackground(new java.awt.Color(233, 233, 233));
+        incrementButton.setFont(inter);
         incrementButton.setForeground(new java.awt.Color(64, 64, 64));
         incrementButton.setText("+");
         incrementButton.setAlignmentY(0.0F);
+        incrementButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 12, 8, 12));
+        incrementButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         incrementButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 incrementButtonActionPerformed(evt);
@@ -188,15 +204,23 @@ public class ProductPanel extends javax.swing.JPanel {
         bottomRow.add(buttonRow);
 
         countRow.setBackground(new java.awt.Color(255, 255, 255));
+        countRow.setOpaque(false);
 
-        countLabel.setText("" + quantity + " pcs");
-        countRow.add(countLabel);
+        quantityLabel.setFont(inter);
+        quantityLabel.setForeground(new java.awt.Color(129, 129, 129));
+        quantityLabel.setText(Integer.toString(quantity) + " pcs");
+        countRow.add(quantityLabel);
 
         bottomRow.add(countRow);
 
         add(bottomRow);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void setFonts() {
+        inter = fontLoader.interRegular(12);
+        interBold = fontLoader.interBold(12);
+    }
+    
     public Main getMain() {
         return main;
     }
@@ -252,7 +276,7 @@ public class ProductPanel extends javax.swing.JPanel {
         
         quantity += 1;
         
-        countLabel.setText("" + quantity + " pcs");
+        quantityLabel.setText("" + quantity + " pcs");
         renderQuantity();
         this.updateDatabase();
     }//GEN-LAST:event_incrementButtonActionPerformed
@@ -299,7 +323,7 @@ public class ProductPanel extends javax.swing.JPanel {
     }
     
     private void renderQuantity() {
-        countLabel.setText("" + quantity + " pcs");
+        quantityLabel.setText("" + quantity + " pcs");
     
         this.repaint();
         this.revalidate();
@@ -333,7 +357,6 @@ public class ProductPanel extends javax.swing.JPanel {
     private javax.swing.JPanel bottomPadding;
     private javax.swing.JPanel bottomRow;
     private javax.swing.JPanel buttonRow;
-    private java.awt.Label countLabel;
     private javax.swing.JPanel countRow;
     private javax.swing.JButton decrementButton;
     private javax.swing.JPanel imageContainer;
@@ -341,6 +364,7 @@ public class ProductPanel extends javax.swing.JPanel {
     private javax.swing.JButton incrementButton;
     private javax.swing.JLabel productImageLabel;
     private javax.swing.JLabel productNameLabel;
+    private javax.swing.JLabel quantityLabel;
     private javax.swing.JPanel topPadding;
     // End of variables declaration//GEN-END:variables
 }
