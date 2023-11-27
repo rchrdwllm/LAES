@@ -200,6 +200,8 @@ public class ItemDetails extends javax.swing.JFrame {
             stmt.setBlob(3, pictureBlob);
             stmt.setInt(4, id);
             stmt.executeUpdate();
+            
+            System.out.println("Updated product with productId " + id);
         } catch (SQLException exception) { 
             System.out.println("SQL Failed! Error: " + exception.getMessage());
         }
