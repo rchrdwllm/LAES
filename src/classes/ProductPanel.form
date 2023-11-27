@@ -174,20 +174,15 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="decrementButtonActionPerformed"/>
               </Events>
             </Component>
-            <Component class="java.awt.Label" name="productNameLabel">
+            <Component class="javax.swing.JLabel" name="productNameLabel">
               <Properties>
-                <Property name="alignment" type="int" value="1"/>
-                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[72, 20]"/>
-                </Property>
-                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[72, 20]"/>
-                </Property>
-                <Property name="name" type="java.lang.String" value="" noResource="true"/>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="productName" type="code"/>
                 </Property>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="productNameLabel.setPreferredSize(new Dimension(72, 16));&#xa;productNameLabel.setMinimumSize(new Dimension(72, 16));&#xa;productNameLabel.setMaximumSize(new Dimension(72, 16));&#xa;productNameLabel.setHorizontalAlignment(SwingConstants.CENTER);"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JButton" name="incrementButton">
               <Properties>

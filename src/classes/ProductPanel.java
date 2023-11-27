@@ -4,10 +4,12 @@
  */
 package classes;
 
+import java.awt.Dimension;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
 import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
 import javax.swing.SwingWorker;
 import screens.ItemDetails;
 import screens.Main;
@@ -66,7 +68,7 @@ public class ProductPanel extends javax.swing.JPanel {
         bottomRow = new javax.swing.JPanel();
         buttonRow = new javax.swing.JPanel();
         decrementButton = new javax.swing.JButton();
-        productNameLabel = new java.awt.Label();
+        productNameLabel = new javax.swing.JLabel();
         incrementButton = new javax.swing.JButton();
         countRow = new javax.swing.JPanel();
         countLabel = new java.awt.Label();
@@ -165,11 +167,11 @@ public class ProductPanel extends javax.swing.JPanel {
         });
         buttonRow.add(decrementButton);
 
-        productNameLabel.setAlignment(java.awt.Label.CENTER);
-        productNameLabel.setMaximumSize(new java.awt.Dimension(72, 20));
-        productNameLabel.setMinimumSize(new java.awt.Dimension(72, 20));
-        productNameLabel.setName(""); // NOI18N
         productNameLabel.setText(productName);
+        productNameLabel.setPreferredSize(new Dimension(72, 16));
+        productNameLabel.setMinimumSize(new Dimension(72, 16));
+        productNameLabel.setMaximumSize(new Dimension(72, 16));
+        productNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
         buttonRow.add(productNameLabel);
 
         incrementButton.setBackground(new java.awt.Color(192, 192, 192));
@@ -338,7 +340,7 @@ public class ProductPanel extends javax.swing.JPanel {
     private javax.swing.JPanel imageRow;
     private javax.swing.JButton incrementButton;
     private javax.swing.JLabel productImageLabel;
-    private java.awt.Label productNameLabel;
+    private javax.swing.JLabel productNameLabel;
     private javax.swing.JPanel topPadding;
     // End of variables declaration//GEN-END:variables
 }

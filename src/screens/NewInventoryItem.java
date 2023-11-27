@@ -140,6 +140,12 @@ public class NewInventoryItem extends javax.swing.JFrame {
         });
 
         panel1.setBackground(new java.awt.Color(248, 248, 248));
+        panel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        panel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panel1MouseClicked(evt);
+            }
+        });
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Camera.png"))); // NOI18N
 
@@ -147,8 +153,6 @@ public class NewInventoryItem extends javax.swing.JFrame {
         jLabel2.setFont(inter);
         jLabel2.setForeground(new java.awt.Color(129, 129, 129));
         jLabel2.setText("Upload image");
-        jLabel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel2MouseClicked(evt);
@@ -210,7 +214,7 @@ public class NewInventoryItem extends javax.swing.JFrame {
                 .addComponent(savebutton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(deletebutton)
-                .addGap(0, 8, Short.MAX_VALUE))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -302,6 +306,10 @@ public class NewInventoryItem extends javax.swing.JFrame {
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void panel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel1MouseClicked
+        // TODO add your handling code here:
         
         var chooser = new JFileChooser();
         var filter = new FileNameExtensionFilter(
@@ -336,7 +344,7 @@ public class NewInventoryItem extends javax.swing.JFrame {
                 
                 blob = Database.sqlConnection.createBlob();
                 blob.setBytes(1, bytes);
-//                ii = new ImageIcon(scaleImage(120, 120, ImageIO.read(new File(f.getAbsolutePath()))));
+                
                 return null;
             }
 
@@ -349,7 +357,7 @@ public class NewInventoryItem extends javax.swing.JFrame {
             }
         };
         sw.execute();
-    }//GEN-LAST:event_jLabel2MouseClicked
+    }//GEN-LAST:event_panel1MouseClicked
    
 //    /**
 //     * @param args the command line arguments
