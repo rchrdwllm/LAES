@@ -6,6 +6,7 @@ package classes;
 
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
@@ -104,6 +105,8 @@ public class ProductPanel extends javax.swing.JPanel {
 
         imageContainer.setBackground(new java.awt.Color(225, 225, 225));
         imageContainer.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        imageContainer.setMaximumSize(new java.awt.Dimension(130, 130));
+        imageContainer.setMinimumSize(new java.awt.Dimension(130, 130));
 
         productImageLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         productImageLabel.setText("image");
@@ -337,7 +340,9 @@ public class ProductPanel extends javax.swing.JPanel {
                     var blob = pictureBlob;
                     var stream = blob.getBinaryStream().readAllBytes();
             
-                    var imageIcon = new ImageIcon(stream);
+                    var imageIcon = scaleImageIcon(new ImageIcon(stream), 130, 130);
+                    
+                    productImageLabel.setText("");
                     productImageLabel.setIcon(imageIcon);
                     revalidate();
                 } catch (IOException exception) {
@@ -352,6 +357,15 @@ public class ProductPanel extends javax.swing.JPanel {
         worker.execute();
     }
     
+    private static ImageIcon scaleImageIcon(ImageIcon originalIcon, int width, int height) {
+        Image originalImage = originalIcon.getImage();
+
+        // Create a scaled image
+        Image scaledImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+
+        // Create a new ImageIcon from the scaled image
+        return new ImageIcon(scaledImage);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bottomPadding;
