@@ -41,7 +41,7 @@ public class Database {
             "  id       INT PRIMARY KEY AUTO_INCREMENT," +
             "  name     VARCHAR(255)," +
             "  quantity INT," +
-            "  picture  BLOB" +
+            "  picture  LONGBLOB" +
             ")",
             "CREATE TABLE IF NOT EXISTS laes.reservations (" +
             "  contactNumber    VARCHAR(255)," +
