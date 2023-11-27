@@ -10,10 +10,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileInputStream;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.SwingConstants;
 import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import utils.FontLoader;
@@ -23,7 +26,7 @@ import utils.FontLoader;
  * @author vctrd
  */
 public class NewInventoryItem extends javax.swing.JFrame {
-    private Main parent;
+    private final Main parent;
     private Blob pictureBlob;
     
     FontLoader fontLoader = new FontLoader();
@@ -69,8 +72,8 @@ public class NewInventoryItem extends javax.swing.JFrame {
         savebutton = new javax.swing.JButton();
         deletebutton = new javax.swing.JButton();
         panel1 = new java.awt.Panel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        imageLabel = new javax.swing.JLabel();
+        hintLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Add inventory item");
@@ -147,15 +150,19 @@ public class NewInventoryItem extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Camera.png"))); // NOI18N
+        imageLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Camera.png"))); // NOI18N
+        imageLabel.setMaximumSize(new java.awt.Dimension(96, 96));
+        imageLabel.setMinimumSize(new java.awt.Dimension(96, 96));
+        imageLabel.setPreferredSize(new java.awt.Dimension(96, 96));
+        imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        jLabel2.setBackground(new java.awt.Color(225, 225, 225));
-        jLabel2.setFont(inter);
-        jLabel2.setForeground(new java.awt.Color(129, 129, 129));
-        jLabel2.setText("Upload image");
-        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+        hintLabel.setBackground(new java.awt.Color(225, 225, 225));
+        hintLabel.setFont(inter);
+        hintLabel.setForeground(new java.awt.Color(129, 129, 129));
+        hintLabel.setText("Upload image");
+        hintLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel2MouseClicked(evt);
+                hintLabelMouseClicked(evt);
             }
         });
 
@@ -163,23 +170,23 @@ public class NewInventoryItem extends javax.swing.JFrame {
         panel1.setLayout(panel1Layout);
         panel1Layout.setHorizontalGroup(
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel1Layout.createSequentialGroup()
-                .addGap(276, 276, 276)
-                .addComponent(jLabel1)
-                .addContainerGap(280, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
+                .addComponent(hintLabel)
                 .addGap(274, 274, 274))
+            .addGroup(panel1Layout.createSequentialGroup()
+                .addGap(261, 261, 261)
+                .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel1Layout.setVerticalGroup(
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel1Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(jLabel1)
+                .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addComponent(hintLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout addnewitempnlLayout = new javax.swing.GroupLayout(addnewitempnl);
@@ -190,15 +197,14 @@ public class NewInventoryItem extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addGroup(addnewitempnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(newitem, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(savebutton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, addnewitempnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, addnewitempnlLayout.createSequentialGroup()
-                            .addComponent(itemname, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(amount, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(deletebutton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 621, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                    .addComponent(deletebutton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, addnewitempnlLayout.createSequentialGroup()
+                        .addComponent(itemname, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(amount, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(savebutton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
         addnewitempnlLayout.setVerticalGroup(
             addnewitempnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -304,9 +310,9 @@ public class NewInventoryItem extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_deletebuttonActionPerformed
 
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+    private void hintLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hintLabelMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel2MouseClicked
+    }//GEN-LAST:event_hintLabelMouseClicked
 
     private void panel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel1MouseClicked
         // TODO add your handling code here:
@@ -323,6 +329,10 @@ public class NewInventoryItem extends javax.swing.JFrame {
         chooser.setFileFilter(filter);
         chooser.showOpenDialog(null);
         var f = chooser.getSelectedFile();
+        if (f == null) {
+            return;
+        }
+        
         var filename = f.getAbsolutePath();
         
         System.out.println("The filename is " + filename);
@@ -333,7 +343,7 @@ public class NewInventoryItem extends javax.swing.JFrame {
             @Override
             protected Object doInBackground() throws Exception {
 //                Thread.sleep(5000);//simulate large image takes long to load
-                var file = new File(f.getAbsolutePath());
+                var file = new File(filename);
                 try (var fis = new FileInputStream(file)) {
                     var buffer = new byte[(int)file.length()];
                     fis.read(buffer);
@@ -354,11 +364,38 @@ public class NewInventoryItem extends javax.swing.JFrame {
                 System.out.println("The bytes are: " + bytes.length);
                 
                 pictureBlob = blob;
+                renderBlob();
             }
         };
         sw.execute();
     }//GEN-LAST:event_panel1MouseClicked
    
+    private void renderBlob() {
+        if (pictureBlob == null) {
+            /// Since there is no image, we just let it be.
+            
+            imageLabel.setText("");
+            imageLabel.setIcon(new ImageIcon(getClass().getResource("/assets/Camera.png")));
+            hintLabel.setText("Upload image");
+            
+            return;
+        }
+        
+        System.out.println("There is a blob!");
+        
+        try {
+            byte[] bytes = pictureBlob.getBytes(1l, (int)pictureBlob.length());
+            var imageIcon = new ImageIcon(bytes);
+            var scaled = scaleImageIcon(imageIcon, 96, 96);
+            
+            imageLabel.setText("");
+            imageLabel.setIcon(scaled);
+            hintLabel.setText("Change image");
+        } catch (SQLException exception) {
+            System.out.println("SQL Failed! Error: " + exception.getMessage());
+        }
+    }
+    
 //    /**
 //     * @param args the command line arguments
 //     */
@@ -395,13 +432,25 @@ public class NewInventoryItem extends javax.swing.JFrame {
 //        });
 //    }
 
+    
+    
+    private static ImageIcon scaleImageIcon(ImageIcon originalIcon, int width, int height) {
+        Image originalImage = originalIcon.getImage();
+
+        // Create a scaled image
+        Image scaledImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+
+        // Create a new ImageIcon from the scaled image
+        return new ImageIcon(scaledImage);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel addnewitempnl;
     private javax.swing.JTextField amount;
     private javax.swing.JButton deletebutton;
+    private javax.swing.JLabel hintLabel;
+    private javax.swing.JLabel imageLabel;
     private javax.swing.JTextField itemname;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel newitem;
     private java.awt.Panel panel1;
     private javax.swing.JButton savebutton;

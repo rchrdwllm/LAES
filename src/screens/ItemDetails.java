@@ -7,12 +7,15 @@ package screens;
 import classes.Database;
 import classes.ProductPanel;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileInputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.SwingConstants;
 import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import utils.FontLoader;
@@ -22,6 +25,9 @@ import utils.FontLoader;
  * @author ruki
  */
 public class ItemDetails extends javax.swing.JFrame {
+    static final int PICTURE_WIDTH = 96;
+    static final int PICTURE_HEIGHT = 96;
+    
     private ProductPanel productPanel;
     private Blob pictureBlob;
     Font inter;
@@ -34,10 +40,12 @@ public class ItemDetails extends javax.swing.JFrame {
      */
     public ItemDetails(ProductPanel productPanel) {
         this.productPanel = productPanel;
+        this.pictureBlob = this.productPanel.getPictureBlob();
         
         setFonts();
         initComponents();
         setFrameIcon();
+        setShownImage();
     }
 
     /**
@@ -52,12 +60,18 @@ public class ItemDetails extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         productNamePanel = new javax.swing.JTextField();
+        clickableImagePanel = new javax.swing.JPanel();
+        topPadding = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        imageLabel = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        hintLabel = new javax.swing.JLabel();
+        bottomPadding = new javax.swing.JPanel();
         quantityPanel = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        saveButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
+        cancelButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Edit product");
@@ -78,36 +92,90 @@ public class ItemDetails extends javax.swing.JFrame {
         productNamePanel.setText(productPanel.getProductName());
         productNamePanel.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(218, 218, 218)), javax.swing.BorderFactory.createEmptyBorder(0, 16, 0, 16)));
 
-        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+        clickableImagePanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        clickableImagePanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel1MouseClicked(evt);
+                clickableImagePanelMouseClicked(evt);
             }
         });
+        clickableImagePanel.setLayout(new javax.swing.BoxLayout(clickableImagePanel, javax.swing.BoxLayout.Y_AXIS));
 
-        jLabel2.setBackground(new java.awt.Color(248, 248, 248));
-        jLabel2.setFont(inter);
-        jLabel2.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("IMAGE GOES HERE");
-        jLabel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(218, 218, 218)));
+        topPadding.setMaximumSize(new java.awt.Dimension(0, 8));
+        topPadding.setMinimumSize(new java.awt.Dimension(0, 8));
+        topPadding.setPreferredSize(new java.awt.Dimension(0, 8));
+        topPadding.setRequestFocusEnabled(false);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+        javax.swing.GroupLayout topPaddingLayout = new javax.swing.GroupLayout(topPadding);
+        topPadding.setLayout(topPaddingLayout);
+        topPaddingLayout.setHorizontalGroup(
+            topPaddingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+        topPaddingLayout.setVerticalGroup(
+            topPaddingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 8, Short.MAX_VALUE)
         );
+
+        clickableImagePanel.add(topPadding);
+
+        jPanel4.setBackground(null);
+        jPanel4.setOpaque(false);
+
+        imageLabel.setText("IMAGE");
+        imageLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        imageLabel.setMaximumSize(new java.awt.Dimension(96, 96));
+        imageLabel.setMinimumSize(new java.awt.Dimension(96, 96));
+        imageLabel.setName(""); // NOI18N
+        imageLabel.setPreferredSize(new java.awt.Dimension(96, 96));
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel4Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel4Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+
+        jPanel1.add(jPanel4);
+
+        clickableImagePanel.add(jPanel1);
+
+        hintLabel.setText("UPLOAD IMAGE");
+        hintLabel.setName(""); // NOI18N
+        jPanel3.add(hintLabel);
+
+        clickableImagePanel.add(jPanel3);
+
+        bottomPadding.setMaximumSize(new java.awt.Dimension(0, 8));
+        bottomPadding.setMinimumSize(new java.awt.Dimension(0, 8));
+        bottomPadding.setRequestFocusEnabled(false);
+
+        javax.swing.GroupLayout bottomPaddingLayout = new javax.swing.GroupLayout(bottomPadding);
+        bottomPadding.setLayout(bottomPaddingLayout);
+        bottomPaddingLayout.setHorizontalGroup(
+            bottomPaddingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        bottomPaddingLayout.setVerticalGroup(
+            bottomPaddingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 8, Short.MAX_VALUE)
+        );
+
+        clickableImagePanel.add(bottomPadding);
 
         quantityPanel.setBackground(new java.awt.Color(248, 248, 248));
         quantityPanel.setFont(inter);
@@ -121,39 +189,39 @@ public class ItemDetails extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(40, 40, 40));
-        jButton1.setFont(inter);
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Save");
-        jButton1.setBorderPainted(false);
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        saveButton.setBackground(new java.awt.Color(40, 40, 40));
+        saveButton.setFont(inter);
+        saveButton.setForeground(new java.awt.Color(255, 255, 255));
+        saveButton.setText("Save");
+        saveButton.setBorderPainted(false);
+        saveButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                saveButtonActionPerformed(evt);
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(197, 59, 59));
-        jButton2.setFont(inter);
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Delete");
-        jButton2.setBorderPainted(false);
-        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        deleteButton.setBackground(new java.awt.Color(197, 59, 59));
+        deleteButton.setFont(inter);
+        deleteButton.setForeground(new java.awt.Color(255, 255, 255));
+        deleteButton.setText("Delete");
+        deleteButton.setBorderPainted(false);
+        deleteButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                deleteButtonActionPerformed(evt);
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(245, 245, 245));
-        jButton3.setFont(inter);
-        jButton3.setForeground(new java.awt.Color(129, 129, 129));
-        jButton3.setText("Cancel");
-        jButton3.setBorderPainted(false);
-        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        cancelButton.setBackground(new java.awt.Color(245, 245, 245));
+        cancelButton.setFont(inter);
+        cancelButton.setForeground(new java.awt.Color(129, 129, 129));
+        cancelButton.setText("Cancel");
+        cancelButton.setBorderPainted(false);
+        cancelButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                cancelButtonActionPerformed(evt);
             }
         });
 
@@ -164,15 +232,15 @@ public class ItemDetails extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(clickableImagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(productNamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(quantityPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 666, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(saveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 666, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -185,13 +253,13 @@ public class ItemDetails extends javax.swing.JFrame {
                     .addComponent(productNamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(quantityPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(clickableImagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -219,11 +287,48 @@ public class ItemDetails extends javax.swing.JFrame {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("../assets/logo.png")));
     }
     
+    private void setShownImage() {
+        if (pictureBlob == null) {
+            /// Since there is no image, we just let it be.
+            
+            imageLabel.setText("");
+            imageLabel.setIcon(new ImageIcon(getClass().getResource("/assets/Camera.png")));
+            hintLabel.setText("Upload image");
+            
+            return;
+        }
+        
+        System.out.println("There is a blob!");
+        
+        try {
+            byte[] bytes = pictureBlob.getBytes(1l, (int)pictureBlob.length());
+            var imageIcon = new ImageIcon(bytes);
+            var scaled = scaleImageIcon(imageIcon, 96, 96);
+            
+            imageLabel.setText("");
+            imageLabel.setIcon(scaled);
+            hintLabel.setText("Change image");
+        } catch (SQLException exception) {
+            System.out.println("SQL Failed! Error: " + exception.getMessage());
+        }
+    }
+    
+    
+    private static ImageIcon scaleImageIcon(ImageIcon originalIcon, int width, int height) {
+        Image originalImage = originalIcon.getImage();
+
+        // Create a scaled image
+        Image scaledImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+
+        // Create a new ImageIcon from the scaled image
+        return new ImageIcon(scaledImage);
+    }
+    
     private void quantityPanelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quantityPanelActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_quantityPanelActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         // TODO add your handling code here:
         
         /// Get the fields.
@@ -255,9 +360,9 @@ public class ItemDetails extends javax.swing.JFrame {
         productPanel.setPictureBlob(pictureBlob);
         
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_saveButtonActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         // TODO add your handling code here:
         
         var id = productPanel.getDatabaseId();
@@ -278,18 +383,15 @@ public class ItemDetails extends javax.swing.JFrame {
         // remove this from the ui.
         productPanel.getMain().removeProduct(id);
         this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_deleteButtonActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        // TODO add your handling code here:  
         this.dispose();
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_cancelButtonActionPerformed
 
-    private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
+    private void clickableImagePanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clickableImagePanelMouseClicked
         // TODO add your handling code here:
-        
-        
         var chooser = new JFileChooser();
         var filter = new FileNameExtensionFilter(
             "JPG, GIF & PNG Images", 
@@ -337,21 +439,29 @@ public class ItemDetails extends javax.swing.JFrame {
                 System.out.println("The bytes are: " + bytes.length);
                 
                 pictureBlob = blob;
+                setShownImage();
+                
             }
         };
         sw.execute();
-    }//GEN-LAST:event_jPanel1MouseClicked
+    }//GEN-LAST:event_clickableImagePanelMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JPanel bottomPadding;
+    private javax.swing.JButton cancelButton;
+    private javax.swing.JPanel clickableImagePanel;
+    private javax.swing.JButton deleteButton;
+    private javax.swing.JLabel hintLabel;
+    private javax.swing.JLabel imageLabel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JTextField productNamePanel;
     private javax.swing.JTextField quantityPanel;
+    private javax.swing.JButton saveButton;
+    private javax.swing.JPanel topPadding;
     // End of variables declaration//GEN-END:variables
 }
