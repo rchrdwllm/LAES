@@ -119,6 +119,7 @@ public class Main extends javax.swing.JFrame {
     reservationsBtn.setText("  Reservations");
     reservationsBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16));
     reservationsBtn.setBorderPainted(false);
+    reservationsBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     reservationsBtn.setFocusPainted(false);
     reservationsBtn.setFocusable(false);
     reservationsBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -128,12 +129,14 @@ public class Main extends javax.swing.JFrame {
         }
     });
 
+    customersBtn.setBackground(new java.awt.Color(255, 255, 255));
     customersBtn.setFont(inter);
     customersBtn.setForeground(new java.awt.Color(35, 35, 35));
     customersBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/UserOutline.png"))); // NOI18N
     customersBtn.setText("  Customers");
     customersBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16));
     customersBtn.setBorderPainted(false);
+    customersBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     customersBtn.setFocusPainted(false);
     customersBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     customersBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -142,12 +145,14 @@ public class Main extends javax.swing.JFrame {
         }
     });
 
+    inventoryBtn.setBackground(new java.awt.Color(255, 255, 255));
     inventoryBtn.setFont(inter);
     inventoryBtn.setForeground(new java.awt.Color(35, 35, 35));
     inventoryBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ArchiveOutline.png"))); // NOI18N
     inventoryBtn.setText("  Inventory");
     inventoryBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16));
     inventoryBtn.setBorderPainted(false);
+    inventoryBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     inventoryBtn.setFocusPainted(false);
     inventoryBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     inventoryBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -156,12 +161,14 @@ public class Main extends javax.swing.JFrame {
         }
     });
 
+    aboutBtn.setBackground(new java.awt.Color(255, 255, 255));
     aboutBtn.setFont(inter);
     aboutBtn.setForeground(new java.awt.Color(35, 35, 35));
     aboutBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ExclamationCircleOutline.png"))); // NOI18N
     aboutBtn.setText("  About");
     aboutBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16));
     aboutBtn.setBorderPainted(false);
+    aboutBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     aboutBtn.setFocusPainted(false);
     aboutBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     aboutBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -405,7 +412,7 @@ public class Main extends javax.swing.JFrame {
             .addComponent(searchCustomers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(18, 18, 18)
             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(52, Short.MAX_VALUE))
+            .addContainerGap(48, Short.MAX_VALUE))
     );
 
     mainPnl.add(customersPnl, "card2");
@@ -542,7 +549,11 @@ public class Main extends javax.swing.JFrame {
         }
     });
 
+    contentPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+    inventoryScrollableArea.setBackground(new java.awt.Color(255, 255, 255));
     inventoryScrollableArea.setBorder(null);
+    inventoryScrollableArea.setOpaque(true);
     inventoryScrollableArea.addMouseListener(new java.awt.event.MouseAdapter() {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
             inventoryScrollableAreaMouseClicked(evt);
@@ -556,7 +567,6 @@ public class Main extends javax.swing.JFrame {
 
     inventoryDisplayPanel.setBackground(new java.awt.Color(255, 255, 255));
     inventoryDisplayPanel.setDoubleBuffered(false);
-    inventoryDisplayPanel.setOpaque(false);
     inventoryScrollableArea.setViewportView(inventoryDisplayPanel);
 
     javax.swing.GroupLayout contentPanelLayout = new javax.swing.GroupLayout(contentPanel);
@@ -679,7 +689,7 @@ public class Main extends javax.swing.JFrame {
     }
     
     private void postInitForInventory() {
-        inventoryDisplayPanel.setLayout(new WrapLayout());
+        inventoryDisplayPanel.setLayout(new WrapLayout(WrapLayout.LEFT));
     }
     
     private void setFonts() {
@@ -852,6 +862,11 @@ public class Main extends javax.swing.JFrame {
         mainPnl.add(customersPnl);
         mainPnl.repaint();
         mainPnl.revalidate();
+        
+        reservationsBtn.setBackground(new Color(255,255,255));
+        customersBtn.setBackground(new Color(248,248,248));
+        inventoryBtn.setBackground(new Color(255,255,255));
+        aboutBtn.setBackground(new Color(255,255,255));
     }//GEN-LAST:event_customersBtnActionPerformed
 
     private void inventoryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inventoryBtnActionPerformed
@@ -859,6 +874,11 @@ public class Main extends javax.swing.JFrame {
         mainPnl.add(inventoryPnl);
         mainPnl.repaint();
         mainPnl.revalidate();
+        
+        reservationsBtn.setBackground(new Color(255,255,255));
+        inventoryBtn.setBackground(new Color(248,248,248));
+        customersBtn.setBackground(new Color(255,255,255));
+        aboutBtn.setBackground(new Color(255,255,255));
     }//GEN-LAST:event_inventoryBtnActionPerformed
 
     private void aboutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutBtnActionPerformed
@@ -866,6 +886,11 @@ public class Main extends javax.swing.JFrame {
         mainPnl.add(aboutPnl);
         mainPnl.repaint();
         mainPnl.revalidate();
+        
+        reservationsBtn.setBackground(new Color(255,255,255));
+        aboutBtn.setBackground(new Color(248,248,248));
+        customersBtn.setBackground(new Color(255,255,255));
+        inventoryBtn.setBackground(new Color(255,255,255));
     }//GEN-LAST:event_aboutBtnActionPerformed
 
     private void reservationsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservationsBtnActionPerformed
@@ -873,6 +898,11 @@ public class Main extends javax.swing.JFrame {
         mainPnl.add(reservationsPnl);
         mainPnl.repaint();
         mainPnl.revalidate();
+        
+        customersBtn.setBackground(new Color(255,255,255));
+        reservationsBtn.setBackground(new Color(248,248,248));
+        inventoryBtn.setBackground(new Color(255,255,255));
+        aboutBtn.setBackground(new Color(255,255,255));
     }//GEN-LAST:event_reservationsBtnActionPerformed
 
     private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
