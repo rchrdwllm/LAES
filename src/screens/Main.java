@@ -573,17 +573,14 @@ public class Main extends javax.swing.JFrame {
     contentPanel.setLayout(contentPanelLayout);
     contentPanelLayout.setHorizontalGroup(
         contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(contentPanelLayout.createSequentialGroup()
-            .addGap(22, 22, 22)
-            .addComponent(inventoryScrollableArea, javax.swing.GroupLayout.PREFERRED_SIZE, 935, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addComponent(inventoryScrollableArea)
     );
     contentPanelLayout.setVerticalGroup(
         contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, contentPanelLayout.createSequentialGroup()
-            .addContainerGap(25, Short.MAX_VALUE)
-            .addComponent(inventoryScrollableArea, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(20, 20, 20))
+        .addGroup(contentPanelLayout.createSequentialGroup()
+            .addContainerGap()
+            .addComponent(inventoryScrollableArea, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+            .addContainerGap())
     );
 
     javax.swing.GroupLayout inventoryPnlLayout = new javax.swing.GroupLayout(inventoryPnl);
