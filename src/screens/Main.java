@@ -56,6 +56,7 @@ public class Main extends javax.swing.JFrame {
         setupProducts();
         
         postInitForInventory();
+        setupInventorySearch();
     }
 
     /**
@@ -845,6 +846,64 @@ public class Main extends javax.swing.JFrame {
         } catch (SQLException exception) {
             System.out.println("SQL Failed! Error: " + exception.getMessage());
         }
+    }
+    
+    private void setupInventorySearch() {
+        searchInventory.getDocument().addDocumentListener(new DocumentListener(){
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                String text = searchInventory.getText();
+                
+                if (text.isEmpty()) {
+                    for (ProductPanel product : products) {
+                        inventoryDisplayPanel.add(product);
+                    }
+                    
+                    return;
+                }
+
+                inventoryDisplayPanel.removeAll(); // Clear existing components
+
+                for (ProductPanel product : products) {
+                    if (product.productName.toLowerCase().contains(text.toLowerCase())) {
+                        inventoryDisplayPanel.add(product);
+                    }
+                }
+
+                inventoryDisplayPanel.revalidate();
+                inventoryDisplayPanel.repaint();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                String text = searchInventory.getText();
+                
+                if (text.isEmpty()) {
+                    for (ProductPanel product : products) {
+                        inventoryDisplayPanel.add(product);
+                    }
+                    
+                    return;
+                }
+
+                inventoryDisplayPanel.removeAll();
+
+                for (ProductPanel product : products) {
+                    if (product.productName.toLowerCase().contains(text.toLowerCase())) {
+                        inventoryDisplayPanel.add(product);
+                    }
+                }
+
+                inventoryDisplayPanel.revalidate();
+                inventoryDisplayPanel.repaint();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+        });
     }
     
     private void setFirstPanel() {
