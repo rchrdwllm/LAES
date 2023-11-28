@@ -9,6 +9,7 @@ import java.awt.Font;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.time.LocalDate;
+import java.util.Date;
 import javax.swing.JComponent;
 import javax.swing.border.EmptyBorder;
 import javax.swing.AbstractButton;
@@ -139,7 +140,7 @@ public class NewReservation extends javax.swing.JFrame {
             }
         });
 
-        typeOfReservation.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Type of service", "Alternator repair", "Battery repair" }));
+        typeOfReservation.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Type of service", "Alternator repair", "Battery repair", "Wiring repair", "Fuse replacement", "Starter motor repair" }));
         typeOfReservation.setBackground(new java.awt.Color(248, 248, 248));
         typeOfReservation.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(218, 218, 218)), javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16)));
         typeOfReservation.setFont(inter);
@@ -177,11 +178,11 @@ public class NewReservation extends javax.swing.JFrame {
             }
         });
 
+        modeOfPayment.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mode of payment", "Cash", "GCash" }));
         modeOfPayment.setBackground(new java.awt.Color(248, 248, 248));
+        modeOfPayment.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(218, 218, 218)), javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16)));
         modeOfPayment.setFont(inter);
         modeOfPayment.setForeground(new java.awt.Color(35, 35, 35));
-        modeOfPayment.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mode of payment", "Cash", "GCash" }));
-        modeOfPayment.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(218, 218, 218)), javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16)));
 
         javax.swing.GroupLayout mainPnlLayout = new javax.swing.GroupLayout(mainPnl);
         mainPnl.setLayout(mainPnlLayout);
@@ -275,13 +276,27 @@ public class NewReservation extends javax.swing.JFrame {
         String service = typeOfReservation.getSelectedItem().toString();
         String payment = modeOfPayment.getSelectedItem().toString();
         
-        Reservation reservation = new Reservation(name, contactNumber, date, service, payment);
+        if (name.isEmpty() || contactNumber.isEmpty()) {
+            System.out.println("Please fill in all fields");
+            
+            return;
+        } else if (typeOfReservation.getSelectedIndex() == 0) {
+            System.out.println("Please select a type of service!");
+            
+            return;
+        } else if (modeOfPayment.getSelectedIndex() == 0) {
+            System.out.println("Please select mode of payment!");
+            
+            return;
+        } else {
+            Reservation reservation = new Reservation(name, contactNumber, date, service, payment);
         
-        reservation.add();
-        
-        this.main.fetchReservations();
-        this.dispose();
-        this.main.fetchCustomers();
+            reservation.add();
+            
+            this.main.fetchReservations();
+            this.dispose();
+            this.main.fetchCustomers();
+        }
     }//GEN-LAST:event_saveBtnActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
