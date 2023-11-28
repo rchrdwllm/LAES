@@ -130,7 +130,6 @@ public class Main extends javax.swing.JFrame {
         }
     });
 
-    customersBtn.setBackground(new java.awt.Color(255, 255, 255));
     customersBtn.setFont(inter);
     customersBtn.setForeground(new java.awt.Color(35, 35, 35));
     customersBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/UserOutline.png"))); // NOI18N
@@ -146,7 +145,6 @@ public class Main extends javax.swing.JFrame {
         }
     });
 
-    inventoryBtn.setBackground(new java.awt.Color(255, 255, 255));
     inventoryBtn.setFont(inter);
     inventoryBtn.setForeground(new java.awt.Color(35, 35, 35));
     inventoryBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ArchiveOutline.png"))); // NOI18N
@@ -162,7 +160,6 @@ public class Main extends javax.swing.JFrame {
         }
     });
 
-    aboutBtn.setBackground(new java.awt.Color(255, 255, 255));
     aboutBtn.setFont(inter);
     aboutBtn.setForeground(new java.awt.Color(35, 35, 35));
     aboutBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ExclamationCircleOutline.png"))); // NOI18N
@@ -554,17 +551,6 @@ public class Main extends javax.swing.JFrame {
 
     inventoryScrollableArea.setBackground(new java.awt.Color(255, 255, 255));
     inventoryScrollableArea.setBorder(null);
-    inventoryScrollableArea.setOpaque(true);
-    inventoryScrollableArea.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseClicked(java.awt.event.MouseEvent evt) {
-            inventoryScrollableAreaMouseClicked(evt);
-        }
-    });
-    inventoryScrollableArea.addComponentListener(new java.awt.event.ComponentAdapter() {
-        public void componentShown(java.awt.event.ComponentEvent evt) {
-            inventoryScrollableAreaComponentShown(evt);
-        }
-    });
 
     inventoryDisplayPanel.setBackground(new java.awt.Color(255, 255, 255));
     inventoryDisplayPanel.setDoubleBuffered(false);
@@ -855,10 +841,12 @@ public class Main extends javax.swing.JFrame {
             public void insertUpdate(DocumentEvent e) {
                 String text = searchInventory.getText();
                 
-                if (text.isEmpty()) {
+                if (text.isEmpty() || text.equals("Search inventory")) {
                     for (ProductPanel product : products) {
                         inventoryDisplayPanel.add(product);
                     }
+                    inventoryDisplayPanel.repaint();
+                    inventoryDisplayPanel.revalidate();
                     
                     return;
                 }
@@ -879,14 +867,17 @@ public class Main extends javax.swing.JFrame {
             public void removeUpdate(DocumentEvent e) {
                 String text = searchInventory.getText();
                 
-                if (text.isEmpty()) {
+                if (text.isEmpty() || text.equals("Search inventory")) {
                     for (ProductPanel product : products) {
                         inventoryDisplayPanel.add(product);
                     }
                     
+                    inventoryDisplayPanel.repaint();
+                    inventoryDisplayPanel.revalidate();
+                    
                     return;
                 }
-
+                
                 inventoryDisplayPanel.removeAll();
 
                 for (ProductPanel product : products) {
@@ -1027,7 +1018,7 @@ public class Main extends javax.swing.JFrame {
     private void searchInventoryFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchInventoryFocusLost
         String searchValue = searchInventory.getText();
 
-        if (searchValue.equals("")) {
+        if (searchValue.equals("")) {   
             searchInventory.setText("Search inventory");
             searchInventory.setForeground(new Color(129, 129, 129));
         }
@@ -1047,15 +1038,7 @@ public class Main extends javax.swing.JFrame {
         
         new ReservationDetails(this, reservationId).setVisible(true);
     }//GEN-LAST:event_reservationsTblMouseClicked
-
-    private void inventoryScrollableAreaComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_inventoryScrollableAreaComponentShown
-        // TODO add your handling code here:
-    }//GEN-LAST:event_inventoryScrollableAreaComponentShown
     
-    private void inventoryScrollableAreaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inventoryScrollableAreaMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_inventoryScrollableAreaMouseClicked
-
     /**
      * @param args the command line arguments
      */
