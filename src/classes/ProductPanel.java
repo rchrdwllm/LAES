@@ -28,7 +28,7 @@ public class ProductPanel extends javax.swing.JPanel {
     Font interBold;
     
     private final int databaseId;
-    private String productName;
+    public String productName;
     private int quantity;
     private Blob pictureBlob;
     
