@@ -108,10 +108,12 @@ public class ProductPanel extends javax.swing.JPanel {
         imageContainer.setMaximumSize(new java.awt.Dimension(130, 130));
         imageContainer.setMinimumSize(new java.awt.Dimension(130, 130));
 
+        productImageLabel.setBackground(new java.awt.Color(243, 243, 243));
         productImageLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         productImageLabel.setText("image");
         productImageLabel.setToolTipText("");
         productImageLabel.setAlignmentX(0.5F);
+        productImageLabel.setOpaque(true);
         productImageLabel.setPreferredSize(new java.awt.Dimension(130, 130));
         productImageLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
