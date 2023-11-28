@@ -130,6 +130,7 @@ public class Main extends javax.swing.JFrame {
         }
     });
 
+    customersBtn.setBackground(new java.awt.Color(255, 255, 255));
     customersBtn.setFont(inter);
     customersBtn.setForeground(new java.awt.Color(35, 35, 35));
     customersBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/UserOutline.png"))); // NOI18N
@@ -145,6 +146,7 @@ public class Main extends javax.swing.JFrame {
         }
     });
 
+    inventoryBtn.setBackground(new java.awt.Color(255, 255, 255));
     inventoryBtn.setFont(inter);
     inventoryBtn.setForeground(new java.awt.Color(35, 35, 35));
     inventoryBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ArchiveOutline.png"))); // NOI18N
@@ -160,6 +162,7 @@ public class Main extends javax.swing.JFrame {
         }
     });
 
+    aboutBtn.setBackground(new java.awt.Color(255, 255, 255));
     aboutBtn.setFont(inter);
     aboutBtn.setForeground(new java.awt.Color(35, 35, 35));
     aboutBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ExclamationCircleOutline.png"))); // NOI18N
