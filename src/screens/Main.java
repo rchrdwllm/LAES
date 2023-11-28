@@ -524,7 +524,7 @@ public class Main extends javax.swing.JFrame {
     searchInventory.setBackground(new java.awt.Color(248, 248, 248));
     searchInventory.setFont(inter);
     searchInventory.setForeground(new java.awt.Color(129, 129, 129));
-    searchInventory.setText("Search Inventory");
+    searchInventory.setText("Search inventory");
     searchInventory.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(218, 218, 218)), javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16)));
     searchInventory.addFocusListener(new java.awt.event.FocusAdapter() {
         public void focusGained(java.awt.event.FocusEvent evt) {
@@ -849,7 +849,8 @@ public class Main extends javax.swing.JFrame {
     }
     
     private void setupInventorySearch() {
-        searchInventory.getDocument().addDocumentListener(new DocumentListener(){
+        searchInventory.getDocument().addDocumentListener(new DocumentListener() {
+            
             @Override
             public void insertUpdate(DocumentEvent e) {
                 String text = searchInventory.getText();
@@ -862,7 +863,7 @@ public class Main extends javax.swing.JFrame {
                     return;
                 }
 
-                inventoryDisplayPanel.removeAll(); // Clear existing components
+                inventoryDisplayPanel.removeAll();
 
                 for (ProductPanel product : products) {
                     if (product.productName.toLowerCase().contains(text.toLowerCase())) {
@@ -1110,7 +1111,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel reservationsPnl;
     private javax.swing.JTable reservationsTbl;
     private javax.swing.JTextField searchCustomers;
-    private javax.swing.JTextField searchInventory;
+    public javax.swing.JTextField searchInventory;
     private javax.swing.JTextField searchReservations;
     private javax.swing.JPanel sidePnl;
     private javax.swing.ButtonGroup tabsBtnGroup;
